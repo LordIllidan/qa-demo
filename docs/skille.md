@@ -1,6 +1,6 @@
 # Zbiór skilli dla testerów
 
-Dziewiętnaście skilli GitHub Copilot: czternaście dla zagadnień pokazu i pięć dla zagadnień rozszerzających (R1–R5), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
+Dwadzieścia dwa skille GitHub Copilot: czternaście dla zagadnień pokazu i osiem dla zagadnień rozszerzających (R1–R8), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
 
 ## Gdzie leżą i w jakim formacie
 
@@ -44,6 +44,9 @@ Skille nie mają pola `allowed-tools`, więc żadnego narzędzia nie zatwierdzaj
 | `kandydaci-do-automatyzacji` | R3. Kandydaci do automatyzacji | zestawienie sprawdzeń ręcznych z testami automatycznymi: w całości, częściowo, brak, z czasem ręcznej pracy |
 | `szkic-testu-automatycznego` | R4. Szkic testu automatycznego | kod testu dla potwierdzonego przypadku, asercje ze zdaniem wymagania i to, czego test nie sprawdza |
 | `testy-niefunkcjonalne` | R5. Testy niefunkcjonalne | tabela cech jakości: co mówi wymaganie, pytanie do autora, rodzaj testu |
+| `testy-po-zmianie-wymagania` | R6. Testy po zmianie wymagania | stan każdego testu po zmianie wymagania, zdania bez testu i pytania do autora |
+| `testy-z-opisu-interfejsu` | R7. Testy z opisu interfejsu | sprawdzenia kontraktu ze źródłem i niezgodności opisu interfejsu z wymaganiem |
+| `plan-testow-iteracji` | R8. Plan testów iteracji | szkic planu: rodzaje testów dla historii, ryzyka, role, terminy i pytania |
 
 Które skille służą testerowi manualnemu, a które automatyzującemu, opisuje [role-testerow.md](role-testerow.md).
 
@@ -99,4 +102,4 @@ python app/serwer.py
 
 ## Zmiana skilla
 
-Przy zmianie zasad wspólnych trzeba poprawić blok „Zasady wspólne” we wszystkich dziewiętnastu plikach, żeby pozostał jednakowy. Nazwa w polu `name` musi być taka sama jak nazwa katalogu; wymaga tego specyfikacja.
+Przy zmianie zasad wspólnych trzeba poprawić blok „Zasady wspólne” we wszystkich dwudziestu dwóch plikach, żeby pozostał jednakowy. Nazwa w polu `name` musi być taka sama jak nazwa katalogu; wymaga tego specyfikacja.

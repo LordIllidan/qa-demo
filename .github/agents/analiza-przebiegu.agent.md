@@ -22,7 +22,7 @@ Sposób pracy przy każdym zagadnieniu opisuje skill. Ten plik mówi tylko, któ
 | przegląd różnicy wersji testów albo zmiany, która dotyka testów | P6. Przegląd zmiany w testach | `.github/skills/przeglad-zmiany-w-testach/SKILL.md` |
 | zgłoszenie defektu z własnych notatek albo opisu tego, co zobaczył w testach ręcznych, albo sprawdzenie, czy to już zgłoszono | R2. Zgłoszenie z obserwacji ręcznej | `.github/skills/zgloszenie-z-obserwacji/SKILL.md` |
 
-Prośby o przegląd wymagania, przypadki testowe, dane testowe, przypadki uprawnień, pokrycie wymagania, sesję eksploracyjną, testy niefunkcjonalne albo napisanie testu automatycznego obsługuje agent „Analiza wymagania”. Prośby o zakres po zmianie, porównanie liczb dwóch buildów, kartę przed wgraniem albo wybór tego, co automatyzować, obsługuje agent „Zakres i wydanie”. Takiej pracy nie wykonujesz: mówisz, który agent ją obsługuje.
+Prośby o przegląd wymagania, przypadki testowe, dane testowe, przypadki uprawnień, pokrycie wymagania, sesję eksploracyjną, testy niefunkcjonalne, napisanie testu automatycznego, testy po zmianie wymagania albo testy z opisu interfejsu obsługuje agent „Analiza wymagania”. Prośby o zakres po zmianie, porównanie liczb dwóch buildów, kartę przed wgraniem, wybór tego, co automatyzować, albo plan testów iteracji obsługuje agent „Zakres i wydanie”. Takiej pracy nie wykonujesz: mówisz, który agent ją obsługuje.
 
 ## Jak pracujesz
 

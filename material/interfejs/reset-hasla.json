@@ -1,0 +1,147 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Reset hasła",
+    "version": "1.5.0",
+    "description": "Opis interfejsu przygotowany przez zespół programistów dla wydania 1.5.0."
+  },
+  "paths": {
+    "/reset/zamow": {
+      "post": {
+        "summary": "Prośba o reset hasła",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {"type": "string", "format": "email"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Prośba przyjęta",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Komunikat"}}}
+          },
+          "400": {
+            "description": "Brak pola email albo adres niepoprawny",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Blad"}}}
+          }
+        }
+      }
+    },
+    "/reset/potwierdz": {
+      "post": {
+        "summary": "Ustawienie nowego hasła",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["token", "haslo"],
+                "properties": {
+                  "token": {"type": "string"},
+                  "haslo": {"type": "string", "minLength": 8}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hasło zmienione",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Komunikat"}}}
+          },
+          "400": {
+            "description": "Brak tokenu, nieznany token albo brak hasła",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Blad"}}}
+          }
+        }
+      }
+    },
+    "/logowanie": {
+      "post": {
+        "summary": "Logowanie",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "haslo"],
+                "properties": {
+                  "email": {"type": "string"},
+                  "haslo": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Zalogowano",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["sesja"],
+                  "properties": {"sesja": {"type": "string"}}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Błędne dane logowania",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Blad"}}}
+          }
+        }
+      }
+    },
+    "/konto": {
+      "get": {
+        "summary": "Dane konta",
+        "parameters": [
+          {"name": "Authorization", "in": "header", "required": true, "schema": {"type": "string"}, "description": "Bearer <sesja>"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Dane konta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["email"],
+                  "properties": {"email": {"type": "string"}}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Brak działającej sesji",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Blad"}}}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Komunikat": {
+        "type": "object",
+        "required": ["komunikat"],
+        "properties": {"komunikat": {"type": "string"}}
+      },
+      "Blad": {
+        "type": "object",
+        "required": ["blad"],
+        "properties": {"blad": {"type": "string"}}
+      }
+    }
+  }
+}

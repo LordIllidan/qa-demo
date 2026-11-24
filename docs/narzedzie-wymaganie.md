@@ -2,7 +2,7 @@
 
 Podaje tekst wymagania w stałej ramce.
 
-- Zagadnienia: 1, 2, 3, 4, 7, 8, P4, P5, P6, R1, R2, R4, R5
+- Zagadnienia: 1, 2, 3, 4, 7, 8, P4, P5, P6, R1, R2, R4, R5, R7
 - Rodzaj wejścia: wymaganie
 - Aplikacja nie musi działać
 

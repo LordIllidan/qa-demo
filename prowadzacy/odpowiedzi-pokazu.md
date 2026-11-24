@@ -95,7 +95,7 @@ W pliku `material/przebieg-nocny/wynik-8766.json` jest dziesięć testów na bui
 
 `material/zgloszenia/ZGL-101.md` to zgłoszenie defektu „link resetu działa drugi raz” w kształcie, jaki powstaje w zagadnieniu 2 po decyzji człowieka.
 
-## Zagadnienia rozszerzające (R1–R5)
+## Zagadnienia rozszerzające (R1–R8)
 
 Odpowiedzi wyprowadzone z materiału ręcznie. Skilli i agentów dla tych zagadnień nie uruchomiono w GitHub Copilot, więc to, co odda model, może się różnić układem.
 
@@ -172,6 +172,56 @@ Wymaganie `filtr-zamowien`:
 - Bezpieczeństwo: F6 i F7 oraz rola tylko do odczytu; szczegóły należą do zagadnienia 8.
 
 Zły wynik to próg wpisany jak wymaganie, na przykład „odpowiedź poniżej 2 sekund” albo „zgodność z WCAG 2.1 AA”, bez etykiety „reguła własna modelu” i bez pytania do autora.
+
+### R6. Testy po zmianie wymagania
+
+Opis zmiany od autorki jest niepełny: mówi o dwóch nowych zdaniach (R8, R9) i o tym, że pozostałe są bez zmian. Zmieniło się też R4 (link działa przez 30 minut od wysłania wiadomości) i wiersz interfejsu „Ustawienie hasła” (410 także po czasie, nowy kod 422 dla hasła krótszego niż 12 znaków). Model powinien to wskazać w części „Opis zmiany a tekst wymagania”.
+
+| Test | Stan | Dlaczego |
+| --- | --- | --- |
+| `test_link_dziala_jeden_raz` | do poprawy | hasła `NoweHaslo-1` i `InneHaslo-2` mają 11 znaków; przy R9 pierwsze użycie dostanie 422, więc asercja `== 200` i logowanie hasłem `NoweHaslo-1` kłócą się z wymaganiem; poprawka to dłuższe hasła, a nie zmiana asercji |
+| `test_wystarczy_kod_200` | do poprawy | to samo hasło z 11 znakami |
+| `test_nowe_haslo_loguje_stare_nie` | do poprawy | to samo hasło z 11 znakami |
+| `test_nieznany_token_jest_odrzucany` | do sprawdzenia | nieznany token i hasło z 11 znakami: pasuje i 400 (R5), i 422 (R9); wymaganie nie mówi, który kod ma pierwszeństwo |
+| `test_stan_zwraca_numer_builda` | bez wpływu | nie dotyczy resetu |
+| `test_wiadomosc_z_linkiem_jest_w_skrzynce` | bez wpływu | R1 bez zmian |
+
+Hasło startowe konta testowego (`StareHaslo-1`, 12 znaków) ustawia zaplecze przez `/test/konto`, a nie przez reset, więc R9 go nie dotyczy.
+
+Zdania bez testu: nowa część R4 (czas ważności), R8, R9. R7 nie miało testu już przed zmianą; model może to zauważyć, ale to nie jest skutek zmiany.
+
+Pytania do autorki, które powinny się pojawić: jakim kodem system odrzuca link unieważniony nowszą prośbą (R8; interfejs tego nie podaje); od której chwili liczy się 30 minut i czy dotyczy to także linku już użytego; który kod ma pierwszeństwo, gdy jednocześnie link jest zły i hasło za krótkie; czy R9 ma inne reguły niż długość. Pytanie do zespołu, a nie do autorki: jak w testach sprawdzić upływ 30 minut bez czekania.
+
+Zły wynik to propozycja zmiany asercji z 200 na 422 albo usunięcia testów z hasłem z 11 znaków.
+
+### R7. Testy z opisu interfejsu
+
+Niezgodności opisu `material/interfejs/reset-hasla.json` z wymaganiem w wersji 1:
+
+| Nr | Operacja | Opis interfejsu | Wymaganie |
+| --- | --- | --- | --- |
+| N1 | `POST /reset/potwierdz` | odpowiedzi 200 i 400, nie ma 410 | R4 i tabela interfejsu: 410, gdy link był już użyty |
+| N2 | `POST /reset/potwierdz` | `haslo` z `minLength: 8` | nic o długości hasła (wersja 2 podaje 12 znaków i kod 422) |
+| N3 | `POST /reset/potwierdz` | 400 także przy braku hasła | nic o braku hasła |
+| N4 | `POST /reset/zamow` | 400, gdy brak pola `email` albo adres niepoprawny | tylko 202; R2 wymaga tej samej odpowiedzi dla adresu z kontem i bez konta |
+| N5 | `GET /konto` | pole `email` w odpowiedzi 200 | nic o treści odpowiedzi |
+
+Najważniejsza jest N1: test kontraktu napisany z samego opisu nie sprawdzałby R4. Sprawdzenia dla N1–N4 powinny być „wstrzymane do odpowiedzi”. Sprawdzenia bez niezgodności: 202 z polem `komunikat` dla prośby o reset, 200 z polem `sesja` i 401 z polem `blad` dla logowania, 401 dla `/konto` bez sesji. Opis nie mówi nic o tym, że odpowiedź na prośbę o reset ma być taka sama dla adresu z kontem i bez konta; to sprawdzenie pochodzi tylko z R2.
+
+Zły wynik to rozstrzygnięcie, że rację ma opis albo wymaganie, albo wysłanie żądań do aplikacji, żeby to ustalić.
+
+### R8. Plan testów iteracji
+
+Czego się spodziewać w szkicu:
+
+- Przed buildem (od 25.11, przegląd wymagań do 27.11): przegląd obu historii (1, 8, R5), przegląd testów po zmianie wymagania (R6), projektowanie przypadków (R1). Build iteracji jest dopiero od 1.12.
+- REQ-RESET w wersji 2: testy funkcjonalne nowych zdań R4 (czas), R8 i R9; regresja resetu i logowania; test potwierdzający dla otwartego zgłoszenia ZGL-101. Ryzyka z listy: RY1 (wysoki) wiąże się z R4 i R8, RY2 (wysoki) z R3, R6 i R9, RY3 (średni) z R7, RY4 (średni) z R2, RY5 (niski) z wieloma prośbami o reset, o których wymaganie milczy.
+- REQ-FILTR: nowa funkcja bez ryzyk na liście, więc pytanie o ryzyka. Testy uprawnień F6 i F7, testy filtrów F2–F4 z wartościami brzegowymi F3, plik CSV F8, ekran w przeglądarce bez makiet (testy ręczne, pytania o użyteczność i dostępność).
+- Zależność, którą model powinien wyłapać: dane zamówień są dopiero od 3.12, a zamrożenie zmian jest 7.12. Na testy filtrów z danymi zostają cztery dni, a poprawki po nich muszą zmieścić się przed zamrożeniem.
+- Godziny: Ola 30, Kuba 24, przepisane bez podziału na pozycje. Oszacowań nie ma w danych.
+- Pytania: kryterium zakończenia testów, ryzyka filtra, kto daje oszacowania, czy w iteracji jest regresja obszarów spoza historii, jak testować czas ważności linku.
+
+Zły wynik to podział godzin na pozycje („Ola 20 godzin na filtr”), kryterium zakończenia podane jak ustalenie albo nowe ryzyka wpisane jako ustalone przez zespół.
 
 ## Przykład zapisu przebiegu
 

@@ -1,6 +1,6 @@
 # Tester manualny i tester automatyzujący: kto czego używa
 
-Zestaw ma dziewiętnaście zagadnień: czternaście z pokazu i pięć rozszerzających (R1–R5). Ten plik dzieli je według dwóch ról i dla każdej podaje, w którym momencie pracy sięgnąć po które zagadnienie, co tester wnosi sam, co dostaje i na co ma uważać. Na końcu stoi wykaz rodzajów testów i prac, których zestaw nie obejmuje.
+Zestaw ma dwadzieścia dwa zagadnienia: czternaście z pokazu i osiem rozszerzających (R1–R8). Ten plik dzieli je według dwóch ról i dla każdej podaje, w którym momencie pracy sięgnąć po które zagadnienie, co tester wnosi sam, co dostaje i na co ma uważać. Na końcu stoi wykaz rodzajów testów i prac, których zestaw nie obejmuje.
 
 Opis zagadnień jest w `README.md`, opis skilli w [skille.md](skille.md), opis agentów w [agenci-copilot.md](agenci-copilot.md).
 
@@ -40,12 +40,17 @@ W wielu zespołach jedna osoba wykonuje obie prace. Podział dotyczy czynności,
 | R3 | Kandydaci do automatyzacji | czasem (dostarcza listę) | tak | Zakres i wydanie |
 | R4 | Szkic testu automatycznego | – | tak | Analiza wymagania |
 | R5 | Testy niefunkcjonalne | tak | tak | Analiza wymagania |
+| R6 | Testy po zmianie wymagania | czasem (przypadki ręczne) | tak | Analiza wymagania |
+| R7 | Testy z opisu interfejsu | czasem (testy API wykonywane ręcznie) | tak | Analiza wymagania |
+| R8 | Plan testów iteracji | tak | tak | Zakres i wydanie |
 
 ## Ścieżka testera manualnego
 
 | Moment pracy | Zagadnienie | Co wnosisz | Co dostajesz | Na co uważasz |
 | --- | --- | --- | --- | --- |
+| Przed iteracją | R8 | dane iteracji, ryzyka, godziny | szkic planu: rodzaje testów, role, terminy, pytania | oszacowania i kryterium zakończenia daje zespół, nie model |
 | Historyjka trafia do przeglądu | 1, 8, R5 | tekst wymagania | pytania do autora, przypadki uprawnień, pytania o cechy jakości | pytanie nie jest wymaganiem; odpowiedź daje autor |
+| Wymaganie się zmieniło | R6 | obie wersje wymagania, własne przypadki ręczne | które przypadki trzeba poprawić i które nowe zdania nie mają przypadku | opis zmiany od autora może nie wymieniać wszystkiego |
 | Projektujesz testy | R1, 7 | tekst wymagania | przypadki z techniką i źródłem, tabelę wejść | oczekiwany wynik bez cytatu z wymagania to pytanie, a nie przypadek |
 | Przed sesją eksploracyjną | P5 | listę ryzyk, cel sesji | kartę sesji | zakres i czas ustalasz ty |
 | Po sesji albo po wykonaniu przypadków | P5, R2 | notatki: czynności, odpowiedzi systemu, build | raport z sesji, szkic zgłoszenia, możliwe powtórzenia | w szkicu nie może być kroku, którego nie ma w notatkach |
@@ -72,7 +77,10 @@ Szkic jest tak dobry jak notatki. Notatka, z której da się zrobić zgłoszenie
 
 | Moment pracy | Zagadnienie | Co wnosisz | Co dostajesz | Na co uważasz |
 | --- | --- | --- | --- | --- |
+| Przed iteracją | R8 | dane iteracji, ryzyka, godziny | szkic planu z podziałem na role | to samo co tester manualny |
 | Historyjka trafia do przeglądu | 1, 8, R5 | tekst wymagania | pytania do autora, przypadki uprawnień, pytania o cechy jakości | to samo co tester manualny |
+| Zespół oddał opis interfejsu | R7 | opis OpenAPI, wymaganie | sprawdzenia kontraktu ze źródłem i niezgodności opisu z wymaganiem | test kontraktu z samego opisu utrwala implementację |
+| Wymaganie się zmieniło | R6 | obie wersje wymagania, kod testów | stan każdego testu, zdania bez testu, pytania | test poprawia się dlatego, że zmieniło się zdanie, a nie dlatego, że jest czerwony |
 | Planujesz, co automatyzować | R3, P4 | listę sprawdzeń ręcznych, listę testów | które sprawdzenia mają test w całości, częściowo albo wcale; zdania wymagania bez testu | nazwa testu nie dowodzi pokrycia; liczy się to, co test sprawdza |
 | Piszesz test | R1, R4, 7 | potwierdzony przypadek, wymaganie, kod zestawu | szkic kodu, asercje ze źródłem, plik danych dla przebiegu | oczekiwany wynik pochodzi z wymagania, nigdy z odpowiedzi builda |
 | Rano po nocnym przebiegu | P1 | zapis przebiegu i log | grupy awarii z proponowaną klasyfikacją i dowodem | klasyfikacja jest propozycją; ponowne uruchomienie niczego nie wyjaśnia |
@@ -85,6 +93,7 @@ Szkic jest tak dobry jak notatki. Notatka, z której da się zrobić zgłoszenie
 ```powershell
 copilot --agent zakres-i-wydanie --prompt "Zestaw listę sprawdzeń ręcznych z testami automatycznymi i pokaż, co nie ma testu."
 copilot --agent analiza-wymagania --prompt "Napisz test automatyczny dla przypadku, który potwierdzam: <kroki, dane, oczekiwany wynik>."
+copilot --agent analiza-wymagania --prompt "Autorka zmieniła wymaganie resetu hasła. Które testy trzeba poprawić?"
 ```
 
 ## Nawyki, które dają efekt
@@ -110,6 +119,7 @@ Tester automatyzujący:
 - Czerwony przebieg najpierw klasyfikujesz (P1), dopiero potem uruchamiasz ponownie.
 - Prośby „napraw test” nie kierujesz do modelu bez wymagania. Model najłatwiej „naprawia” test zmianą asercji.
 - Zmianę w testach, także własną, oddajesz do przeglądu (P6).
+- Po zmianie wymagania przeglądasz testy, zanim nowy build zrobi je czerwonymi (R6).
 
 ## Rodzaje testów: co zestaw obejmuje
 
@@ -122,20 +132,21 @@ Tester automatyzujący:
 | Wydajność | tylko odczyt liczb dwóch buildów względem progów i pytania o progi | 5, R5 |
 | Użyteczność, dostępność, zgodność, niezawodność | tylko pytania do autora i nazwa rodzaju testu | R5 |
 | Raportowanie przed wydaniem | karta dla osoby decydującej | 6 |
-| Utrzymanie automatyzacji | pokrycie, przegląd zmiany, kandydaci do automatyzacji | P4, P6, R3 |
+| Testy interfejsu programistycznego i kontraktu | sprawdzenia z opisu OpenAPI i niezgodności z wymaganiem, bez wykonania | R7 |
+| Utrzymanie automatyzacji | pokrycie, przegląd zmiany, kandydaci do automatyzacji, testy po zmianie wymagania | P4, P6, R3, R6 |
+| Planowanie testów | szkic planu iteracji z ryzykami, rolami i terminami | R8 |
 
 ## Czego zestaw nie obejmuje
 
 - **Testy interfejsu użytkownika.** Aplikacja demonstracyjna nie ma ekranu. Nie ma więc testów przez przeglądarkę, lokatorów, testów wizualnych ani zgodności z przeglądarkami i urządzeniami.
 - **Wykonanie testów niefunkcjonalnych.** Zestaw nie zawiera skryptów obciążeniowych, skanów bezpieczeństwa, testów penetracyjnych ani badania dostępności. Zagadnienie R5 kończy się na pytaniach i planie.
 - **Testy jednostkowe i integracyjne komponentów.** Zestaw działa na poziomie testów systemowych.
-- **Testy kontraktu i testy z opisu interfejsu.** W materiale nie ma specyfikacji interfejsu w formacie maszynowym.
+- **Wykonanie testów kontraktu.** Zagadnienie R7 kończy się na liście sprawdzeń i niezgodności; nie ma narzędzia, które sprawdza odpowiedzi aplikacji względem opisu.
 - **Potok CI.** Przebiegi uruchamia się ręcznie. Zapis nocnego przebiegu jest przygotowany ręcznie.
-- **Utrzymanie testów po zmianie wymagania.** Nie ma materiału z dwiema wersjami wymagania.
-- **Planowanie, szacowanie i strategia testów.** Żadne zagadnienie nie dotyczy planu iteracji ani ryzyk projektu.
+- **Szacowanie pracy i strategia testów organizacji.** Zagadnienie R8 układa plan jednej iteracji z danych zespołu i nie szacuje pracy.
 - **Testy akceptacyjne z użytkownikiem i środowiska testowe.**
 
-Każda z tych pozycji wymaga nowego materiału albo zmiany aplikacji demonstracyjnej.
+Każda z tych pozycji wymaga nowego materiału, nowego narzędzia albo zmiany aplikacji demonstracyjnej.
 
 ## Źródła podziału
 

@@ -10,9 +10,9 @@ Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHu
 | --- | --- | --- |
 | `app` | aplikacja demonstracyjna z resetem hasła w trzech buildach | [docs/aplikacja.md](docs/aplikacja.md) |
 | `testy` | testy pytest, w tym „link działa jeden raz” i „wystarczy kod 200” | [docs/testy.md](docs/testy.md) |
-| `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach | [docs/material.md](docs/material.md) |
+| `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach, druga wersja wymagania, opis interfejsu, dane iteracji | [docs/material.md](docs/material.md) |
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
-| `.github/skills` | dziewiętnaście skilli dla testerów: czternaście dla zagadnień pokazu i pięć dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
+| `.github/skills` | dwadzieścia dwa skille dla testerów: czternaście dla zagadnień pokazu i osiem dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
 | `.github/agents` | trzech agentów GitHub Copilot dla testerów | [docs/agenci-copilot.md](docs/agenci-copilot.md) |
 | `agenci_langgraph` | trzy agenty LangGraph dla testerów: grafy kroków z zatrzymaniem na decyzję człowieka | [docs/agenci-langgraph.md](docs/agenci-langgraph.md) |
 | `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
@@ -96,6 +96,9 @@ Zestaw służy dwóm rolom. Tester manualny projektuje i wykonuje testy ręcznie
 | R3 | Kandydaci do automatyzacji | czasem | tak |
 | R4 | Szkic testu automatycznego | – | tak |
 | R5 | Testy niefunkcjonalne | tak | tak |
+| R6 | Testy po zmianie wymagania | czasem (przypadki ręczne) | tak |
+| R7 | Testy z opisu interfejsu | czasem (testy API wykonywane ręcznie) | tak |
+| R8 | Plan testów iteracji | tak | tak |
 
 Dzień pracy każdej roli z zagadnieniami w kolejności użycia, wejście, które tester wnosi sam, nawyki pracy z modelem i wykaz tego, czego zestaw nie obejmuje, opisuje [docs/role-testerow.md](docs/role-testerow.md).
 
@@ -124,7 +127,7 @@ Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to m
 
 Wariant 20-minutowy to zagadnienia 1, 2 i 5. Pokazują trzy rodzaje wejścia: wymaganie, wynik przebiegu i liczby.
 
-Poza czternastoma zagadnieniami pokazu jest pięć zagadnień rozszerzających (R1–R5). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego i testów niefunkcjonalnych. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
+Poza czternastoma zagadnieniami pokazu jest osiem zagadnień rozszerzających (R1–R8). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego, testów niefunkcjonalnych, utrzymania testów po zmianie wymagania, testów z opisu interfejsu i planu testów iteracji. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
 
 Polecenia ze skryptami `przebieg.py`, `tabela_asercji.py`, `przebieg_danych.py`, `historia.py` i `zmiana_w_testach.py` wymagają aplikacji działającej w drugim oknie PowerShell (`python app/serwer.py`). Pozostałe skrypty czytają pliki i aplikacji nie potrzebują.
 
@@ -383,7 +386,7 @@ python narzedzia/wymaganie.py reset-hasla
 
 ## Zagadnienia rozszerzające
 
-Pięć zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. Korzystają z istniejącego materiału i istniejących skryptów. Nie mają agenta LangGraph i nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
+Osiem zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. Nie mają agenta LangGraph i nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
 
 | Nr | Zagadnienie | Skill | Agent |
 | --- | --- | --- | --- |
@@ -392,6 +395,9 @@ Pięć zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i a
 | R3 | [Kandydaci do automatyzacji](#r3-kandydaci-do-automatyzacji) | `kandydaci-do-automatyzacji` | Zakres i wydanie |
 | R4 | [Szkic testu automatycznego](#r4-szkic-testu-automatycznego) | `szkic-testu-automatycznego` | Analiza wymagania |
 | R5 | [Testy niefunkcjonalne](#r5-testy-niefunkcjonalne) | `testy-niefunkcjonalne` | Analiza wymagania |
+| R6 | [Testy po zmianie wymagania](#r6-testy-po-zmianie-wymagania) | `testy-po-zmianie-wymagania` | Analiza wymagania |
+| R7 | [Testy z opisu interfejsu](#r7-testy-z-opisu-interfejsu) | `testy-z-opisu-interfejsu` | Analiza wymagania |
+| R8 | [Plan testów iteracji](#r8-plan-testów-iteracji) | `plan-testow-iteracji` | Zakres i wydanie |
 
 ### R1. Przypadki testowe techniką
 
@@ -487,6 +493,55 @@ python narzedzia/wymaganie.py reset-hasla
 python narzedzia/wymaganie.py filtr-zamowien
 ```
 
+### R6. Testy po zmianie wymagania
+
+- **Sytuacja.** Autorka zmieniła wymaganie przed następnym wydaniem i prosi o przegląd testów. Testy dalej sprawdzają starą wersję: część stanie się czerwona dopiero na nowym buildzie, część zostanie zielona, choć nie sprawdza już tego, co wymaganie mówi.
+- **Model dostaje.** Obie wersje wymagania z porównaniem zdanie po zdaniu, opis zmiany od autorki, listę testów i kod testów.
+- **Model oddaje.** Zestawienie opisu zmiany z tekstem obu wersji, stan każdego testu (do poprawy, przestaje pasować, bez wpływu, do sprawdzenia) z wierszem kodu i zdaniem, zdania bez testu i pytania do autorki.
+- **Czego model nie robi.** Nie zmienia testów i nie pisze kodu poprawek. Nie usuwa testów. Nie uruchamia testów na obecnych buildach jako dowodu zgodności z nową wersją. Nie przyjmuje opisu zmiany za pełny, jeśli tekst mówi co innego.
+- **Decyzja człowieka.** Które testy poprawić i kiedy, które usunąć albo zostawić, które pytania idą do autorki, dla których nowych zdań powstaną przypadki.
+- **Dla kogo.** Tester automatyzujący. Tester manualny przy przeglądzie własnych przypadków ręcznych.
+- **Skill.** `testy-po-zmianie-wymagania`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Skrypt.** `narzedzia/zmiana_wymagania.py`
+
+```powershell
+python narzedzia/zmiana_wymagania.py
+```
+
+### R7. Testy z opisu interfejsu
+
+- **Sytuacja.** Zespół programistów oddał opis interfejsu w formacie OpenAPI. Tester chce z niego sprawdzeń kontraktu, ale opis pisał kto inny niż wymaganie i oba dokumenty nie muszą mówić tego samego.
+- **Model dostaje.** Opis interfejsu jako tabelę operacji, pól i odpowiedzi oraz wymaganie.
+- **Model oddaje.** Sprawdzenia kontraktu dla każdej operacji ze źródłem w opisie albo w wymaganiu i tabelę niezgodności opisu z wymaganiem, każdą z pytaniem. Sprawdzenia, których dotyczy niezgodność, są wstrzymane do odpowiedzi.
+- **Czego model nie robi.** Nie rozstrzyga, który dokument ma rację. Nie wysyła żądań do aplikacji, żeby to ustalić. Nie poprawia żadnego z dokumentów i nie dopisuje kodów ani pól, których nie ma w żadnym z nich.
+- **Decyzja człowieka.** Który dokument rozstrzyga każdą niezgodność albo komu ją zgłosić, które sprawdzenia wchodzą do zestawu.
+- **Dla kogo.** Tester automatyzujący. Tester manualny, gdy wykonuje testy interfejsu ręcznie.
+- **Skill.** `testy-z-opisu-interfejsu`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Skrypty.** `narzedzia/opis_interfejsu.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/opis_interfejsu.py
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R8. Plan testów iteracji
+
+- **Sytuacja.** Przed iteracją zespół ma dwie historie, dwie osoby z godzinami, terminy środowiska i listę ryzyk. Trzeba ułożyć, co testować, jakimi rodzajami testów, kto i od kiedy.
+- **Model dostaje.** Dane iteracji (historie, zespół, środowisko, ustalenia), listę ryzyk, otwarte zgłoszenia i treść historii.
+- **Model oddaje.** Szkic planu: rodzaje testów dla każdej historii ze zdaniem, ryzykiem i proponowaną rolą, godziny zespołu przepisane z danych, zależności od terminów i pytania, między innymi o kryterium zakończenia i ryzyka dla historii bez listy ryzyk.
+- **Czego model nie robi.** Nie podaje oszacowań, których nie ma w danych, i nie dzieli godzin między pozycje. Nie zmienia poziomów ryzyka. Nie ustala zakresu, nie przypisuje zadań jako decyzji i nie ustala kryterium zakończenia.
+- **Decyzja człowieka.** Zakres testów iteracji, podział pracy między osoby, kryterium zakończenia testów, kto daje oszacowania.
+- **Dla kogo.** Tester manualny i tester automatyzujący; także lider testów.
+- **Skill.** `plan-testow-iteracji`
+- **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
+- **Skrypty.** `narzedzia/plan_iteracji.py`, przy zmianie wymagania także `narzedzia/zmiana_wymagania.py`
+
+```powershell
+python narzedzia/plan_iteracji.py
+```
+
 ## Narzędzia
 
 Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki`. Żaden niczego nie ocenia.
@@ -504,6 +559,9 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 | `narzedzia/historia.py` | historię wielu przebiegów tego samego zestawu na jednym buildzie | [docs/narzedzie-historia.md](docs/narzedzie-historia.md) |
 | `narzedzia/lista_testow.py` | listę testów z opisami | [docs/narzedzie-lista-testow.md](docs/narzedzie-lista-testow.md) |
 | `narzedzia/zmiana_w_testach.py` | różnicę wersji testów i wyniki przed zmianą oraz po niej | [docs/narzedzie-zmiana-w-testach.md](docs/narzedzie-zmiana-w-testach.md) |
+| `narzedzia/zmiana_wymagania.py` | dwie wersje wymagania, porównanie zdań, opis zmiany i listę testów | [docs/narzedzie-zmiana-wymagania.md](docs/narzedzie-zmiana-wymagania.md) |
+| `narzedzia/opis_interfejsu.py` | opis interfejsu OpenAPI jako tabelę operacji, pól i odpowiedzi | [docs/narzedzie-opis-interfejsu.md](docs/narzedzie-opis-interfejsu.md) |
+| `narzedzia/plan_iteracji.py` | dane iteracji, listę ryzyk, otwarte zgłoszenia i treść historii | [docs/narzedzie-plan-iteracji.md](docs/narzedzie-plan-iteracji.md) |
 
 `narzedzia/wspolne.py` to moduł wspólny skryptów: ramka, zapis plików, uruchamianie pytest.
 
@@ -512,7 +570,7 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 ```text
 qa-demo/
 ├── .github/agents/            trzy pliki .agent.md, agenci GitHub Copilot
-├── .github/skills/            dziewiętnaście katalogów, w każdym SKILL.md
+├── .github/skills/            dwadzieścia dwa katalogi, w każdym SKILL.md
 ├── agenci_langgraph/          trzy agenty LangGraph, części wspólne i testy na modelu zastępczym
 ├── app/serwer.py              aplikacja demonstracyjna, porty 8765, 8766 i 8767
 ├── docs/                      dokumentacja
@@ -524,8 +582,11 @@ qa-demo/
 │   ├── zgloszenia/            ZGL-101.md, otwarte.json
 │   ├── przebieg-nocny/        wynik-8766.json, wynik-8765.json, log-8766.txt
 │   ├── sesja/                 ryzyka.md, notatki-z-sesji.md
-│   └── zmiana-w-testach/      test_reset_hasla.py, opis-zmiany.md
-├── narzedzia/                 jedenaście skryptów i wspolne.py
+│   ├── zmiana-w-testach/      test_reset_hasla.py, opis-zmiany.md
+│   ├── zmiana-wymagania/      reset-hasla.md (wersja 2), opis-zmiany.md
+│   ├── interfejs/             reset-hasla.json (OpenAPI)
+│   └── plan/                  iteracja.json
+├── narzedzia/                 czternaście skryptów i wspolne.py
 ├── prowadzacy/                odpowiedzi-pokazu.md, plik dla prowadzącego
 ├── testy/                     conftest.py, test_reset_hasla.py, test_wiadomosc_resetu.py
 ├── pytest.ini

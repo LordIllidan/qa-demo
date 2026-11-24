@@ -28,11 +28,11 @@ Treść pod nagłówkiem to instrukcja agenta. Limit wynosi 30 000 znaków. Najd
 
 | Agent | Plik | Zagadnienia | Co robi |
 | --- | --- | --- | --- |
-| Analiza wymagania | `analiza-wymagania.agent.md` | 1, 7, 8, P4, P5, R1, R4, R5 | Pracuje z tekstem wymagania: pytania do autora, dane pod regułę, przypadki uprawnień, pokrycie wymagania testami, karta i raport sesji eksploracyjnej, przypadki testowe techniką, szkic testu automatycznego, testy niefunkcjonalne. |
+| Analiza wymagania | `analiza-wymagania.agent.md` | 1, 7, 8, P4, P5, R1, R4, R5, R6, R7 | Pracuje z tekstem wymagania: pytania do autora, dane pod regułę, przypadki uprawnień, pokrycie wymagania testami, karta i raport sesji eksploracyjnej, przypadki testowe techniką, szkic testu automatycznego, testy niefunkcjonalne, testy po zmianie wymagania, testy z opisu interfejsu. |
 | Analiza przebiegu | `analiza-przebiegu.agent.md` | 2, 3, P1, P2, P3, P6, R2 | Pracuje z wynikiem przebiegu albo z obserwacją testera: zgłoszenie defektu, ocena asercji, klasyfikacja awarii, ponowny test po poprawce, test niestabilny, przegląd zmiany w testach, zgłoszenie z obserwacji ręcznej. |
-| Zakres i wydanie | `zakres-i-wydanie.agent.md` | 4, 5, 6, R3 | Przygotowuje informację przed wydaniem: zakres po zmianie, zdanie o liczbach dwóch buildów, karta przed wgraniem. Zestawia też sprawdzenia ręczne z testami automatycznymi przed wyborem tego, co automatyzować. |
+| Zakres i wydanie | `zakres-i-wydanie.agent.md` | 4, 5, 6, R3, R8 | Przygotowuje informację przed wydaniem: zakres po zmianie, zdanie o liczbach dwóch buildów, karta przed wgraniem. Zestawia też sprawdzenia ręczne z testami automatycznymi przed wyborem tego, co automatyzować, i układa szkic planu testów iteracji. |
 
-Razem agenci obsługują wszystkie dziewiętnaście zagadnień, czyli czternaście zagadnień pokazu i pięć rozszerzających, każde dokładnie raz. Opis zagadnień jest w `README.md`. Podział zagadnień na pracę testera manualnego i automatyzującego opisuje [role-testerow.md](role-testerow.md).
+Razem agenci obsługują wszystkie dwadzieścia dwa zagadnienia, czyli czternaście zagadnień pokazu i osiem rozszerzających, każde dokładnie raz. Opis zagadnień jest w `README.md`. Podział zagadnień na pracę testera manualnego i automatyzującego opisuje [role-testerow.md](role-testerow.md).
 
 | Zagadnienie | Skill | Agent |
 | --- | --- | --- |
@@ -55,6 +55,9 @@ Razem agenci obsługują wszystkie dziewiętnaście zagadnień, czyli czternaśc
 | R3. Kandydaci do automatyzacji | `kandydaci-do-automatyzacji` | Zakres i wydanie |
 | R4. Szkic testu automatycznego | `szkic-testu-automatycznego` | Analiza wymagania |
 | R5. Testy niefunkcjonalne | `testy-niefunkcjonalne` | Analiza wymagania |
+| R6. Testy po zmianie wymagania | `testy-po-zmianie-wymagania` | Analiza wymagania |
+| R7. Testy z opisu interfejsu | `testy-z-opisu-interfejsu` | Analiza wymagania |
+| R8. Plan testów iteracji | `plan-testow-iteracji` | Zakres i wydanie |
 
 ## Budowa agenta
 
@@ -75,9 +78,9 @@ Jedynym źródłem wejścia są skrypty z katalogu `narzedzia` i pliki, które s
 
 | Agent | Skrypty |
 | --- | --- |
-| Analiza wymagania | `wymaganie.py`, `lista_testow.py`, po decyzji człowieka `przebieg_danych.py` i `przebieg.py` |
+| Analiza wymagania | `wymaganie.py`, `lista_testow.py`, `zmiana_wymagania.py`, `opis_interfejsu.py`, po decyzji człowieka `przebieg_danych.py` i `przebieg.py` |
 | Analiza przebiegu | `przebieg.py`, `tabela_asercji.py`, `przebieg_nocny.py`, `historia.py`, `zmiana_w_testach.py`, `wymaganie.py` |
-| Zakres i wydanie | `lista_sprawdzen.py`, `liczby.py`, `zbierz_wyniki.py`, `lista_testow.py`, `wymaganie.py`, na polecenie człowieka `przebieg.py` |
+| Zakres i wydanie | `lista_sprawdzen.py`, `liczby.py`, `zbierz_wyniki.py`, `lista_testow.py`, `plan_iteracji.py`, `zmiana_wymagania.py`, `wymaganie.py`, na polecenie człowieka `przebieg.py` |
 
 Każdy agent ma zapisane, że:
 
@@ -160,5 +163,5 @@ Agenci z gałęzi domyślnej są widoczni na liście agentów na stronie [github
 
 - Nowe zagadnienie: dodaj skill w `.github/skills`, a potem wiersz w tabeli „Zagadnienia i skille” właściwego agenta i w tabelach tego pliku.
 - Zmiana sposobu pracy przy zagadnieniu: zmień skill. Pliku agenta nie trzeba ruszać.
-- Zmiana zasad wspólnych: zmień blok w dziewiętnastu skillach i skrót w trzech agentach.
+- Zmiana zasad wspólnych: zmień blok w dwudziestu dwóch skillach i skrót w trzech agentach.
 - Po zmianie sprawdź, że nagłówek YAML się wczytuje i że każda ścieżka skilla z tabeli istnieje.
