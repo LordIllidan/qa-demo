@@ -1,6 +1,6 @@
 # Agenty LangGraph
 
-Trzy proste agenty w LangGraph, każdy jako krótki graf kroków. W każdym widać osobno dwie rzeczy: zdanie modelu i decyzję człowieka. Graf zatrzymuje się przed decyzją i bez odpowiedzi człowieka nie idzie dalej.
+Proste agenty w LangGraph, każdy jako krótki graf kroków. Każde z 22 zagadnień zestawu da się uruchomić jednym poleceniem `python -m agenci_langgraph <polecenie>`: dziewięć obsługują trzy agenty z własnym grafem, pozostałe trzynaście jeden wspólny graf „Jedno zagadnienie”. W każdym widać osobno dwie rzeczy: zdanie modelu i decyzję człowieka. Graf zatrzymuje się przed decyzją i bez odpowiedzi człowieka nie idzie dalej.
 
 Kod: katalog `agenci_langgraph`. Baza zestawu (aplikacja, testy, skrypty, skille) działa bez LangGraph; zależności agentów są w osobnym pliku `requirements-langgraph.txt`.
 
@@ -11,6 +11,13 @@ Kod: katalog `agenci_langgraph`. Baza zestawu (aplikacja, testy, skrypty, skille
 | `zestaw` | Od wymagania do potwierdzonego zestawu | 1, 7, 8, P4 | jedno | [agent-langgraph-zestaw.md](agent-langgraph-zestaw.md) |
 | `zgloszenie` | Od czerwonego przebiegu do zgłoszenia | P1, 2 | dwa | [agent-langgraph-zgloszenie.md](agent-langgraph-zgloszenie.md) |
 | `karta` | Dwa buildy i karta | 4, 5, 6 | trzy | [agent-langgraph-karta.md](agent-langgraph-karta.md) |
+| nazwa skilla zagadnienia, na przykład `ocena-asercji` | Jedno zagadnienie | 3, P2, P3, P5, P6, R1–R8 | jedno | [agent-langgraph-jedno-zagadnienie.md](agent-langgraph-jedno-zagadnienie.md) |
+
+Listę poleceń z zagadnieniem, które każde obsługuje, wypisuje:
+
+```powershell
+python -m agenci_langgraph lista
+```
 
 ## Podział ról w grafie
 
@@ -24,7 +31,7 @@ Kod: katalog `agenci_langgraph`. Baza zestawu (aplikacja, testy, skrypty, skille
 
 Graf niczego nie ocenia. Nie czyta wyniku testów, nie porównuje liczb i nie poprawia zdania modelu. Z tekstu modelu bierze tylko dwie rzeczy, mechanicznie: listę decyzji z części „Decyzja człowieka” oraz wiersze tabel o numerach, które wpisał człowiek.
 
-Model w grafie nie ma narzędzi: nie uruchamia poleceń i nie czyta plików. Dostaje skill i tekst oddany przez skrypty, nic więcej. Decyzje człowieka nie trafiają do modelu. Katalogu `prowadzacy` agenty nie czytają.
+Model w grafie nie ma narzędzi: nie uruchamia poleceń i nie czyta plików. Dostaje skill i tekst oddany przez skrypty, a w agencie „Jedno zagadnienie” także prośbę i pliki, które człowiek sam wskazał w wierszu poleceń. Nic więcej. Decyzje człowieka nie trafiają do modelu. Katalogu `prowadzacy` agenty nie czytają; pliku z tego katalogu agent „Jedno zagadnienie” nie przyjmuje także od człowieka.
 
 ## Instalacja
 
@@ -39,16 +46,17 @@ Plik instaluje zależności bazy oraz `langgraph`, `langchain` i pakiety integra
 ## Uruchomienie
 
 1. Ustaw model: [agenci-langgraph-model.md](agenci-langgraph-model.md).
-2. Dla agentów `zgloszenie` i `karta` uruchom aplikację w osobnym oknie PowerShell: `python app/serwer.py`.
+2. Dla agentów, które uruchamiają testy na buildach (`zgloszenie`, `karta` i zagadnienia 3, P2, P3, P6), uruchom aplikację w osobnym oknie PowerShell: `python app/serwer.py`. Lista poleceń mówi, które to są.
 3. Uruchom agenta z katalogu głównego repozytorium:
 
 ```powershell
 python -m agenci_langgraph zestaw
 python -m agenci_langgraph zgloszenie
 python -m agenci_langgraph karta
+python -m agenci_langgraph ocena-asercji
 ```
 
-Listę agentów i opcji pokazuje `python -m agenci_langgraph --help`.
+Polecenia dla pozostałych zagadnień i ich opcje opisuje [agent-langgraph-jedno-zagadnienie.md](agent-langgraph-jedno-zagadnienie.md). Opcje każdego polecenia pokazuje `python -m agenci_langgraph <polecenie> --help`.
 
 ## Co widać w oknie
 
@@ -106,6 +114,7 @@ Agent kończy się kodem 2 i komunikatem „Agent zatrzymany: ...”, gdy nie ma
 | `agenci_langgraph/od_wymagania_do_zestawu.py` | graf agenta `zestaw` |
 | `agenci_langgraph/od_przebiegu_do_zgloszenia.py` | graf agenta `zgloszenie` |
 | `agenci_langgraph/dwa_buildy_i_karta.py` | graf agenta `karta` |
-| `agenci_langgraph/__main__.py` | uruchamianie z konsoli |
+| `agenci_langgraph/jedno_zagadnienie.py` | wspólny graf dla zagadnień bez własnego agenta i lista tych zagadnień ze skryptami |
+| `agenci_langgraph/__main__.py` | uruchamianie z konsoli i lista agentów |
 | `agenci_langgraph/testy` | testy przepływu na modelu zastępczym: [agenci-langgraph-testy.md](agenci-langgraph-testy.md) |
 | `requirements-langgraph.txt` | zależności agentów z wersjami |

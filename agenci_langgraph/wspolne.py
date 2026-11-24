@@ -207,7 +207,7 @@ def wiersze_decyzji(decyzje: dict) -> list:
     return [f"- {pytanie}: {odpowiedz or BEZ_ODPOWIEDZI}" for pytanie, odpowiedz in decyzje.items()]
 
 
-def zapisz_protokol(plik: Path, tytul: str, opis_modelu: str, stan: Stan) -> Path:
+def zapisz_protokol(plik: Path, tytul: str, opis_modelu: str, stan: Stan, wstep: list = ()) -> Path:
     """Zapisuje przebieg grafu: przy każdym kroku osobno wejście, zdanie modelu i decyzję człowieka."""
     decyzje = stan.get("decyzja_czlowieka", {})
     wiersze = [
@@ -217,6 +217,7 @@ def zapisz_protokol(plik: Path, tytul: str, opis_modelu: str, stan: Stan) -> Pat
         f"- model: {opis_modelu or 'nie podano'}",
         "- zdanie modelu jest zapisane dosłownie, jako cytat; decyzje wpisał człowiek przy zatrzymaniu grafu",
         "",
+        *wstep,
     ]
     zdania = stan.get("zdanie_modelu", {})
     for krok in [*decyzje, *(k for k in zdania if k not in decyzje)]:

@@ -47,7 +47,7 @@ Materiał opisuje [material.md](material.md). Żaden z trzech skryptów nie wyma
 ## Czym różnią się od zagadnień pokazu
 
 - Nie należą do scenariusza pokazu ani do wariantu 20-minutowego.
-- Nie mają agenta LangGraph.
+- Nie mają osobnego agenta LangGraph; uruchamia je wspólny graf „Jedno zagadnienie” ([agent-langgraph-jedno-zagadnienie.md](agent-langgraph-jedno-zagadnienie.md)).
 - Nie zmieniają aplikacji, testów ani materiału pokazu.
 - Skilli i agentów dla tych zagadnień nie uruchomiono w GitHub Copilot. Sprawdzono, że wejście, które skille wskazują, istnieje i że polecenia działają.
 

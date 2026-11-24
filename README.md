@@ -2,7 +2,7 @@
 
 Zestaw pokazowy dla testerów i QA Engineerów: jak używać modelu AI w codziennej pracy testera tak, żeby model formułował zdanie, a decyzja zostawała przy człowieku.
 
-Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHub Copilot, trzech agentów GitHub Copilot, którzy z tych skilli korzystają, oraz trzy proste agenty LangGraph, które te same skille wczytują jako instrukcję dla modelu i zatrzymują się na decyzję człowieka.
+Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHub Copilot, trzech agentów GitHub Copilot, którzy z tych skilli korzystają, oraz proste agenty LangGraph, które te same skille wczytują jako instrukcję dla modelu i zatrzymują się na decyzję człowieka; każde zagadnienie da się uruchomić jako agent LangGraph jednym poleceniem.
 
 ## Co tu jest
 
@@ -14,7 +14,7 @@ Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHu
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
 | `.github/skills` | dwadzieścia dwa skille dla testerów: czternaście dla zagadnień pokazu i osiem dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
 | `.github/agents` | trzech agentów GitHub Copilot dla testerów | [docs/agenci-copilot.md](docs/agenci-copilot.md) |
-| `agenci_langgraph` | trzy agenty LangGraph dla testerów: grafy kroków z zatrzymaniem na decyzję człowieka | [docs/agenci-langgraph.md](docs/agenci-langgraph.md) |
+| `agenci_langgraph` | agenty LangGraph dla testerów: trzy grafy dla dziewięciu zagadnień i jeden wspólny graf dla pozostałych, każdy z zatrzymaniem na decyzję człowieka | [docs/agenci-langgraph.md](docs/agenci-langgraph.md) |
 | `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
 | `docs` | dokumentacja, jeden plik na funkcję; podział zagadnień na pracę testera manualnego i automatyzującego opisuje [docs/role-testerow.md](docs/role-testerow.md) | |
 
@@ -104,7 +104,7 @@ Dzień pracy każdej roli z zagadnieniami w kolejności użycia, wejście, któr
 
 ## Zagadnienia
 
-Czternaście zagadnień: osiem podstawowych (1–8) i sześć dodatkowych (P1–P6). Każde zaczyna się od sytuacji z dnia testera i ma ten sam układ opisu: co model dostaje, co oddaje, czego sam nie robi i jaka decyzja zostaje przy człowieku. Każde ma też skill w `.github/skills/<nazwa>/SKILL.md`, agenta GitHub Copilot w `.github/agents`, który ten skill stosuje, i polecenia, które podają wejście. Dziewięć zagadnień obsługują także agenty LangGraph z katalogu `agenci_langgraph`; instalację i ustawienie modelu opisuje [docs/agenci-langgraph.md](docs/agenci-langgraph.md).
+Czternaście zagadnień: osiem podstawowych (1–8) i sześć dodatkowych (P1–P6). Każde zaczyna się od sytuacji z dnia testera i ma ten sam układ opisu: co model dostaje, co oddaje, czego sam nie robi i jaka decyzja zostaje przy człowieku. Każde ma też skill w `.github/skills/<nazwa>/SKILL.md`, agenta GitHub Copilot w `.github/agents`, który ten skill stosuje, i polecenia, które podają wejście. Każde zagadnienie, także rozszerzające, da się uruchomić jako agent LangGraph z katalogu `agenci_langgraph`; listę poleceń wypisuje `python -m agenci_langgraph lista`, a instalację i ustawienie modelu opisuje [docs/agenci-langgraph.md](docs/agenci-langgraph.md).
 
 Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to ma ustalić model na podstawie wejścia.
 
@@ -112,18 +112,18 @@ Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to m
 | --- | --- | --- | --- | --- | --- |
 | 1 | [Luki w wymaganiu](#1-luki-w-wymaganiu) | `luki-w-wymaganiu` | Analiza wymagania | Od wymagania do potwierdzonego zestawu | tak |
 | 2 | [Defekt z czerwonego przebiegu](#2-defekt-z-czerwonego-przebiegu) | `zgloszenie-defektu` | Analiza przebiegu | Od czerwonego przebiegu do zgłoszenia | tak |
-| 3 | [Ocena asercji](#3-ocena-asercji) | `ocena-asercji` | Analiza przebiegu | – | – |
+| 3 | [Ocena asercji](#3-ocena-asercji) | `ocena-asercji` | Analiza przebiegu | Jedno zagadnienie | – |
 | 4 | [Zakres po zmianie](#4-zakres-po-zmianie) | `zakres-po-zmianie` | Zakres i wydanie | Dwa buildy i karta | – |
 | 5 | [Zdanie o dwóch buildach](#5-zdanie-o-dwóch-buildach) | `dwa-buildy-w-liczbach` | Zakres i wydanie | Dwa buildy i karta | tak |
 | 6 | [Karta przed wgraniem](#6-karta-przed-wgraniem) | `karta-przed-wgraniem` | Zakres i wydanie | Dwa buildy i karta | – |
 | 7 | [Dane pod regułę](#7-dane-pod-regułę) | `dane-pod-regule` | Analiza wymagania | Od wymagania do potwierdzonego zestawu | – |
 | 8 | [Uprawnienia przy zwykłej historyjce](#8-uprawnienia-przy-zwykłej-historyjce) | `przypadki-uprawnien` | Analiza wymagania | Od wymagania do potwierdzonego zestawu | – |
 | P1 | [Czerwony przebieg: produkt, test czy środowisko](#p1-czerwony-przebieg-produkt-test-czy-środowisko) | `klasyfikacja-awarii` | Analiza przebiegu | Od czerwonego przebiegu do zgłoszenia | – |
-| P2 | [Ponowny test po poprawce](#p2-ponowny-test-po-poprawce) | `test-potwierdzajacy` | Analiza przebiegu | – | – |
-| P3 | [Test niestabilny](#p3-test-niestabilny) | `test-niestabilny` | Analiza przebiegu | – | – |
+| P2 | [Ponowny test po poprawce](#p2-ponowny-test-po-poprawce) | `test-potwierdzajacy` | Analiza przebiegu | Jedno zagadnienie | – |
+| P3 | [Test niestabilny](#p3-test-niestabilny) | `test-niestabilny` | Analiza przebiegu | Jedno zagadnienie | – |
 | P4 | [Pokrycie wymagania testami](#p4-pokrycie-wymagania-testami) | `pokrycie-wymagania` | Analiza wymagania | Od wymagania do potwierdzonego zestawu | – |
-| P5 | [Karta sesji eksploracyjnej](#p5-karta-sesji-eksploracyjnej) | `sesja-eksploracyjna` | Analiza wymagania | – | – |
-| P6 | [Przegląd zmiany w testach](#p6-przegląd-zmiany-w-testach) | `przeglad-zmiany-w-testach` | Analiza przebiegu | – | – |
+| P5 | [Karta sesji eksploracyjnej](#p5-karta-sesji-eksploracyjnej) | `sesja-eksploracyjna` | Analiza wymagania | Jedno zagadnienie | – |
+| P6 | [Przegląd zmiany w testach](#p6-przegląd-zmiany-w-testach) | `przeglad-zmiany-w-testach` | Analiza przebiegu | Jedno zagadnienie | – |
 
 Wariant 20-minutowy to zagadnienia 1, 2 i 5. Pokazują trzy rodzaje wejścia: wymaganie, wynik przebiegu i liczby.
 
@@ -181,6 +181,7 @@ python narzedzia/wymaganie.py reset-hasla
 - **Dla kogo.** Tester automatyzujący.
 - **Skill.** `ocena-asercji`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph ocena-asercji`
 - **Skrypty.** `narzedzia/tabela_asercji.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -309,6 +310,7 @@ python narzedzia/przebieg_nocny.py
 - **Dla kogo.** Tester automatyzujący. Tester manualny, gdy poda własny wynik ponownego testu.
 - **Skill.** `test-potwierdzajacy`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph test-potwierdzajacy --port 8767 --test test_link_dziala_jeden_raz --plik material/zgloszenia/ZGL-101.md`
 - **Skrypt.** `narzedzia/przebieg.py`; zgłoszenie model czyta z pliku
 
 ```powershell
@@ -325,6 +327,7 @@ python narzedzia/przebieg.py --port 8767 --test test_link_dziala_jeden_raz
 - **Dla kogo.** Tester automatyzujący.
 - **Skill.** `test-niestabilny`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph test-niestabilny --port 8765`
 - **Skrypt.** `narzedzia/historia.py`
 
 ```powershell
@@ -359,6 +362,7 @@ python narzedzia/lista_testow.py
 - **Dla kogo.** Tester manualny.
 - **Skill.** `sesja-eksploracyjna`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph sesja-eksploracyjna --prosba "karta sesji przed sesją" --plik material/sesja/ryzyka.md`, po sesji `python -m agenci_langgraph sesja-eksploracyjna --prosba "raport po sesji" --plik material/sesja/notatki-z-sesji.md`
 - **Skrypt.** `narzedzia/wymaganie.py`; listę ryzyk i notatki model czyta z plików `material/sesja/ryzyka.md` i `material/sesja/notatki-z-sesji.md`
 
 ```powershell
@@ -377,6 +381,7 @@ Get-Content material/sesja/notatki-z-sesji.md -Encoding UTF8
 - **Dla kogo.** Tester automatyzujący.
 - **Skill.** `przeglad-zmiany-w-testach`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph przeglad-zmiany-w-testach`
 - **Skrypty.** `narzedzia/zmiana_w_testach.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -386,18 +391,18 @@ python narzedzia/wymaganie.py reset-hasla
 
 ## Zagadnienia rozszerzające
 
-Osiem zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. Nie mają agenta LangGraph i nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
+Osiem zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. Agentem LangGraph jest dla nich wspólny graf „Jedno zagadnienie”. Nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
 
-| Nr | Zagadnienie | Skill | Agent |
-| --- | --- | --- | --- |
-| R1 | [Przypadki testowe techniką](#r1-przypadki-testowe-techniką) | `projektowanie-przypadkow` | Analiza wymagania |
-| R2 | [Zgłoszenie z obserwacji ręcznej](#r2-zgłoszenie-z-obserwacji-ręcznej) | `zgloszenie-z-obserwacji` | Analiza przebiegu |
-| R3 | [Kandydaci do automatyzacji](#r3-kandydaci-do-automatyzacji) | `kandydaci-do-automatyzacji` | Zakres i wydanie |
-| R4 | [Szkic testu automatycznego](#r4-szkic-testu-automatycznego) | `szkic-testu-automatycznego` | Analiza wymagania |
-| R5 | [Testy niefunkcjonalne](#r5-testy-niefunkcjonalne) | `testy-niefunkcjonalne` | Analiza wymagania |
-| R6 | [Testy po zmianie wymagania](#r6-testy-po-zmianie-wymagania) | `testy-po-zmianie-wymagania` | Analiza wymagania |
-| R7 | [Testy z opisu interfejsu](#r7-testy-z-opisu-interfejsu) | `testy-z-opisu-interfejsu` | Analiza wymagania |
-| R8 | [Plan testów iteracji](#r8-plan-testów-iteracji) | `plan-testow-iteracji` | Zakres i wydanie |
+| Nr | Zagadnienie | Skill | Agent | Agent LangGraph |
+| --- | --- | --- | --- | --- |
+| R1 | [Przypadki testowe techniką](#r1-przypadki-testowe-techniką) | `projektowanie-przypadkow` | Analiza wymagania | Jedno zagadnienie |
+| R2 | [Zgłoszenie z obserwacji ręcznej](#r2-zgłoszenie-z-obserwacji-ręcznej) | `zgloszenie-z-obserwacji` | Analiza przebiegu | Jedno zagadnienie |
+| R3 | [Kandydaci do automatyzacji](#r3-kandydaci-do-automatyzacji) | `kandydaci-do-automatyzacji` | Zakres i wydanie | Jedno zagadnienie |
+| R4 | [Szkic testu automatycznego](#r4-szkic-testu-automatycznego) | `szkic-testu-automatycznego` | Analiza wymagania | Jedno zagadnienie |
+| R5 | [Testy niefunkcjonalne](#r5-testy-niefunkcjonalne) | `testy-niefunkcjonalne` | Analiza wymagania | Jedno zagadnienie |
+| R6 | [Testy po zmianie wymagania](#r6-testy-po-zmianie-wymagania) | `testy-po-zmianie-wymagania` | Analiza wymagania | Jedno zagadnienie |
+| R7 | [Testy z opisu interfejsu](#r7-testy-z-opisu-interfejsu) | `testy-z-opisu-interfejsu` | Analiza wymagania | Jedno zagadnienie |
+| R8 | [Plan testów iteracji](#r8-plan-testów-iteracji) | `plan-testow-iteracji` | Zakres i wydanie | Jedno zagadnienie |
 
 ### R1. Przypadki testowe techniką
 
@@ -409,6 +414,7 @@ Osiem zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i au
 - **Dla kogo.** Tester manualny i tester automatyzujący.
 - **Skill.** `projektowanie-przypadkow`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph projektowanie-przypadkow`
 - **Skrypt.** `narzedzia/wymaganie.py`
 
 ```powershell
@@ -426,6 +432,7 @@ python narzedzia/wymaganie.py filtr-zamowien
 - **Dla kogo.** Tester manualny. Tester automatyzujący, gdy zgłasza coś, co zobaczył poza przebiegiem automatycznym.
 - **Skill.** `zgloszenie-z-obserwacji`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph zgloszenie-z-obserwacji --prosba "<której obserwacji dotyczy zgłoszenie>" --plik material/sesja/notatki-z-sesji.md --plik material/zgloszenia/otwarte.json`
 - **Skrypt.** `narzedzia/wymaganie.py`; notatki i listę otwartych zgłoszeń model czyta z plików `material/sesja/notatki-z-sesji.md` i `material/zgloszenia/otwarte.json`
 
 ```powershell
@@ -446,6 +453,7 @@ Tester wskazuje w prośbie, której obserwacji z notatek dotyczy zgłoszenie, na
 - **Dla kogo.** Tester automatyzujący. Tester manualny dostarcza listę sprawdzeń i współdecyduje.
 - **Skill.** `kandydaci-do-automatyzacji`
 - **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph kandydaci-do-automatyzacji`
 - **Skrypty.** `narzedzia/lista_sprawdzen.py`, `narzedzia/lista_testow.py`
 
 ```powershell
@@ -463,6 +471,7 @@ python narzedzia/lista_testow.py
 - **Dla kogo.** Tester automatyzujący.
 - **Skill.** `szkic-testu-automatycznego`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph szkic-testu-automatycznego --prosba "<potwierdzony przypadek: kroki, dane, oczekiwany wynik>" --plik testy/conftest.py`
 - **Skrypty.** `narzedzia/wymaganie.py`, `narzedzia/lista_testow.py`, po przyjęciu kodu `narzedzia/przebieg.py`
 
 ```powershell
@@ -486,6 +495,7 @@ python narzedzia/przebieg.py --port 8765 --zestaw <plik z testem> --test <nazwa 
 - **Dla kogo.** Tester manualny i tester automatyzujący.
 - **Skill.** `testy-niefunkcjonalne`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph testy-niefunkcjonalne`
 - **Skrypt.** `narzedzia/wymaganie.py`
 
 ```powershell
@@ -503,6 +513,7 @@ python narzedzia/wymaganie.py filtr-zamowien
 - **Dla kogo.** Tester automatyzujący. Tester manualny przy przeglądzie własnych przypadków ręcznych.
 - **Skill.** `testy-po-zmianie-wymagania`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph testy-po-zmianie-wymagania --plik testy/conftest.py`
 - **Skrypt.** `narzedzia/zmiana_wymagania.py`
 
 ```powershell
@@ -519,6 +530,7 @@ python narzedzia/zmiana_wymagania.py
 - **Dla kogo.** Tester automatyzujący. Tester manualny, gdy wykonuje testy interfejsu ręcznie.
 - **Skill.** `testy-z-opisu-interfejsu`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph testy-z-opisu-interfejsu`
 - **Skrypty.** `narzedzia/opis_interfejsu.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -536,6 +548,7 @@ python narzedzia/wymaganie.py reset-hasla
 - **Dla kogo.** Tester manualny i tester automatyzujący; także lider testów.
 - **Skill.** `plan-testow-iteracji`
 - **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph plan-testow-iteracji`
 - **Skrypty.** `narzedzia/plan_iteracji.py`, przy zmianie wymagania także `narzedzia/zmiana_wymagania.py`
 
 ```powershell
@@ -571,7 +584,7 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 qa-demo/
 ├── .github/agents/            trzy pliki .agent.md, agenci GitHub Copilot
 ├── .github/skills/            dwadzieścia dwa katalogi, w każdym SKILL.md
-├── agenci_langgraph/          trzy agenty LangGraph, części wspólne i testy na modelu zastępczym
+├── agenci_langgraph/          agenty LangGraph, wspólny graf zagadnień, części wspólne i testy na modelu zastępczym
 ├── app/serwer.py              aplikacja demonstracyjna, porty 8765, 8766 i 8767
 ├── docs/                      dokumentacja
 ├── material/

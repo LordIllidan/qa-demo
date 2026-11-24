@@ -25,7 +25,7 @@ Polecenie `python -m pytest` bez ścieżki uruchamia jak dotąd tylko katalog `t
 
 ## Aplikacja
 
-Część testów uruchamia skrypt `przebieg.py`, więc potrzebuje buildów pod portami 8765 i 8766. Jeśli aplikacja działa w drugim oknie, testy z niej korzystają. Jeśli nie działa, testy uruchamiają brakujące buildy na czas przebiegu i zatrzymują je po zakończeniu.
+Część testów uruchamia skrypty, które wykonują testy na buildach (`przebieg.py`, `tabela_asercji.py`, `historia.py`, `zmiana_w_testach.py`), więc potrzebuje buildów pod portami 8765 i 8766. Jeśli aplikacja działa w drugim oknie, testy z niej korzystają. Jeśli nie działa, testy uruchamiają brakujące buildy na czas przebiegu i zatrzymują je po zakończeniu.
 
 ## Model zastępczy
 
@@ -43,9 +43,10 @@ Model zastępczy jest tylko w testach. Polecenie `python -m agenci_langgraph` za
 | `test_od_wymagania_do_zestawu.py` | graf zatrzymuje się przed zapisem i do decyzji niczego nie zapisuje; każdy krok modelu dostaje swój skill i tylko wejście ze skryptów; po wznowieniu do zestawu i do pliku dla przebiegu wchodzą tylko wskazane numery; bez potwierdzenia nic nie wchodzi; po decyzji model nie jest pytany ponownie |
 | `test_od_przebiegu_do_zgloszenia.py` | pierwsze zatrzymanie pokazuje klasyfikację i pytanie o dalszy krok; bez słowa „tak” graf nie uruchamia przebiegów i nie prosi o szkic; po słowie „tak” bierze dwa przebiegi i wymaganie, zatrzymuje się drugi raz i zapisuje protokół dopiero po decyzji o zgłoszeniu; porty buildów można wskazać |
 | `test_dwa_buildy_i_karta.py` | graf zatrzymuje się trzy razy i po każdej decyzji idzie dalej; przy ostatnim zatrzymaniu pokazuje wcześniejsze decyzje ze stanu grafu; model karty dostaje tylko zbiór wyników, bez decyzji człowieka; protokół powstaje po ostatniej decyzji |
+| `test_jedno_zagadnienie.py` | każde z trzynastu poleceń wspólnego grafu przechodzi w konsoli od początku do końca: skrypty zagadnienia, skill jako instrukcja, jedno zatrzymanie z pytaniami ze skilla, zapis po decyzji, decyzja nie trafia do modelu; prośba i pliki od człowieka trafiają do wejścia; plik z katalogu `prowadzacy` i brakujący plik zatrzymują agenta przed modelem; parametry od człowieka trafiają do poleceń skryptów; lista podaje każde polecenie z zagadnieniem |
 | `test_uruchomienie.py` | przebieg agenta w konsoli od początku do końca z odpowiedziami człowieka; brak odpowiedzi kończy agenta bez zapisu; brak zmiennych środowiskowych daje komunikat z nazwami zmiennych; dostawca i nazwa modelu pochodzą ze zmiennych |
 
-Testy z plików `test_od_przebiegu_do_zgloszenia.py` i `test_dwa_buildy_i_karta.py` uruchamiają testy aplikacji na buildach przez skrypt `przebieg.py`, tak samo jak agent.
+Testy z plików `test_od_przebiegu_do_zgloszenia.py`, `test_dwa_buildy_i_karta.py` i `test_jedno_zagadnienie.py` uruchamiają testy aplikacji na buildach przez skrypty z katalogu `narzedzia`, tak samo jak agent.
 
 ## Czego testy nie sprawdzają
 
