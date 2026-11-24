@@ -23,7 +23,7 @@ Repozytorium zawiera pierwszy etap zestawu: materiał pokazu, narzędzia i skryp
 3. Model oznacza źródło każdej pozycji: zdanie z wymagania albo reguła własna modelu.
 4. Gdy wymaganie czegoś nie mówi, model pisze pytanie. Nie wymyśla polityki.
 5. Do zestawu testów wchodzi tylko to, co człowiek potwierdzi.
-6. Model opisuje zachowanie systemu („na tym buildzie link działa drugi raz”), a nie stan testu („test padł”).
+6. Model opisuje zachowanie systemu („na tym buildzie koszyk przyjmuje zamówienie bez adresu dostawy”), a nie stan testu („test padł”).
 7. Model nie osłabia bramek: nie obcina asercji, nie rusza progów, nie wyrzuca przypadku, żeby zmieścić się w czasie.
 8. Model nie podejmuje decyzji o wydaniu. Słowa „wgrywamy” w jego wyniku nie ma.
 9. Model mówi także, czego nie sprawdził i czego nie ruszał.

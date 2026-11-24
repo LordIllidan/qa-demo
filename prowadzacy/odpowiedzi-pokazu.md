@@ -121,6 +121,25 @@ Zapis w formacie `qa-demo/przebieg/1` z builda 8766, z testem, który zatrzymał
 }
 ```
 
+## Sformułowania z przykładów użytkownika
+
+Skille i `README.md` używają przykładów spoza pokazu, żeby model nie dostał odpowiedzi razem z instrukcją. Oryginalne sformułowania, z których te przykłady powstały:
+
+| Miejsce | Oryginalne sformułowanie |
+| --- | --- |
+| zasada 6 w zasadach wspólnych skilli i w `README.md` | model opisuje zachowanie systemu: „na tym buildzie link działa drugi raz”, a nie „test padł” |
+| skill `zgloszenie-defektu`, tytuł i wynik faktyczny zgłoszenia | „na tym buildzie link działa drugi raz” |
+| skill `przeglad-zmiany-w-testach`, skutek zmiany w wynikach | „po tej zmianie test jest zielony na buildzie 8766” |
+| skill `ocena-asercji`, dwa buildy | build zgodny z wymaganiem to 8765, build wadliwy to 8766 |
+| skill `przeglad-zmiany-w-testach`, dwa buildy | build zgodny z wymaganiem to 8765, build wadliwy to 8766 |
+| skill `test-potwierdzajacy`, build do ponownego testu | build z poprawką działa na porcie 8767 |
+
+Polecenie zagadnienia P2 z portem i nazwą testu:
+
+```powershell
+python narzedzia/przebieg.py --port 8767 --test test_link_dziala_jeden_raz
+```
+
 ## Gdzie jeszcze widać odpowiedzi
 
 Zakaz czytania dotyczy tylko katalogu `prowadzacy`. Odpowiedzi widać także w miejscach, których zmienić się nie da bez zmiany pokazu:
