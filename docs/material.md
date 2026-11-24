@@ -10,7 +10,7 @@ Wspólny materiał wejściowy dla wszystkich zagadnień. Leży w katalogu `mater
 | `material/wymagania/filtr-zamowien.md` | historyjka z filtrem listy zamówień, zdania F1–F8 i role | 8 | `wymaganie.py filtr-zamowien` |
 | `material/zakres/lista-sprawdzen.json` | zdanie „zmiana w resecie, 40 minut” i lista sprawdzeń z czasami | 4 | `lista_sprawdzen.py` |
 | `material/liczby/build-8765.json`, `material/liczby/build-8766.json` | liczby dwóch buildów: profil, progi, ścieżki orders i search | 5, 6 | `liczby.py`, `zbierz_wyniki.py` |
-| `material/dane/dane-resetu.json` | przykładowy plik danych dla przebiegu: pierwszy link, ten sam link drugi raz, pusty token | 7 | `przebieg_danych.py` |
+| `material/dane/dane-resetu.json` | przykładowy plik danych dla przebiegu w formacie `qa-demo/dane/1`: lista wejść, każde z oczekiwanym wynikiem i jego źródłem | 7 | `przebieg_danych.py` |
 | `material/zgloszenia/ZGL-101.md` | zgłoszenie defektu resetu hasła | P2 | plik czyta model albo człowiek |
 | `material/zgloszenia/otwarte.json` | lista otwartych zgłoszeń | 6 | `zbierz_wyniki.py` |
 | `material/zakres/zakres-wydania.json` | zakres planowany i wykonany | 6 | `zbierz_wyniki.py` |

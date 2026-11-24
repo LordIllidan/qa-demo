@@ -70,6 +70,10 @@ Test o zmiennym wyniku leży w pliku `testy/test_wiadomosc_resetu.py`.
 
 Nazwa pliku i treść testu nie zdradzają, że wynik jest zmienny. Wskazać to ma model na podstawie historii. Wynik tego testu jest losowy, więc dwie historie różnią się od siebie.
 
+## Dane pod regułę (zagadnienie 7)
+
+`material/dane/dane-resetu.json` to przykładowy plik danych dla przebiegu: pierwszy link, ten sam link drugi raz, pusty token.
+
 ## Lista sprawdzeń (zagadnienie 4)
 
 Suma czasów dziesięciu sprawdzeń przekracza okno 40 minut.
