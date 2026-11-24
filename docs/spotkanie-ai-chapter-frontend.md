@@ -11,27 +11,66 @@ Zespół FE wychodzi ze spotkania ze wspólnym obrazem: co się zmieniło w AI d
 | Czas | Blok | Kto | Forma |
 | --- | --- | --- | --- |
 | 0–5 | Otwarcie, cel, agenda | prowadzący | mówione |
-| 5–15 | 1. Co nowego w AI | prowadzący / chętny | skrót + 1–2 linki |
+| 5–15 | 1. Co nowego w AI (ostatnie 2–4 tyg.) | prowadzący / chętny | skrót pod FE + tabela |
 | 15–25 | 2. Status załatwiania tematów AI w firmie | Ty | Ty prowadzisz treść |
 | 25–35 | 3. A2UI 1.0 — oficjalny release | prowadzący | krótki briefing |
 | 35–50 | 4. Praktyka FE: generative UI, design system, MCP/Skills | prowadzący + zespół | rozmowa + przykłady |
 | 50–60 | 5. Pytania, decyzje, follow-upy | wszyscy | lista akcji |
 
-## 1. Co nowego w AI (ok. 10 min)
+## 1. Co nowego w AI — ostatnie 2–4 tygodnie (ok. 10 min)
 
-Skrót pod frontend — bez ogólnego „hype tour”.
+Okno: **ok. końcówka października – 24 listopada 2026**. Tylko rzeczy, które frontowiec realnie poczuje w IDE, w przeglądarce albo w design systemie. Bez ogólnego „hype tour”.
 
-Proponowane punkty do omówienia:
+### Do powiedzenia na chapterze (kolejność pod timer)
 
-- **Agenci w IDE i w terminalu** — praca wieloplikowa (Cursor / Copilot Agent / Claude Code): kiedy agent ma sens przy feature UI, a kiedy zostaje tylko completion.
-- **MCP i Skills** — agent łączy się z narzędziami (np. Figma, repo, CI); Skills dają instrukcję „jak używać narzędzi”, nie tylko surowe API. Dla FE: design → komponenty → PR w jednym przebiegu, z review człowieka.
-- **UI świadome kontekstu wizualnego** — narzędzia, które widzą DOM / przeglądarkę, a nie tylko pliki; znaczenie dla regresji layoutu i „czy to wygląda dobrze”.
-- **Granica odpowiedzialności** — model proponuje, człowiek zatwierdza design system, a11y i kontrakt API (ta sama zasada co w qa-demo: zdanie modelu ≠ decyzja zespołu).
+1. **Claude Code — Code Mode (eksperymentalny, ~12–17 Nov)**  
+   Zamiast kolejnych pojedynczych tool calli (Read / Edit / Bash) model pisze **JavaScript**, który orkiestruje narzędzia w jednym przebiegu: równoległe komendy, filtrowanie wyników, zwrot tylko tego, czego potrzebuje dalej.  
+   **Dla FE:** masowy rename propsów / ścieżek importów, przebieg po wielu plikach komponentów, „znajdź użycia + popraw + odpal testy” bez 30 rund rozmowy.  
+   **Uwagi:** opt-in (`CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1`), na razie głównie natywny terminal Claude Code (nie panel VS Code / cloud); w auto mode classifier widzi skrypt, nie wartości wyliczone w runtime — review diffów zostaje.
 
-Materiał do pokazania (opcjonalnie 1 slajd / 1 ekran):
+2. **A2UI 1.0 (11 Nov) — generative UI jako protokół**  
+   Stabilny release: agent opisuje interaktywny ekran, appka rysuje go **swoimi** komponentami (React / Angular / Lit na web). Szczegóły w bloku 3 — tu tylko sygnał: to już nie demo, tylko kontrakt pod produkcję.
 
-- lista 3 narzędzi używanych w chapterze + 1 zdanie „do czego u nas”;
-- 1 przykład „złe użycie AI na FE” (np. nowy styl poza DS) vs „dobre” (generacja wariantów w ramach tokenów).
+3. **MCP: Skills + Tasks + Elicitation (ogłoszenie ~24 Nov, Anthropic)**  
+   - **Skills over MCP** — serwer MCP dokłada playbooki („jak budować sklep / jak trzymać DS”), nie tylko surowe tool definitions; skill ładuje się gdy potrzeba.  
+   - **Tasks** — długie joby w tle (np. research / generacja zestawu ekranów), wynik wraca gdy gotowy.  
+   - **Elicitation** — serwer zatrzymuje się po zgodę użytkownika (formularz / link), zanim zrobi kosztowną lub nieodwracalną akcję.  
+   **Dla FE:** Figma/MCP → komponenty z regułami „tylko tokeny z DS”; potwierdzenie przed masową zmianą w repo.
+
+4. **Cursor (początek Nov): Voice Chat + Live Apps**  
+   - **Voice chat z agentem** — rozmowa na głos podczas pracy agenta (nie mylić z dyktowaniem do inputa).  
+   - **Live apps w Cursor** — cloud agent buduje i publikuje małą appkę (hosting, opcjonalnie DB/auth) pod link do współdzielenia w org.  
+   **Dla FE:** szybkie prototypy UI / tooly wewnętrzne chapteru bez osobnego pipeline’u; nadal review DS i a11y przed „to idzie do klientów”.
+
+5. **Claude + MCP Apps: pełne narzędzie obok czatu**  
+   Interaktywne connectory: appka partnera (Notion, Confluence itd.) otwiera się **obok** lub full screen; Claude może edytować to, co masz otwarte, za Twoją zgodą. Bazuje na MCP Apps — ten sam kierunek co render A2UI w asystencie.
+
+6. **GitHub Copilot (mid Nov) — Evals + code review Adaptive**  
+   - **Copilot Evals** (public preview) — powtarzalne testy zachowania skilli / agentów / MCP po zmianie setupu.  
+   - **Code review Adaptive** — głębokość review dopasowana do ryzyka PR; wykrywanie sekretów; kontekst cross-repo (preview).  
+   **Dla FE:** eval na skillu „generuj komponent zgodny z DS”; Adaptive na PR-ach UI (mała poprawka CSS vs przebudowa layoutu).
+
+### Jedno zdanie domykające blok
+
+Model przyspiesza robotę w plikach i w prototypie; **design system, a11y i akceptacja wizualna zostają decyzją człowieka** — tak jak w qa-demo zdanie modelu ≠ decyzja zespołu.
+
+### Materiał na ekran (max 1 slajd)
+
+| Nowość | Data (ok.) | Po co frontowcowi |
+| --- | --- | --- |
+| Code Mode (Claude Code) | mid Nov | wieloplikowe refaktory UI jednym skryptem narzędzi |
+| A2UI 1.0 | 11 Nov | agent → natywne komponenty z naszego DS |
+| Skills / Tasks / Elicitation (MCP) | ~24 Nov | design→kod z regułami + zgoda przed ryzykiem |
+| Cursor Voice + Live Apps | ~5–6 Nov | sterowanie agentem + szybki prototyp pod link |
+| Copilot Evals + Adaptive review | ~17 Nov | twardy check skilli DS + mądrzejszy review PR |
+
+Linki (opcjonalnie do wrzucenia na chat chapteru po bloku):
+
+- Code Mode: [InfoQ](https://www.infoq.com/news/2026/11/claude-code-mode/)
+- A2UI 1.0: [Google Developers Blog](https://developers.googleblog.com/en/a2ui-10-build-delightful-fast-reliable-agentic-experiences/)
+- Skills / Tasks MCP: [Claude — Skills over MCP](https://claude.com/resources/articles/skills-over-mcp-tasks-and-more)
+- Cursor changelog: [cursor.com/changelog](https://cursor.com/changelog)
+- Copilot Evals: [GitHub Changelog](https://github.blog/changelog/2026-11-17-github-copilot-evals-is-now-in-public-preview/)
 
 ## 2. Status załatwiania tematów AI w firmie (ok. 10 min)
 
@@ -100,7 +139,7 @@ Na tablicy / w notatce po spotkaniu zostają maksymalnie trzy punkty:
 
 ## Materiały prowadzącego (checklista przed startem)
 
-- [ ] 1 slajd / notatka: „Co nowego w AI” (max 5 bulletów)
+- [ ] 1 slajd: tabela z sekcji 1 (Code Mode, A2UI, MCP Skills/Tasks, Cursor, Copilot)
 - [ ] Twoja treść do bloku 2 (status firmowy)
 - [ ] 1 ekran lub link: A2UI playground / ogłoszenie 1.0
 - [ ] Pusta lista follow-upów (3 sloty)
