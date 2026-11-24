@@ -4,17 +4,15 @@ Prosta aplikacja HTTP z jedną funkcją: resetem hasła. Działa w trzech builda
 
 ## Buildy
 
-| Port | Numer builda | Zachowanie |
+| Port | Numer builda | Rola w pokazie |
 | --- | --- | --- |
-| 8765 | 1.4.0 | zgodne z wymaganiem `material/wymagania/reset-hasla.md` |
-| 8766 | 1.5.0 | defekt: link resetu działa drugi raz |
-| 8767 | 1.5.1 | build z poprawką: link resetu znowu działa jeden raz |
+| 8765 | 1.4.0 | wcześniejszy build, używany jako odniesienie |
+| 8766 | 1.5.0 | nowszy build |
+| 8767 | 1.5.1 | build dostarczony do ponownego testu po zgłoszeniu `material/zgloszenia/ZGL-101.md` (zagadnienie P2) |
 
 Każdy build ma własne konta, tokeny i sesje. Dane żyją w pamięci i znikają po zatrzymaniu aplikacji.
 
-### Build z poprawką (zagadnienie P2)
-
-Wybrany wariant: trzeci build na porcie 8767. To ten sam kod aplikacji z numerem builda 1.5.1 i z włączonym jednorazowym użyciem linku. Wariant jest najprostszy, bo nie wymaga drugiej kopii kodu, a ponowny test dostaje build o innym numerze niż build ze zgłoszenia. Odrzucony wariant to ponowne użycie portu 8765: model porównywałby wtedy zgłoszenie z buildem odniesienia, a nie z buildem po poprawce.
+Wszystkie buildy to ta sama aplikacja z resetem hasła opisanym w wymaganiu `material/wymagania/reset-hasla.md`. Czym się od siebie różnią, ma w pokazie ustalić model na podstawie wejścia, dlatego ten dokument tego nie opisuje. Opis różnic dla prowadzącego leży w pliku `prowadzacy/odpowiedzi-pokazu.md`.
 
 ## Uruchomienie
 
@@ -53,26 +51,10 @@ Adresy pomocnicze środowiska testowego (nie są częścią wymagania):
 
 Po starcie w każdym buildzie istnieje konto `anna@example.com` z hasłem `StareHaslo-1`.
 
-Wiadomość z linkiem trafia do skrzynki z losowym opóźnieniem do 120 ms, tak jak w systemie, w którym pocztę wysyła osobna usługa. Dopóki wiadomość jest w drodze, skrzynka odpowiada 404 z polem `w_drodze`.
+Wiadomość z linkiem trafia do skrzynki z opóźnieniem, tak jak w systemie, w którym pocztę wysyła osobna usługa. Dopóki wiadomość jest w drodze, skrzynka odpowiada 404 z polem `w_drodze`.
 
 ## Czego aplikacja nie robi
 
 - Nie ma historyjki z filtrem zamówień. Ta historyjka istnieje tylko jako tekst wymagania.
 - Nie ma ścieżek `orders` i `search`. Liczby dla nich leżą w gotowych plikach, patrz `docs/material.md`.
 - Zachowania, o których wymaganie milczy, nie są w aplikacji wzorcem. To, co build robi w takim miejscu, nie jest oczekiwanym wynikiem.
-
-## Defekt ręcznie, w PowerShell
-
-Przykład pokazuje różnicę między buildami bez uruchamiania testów. Na porcie 8766 ostatnie polecenie zwraca komunikat o zmianie hasła. Na porcie 8765 to samo polecenie kończy się błędem z kodem 410.
-
-```powershell
-$adres = "http://127.0.0.1:8766"
-$konto = @{ email = "anna@example.com" } | ConvertTo-Json
-Invoke-RestMethod -Method Post -Uri "$adres/reset/zamow" -ContentType "application/json" -Body $konto
-Start-Sleep -Milliseconds 300
-$token = (Invoke-RestMethod -Uri "$adres/test/skrzynka?email=anna@example.com").token
-$pierwsze = @{ token = $token; haslo = "NoweHaslo-1" } | ConvertTo-Json
-$drugie = @{ token = $token; haslo = "InneHaslo-2" } | ConvertTo-Json
-Invoke-RestMethod -Method Post -Uri "$adres/reset/potwierdz" -ContentType "application/json" -Body $pierwsze
-Invoke-RestMethod -Method Post -Uri "$adres/reset/potwierdz" -ContentType "application/json" -Body $drugie
-```

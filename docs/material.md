@@ -11,7 +11,7 @@ Wspólny materiał wejściowy dla wszystkich zagadnień. Leży w katalogu `mater
 | `material/zakres/lista-sprawdzen.json` | zdanie „zmiana w resecie, 40 minut” i lista sprawdzeń z czasami | 4 | `lista_sprawdzen.py` |
 | `material/liczby/build-8765.json`, `material/liczby/build-8766.json` | liczby dwóch buildów: profil, progi, ścieżki orders i search | 5, 6 | `liczby.py`, `zbierz_wyniki.py` |
 | `material/dane/dane-resetu.json` | przykładowy plik danych dla przebiegu: pierwszy link, ten sam link drugi raz, pusty token | 7 | `przebieg_danych.py` |
-| `material/zgloszenia/ZGL-101.md` | zgłoszenie defektu „link resetu działa drugi raz” | P2 | plik czyta model albo człowiek |
+| `material/zgloszenia/ZGL-101.md` | zgłoszenie defektu resetu hasła | P2 | plik czyta model albo człowiek |
 | `material/zgloszenia/otwarte.json` | lista otwartych zgłoszeń | 6 | `zbierz_wyniki.py` |
 | `material/zakres/zakres-wydania.json` | zakres planowany i wykonany | 6 | `zbierz_wyniki.py` |
 | `material/przebieg-nocny/` | zapis nocnego przebiegu z kilkoma awariami, przebieg referencyjny i log | P1 | `przebieg_nocny.py` |
@@ -29,18 +29,11 @@ Historyjka z filtrem zamówień istnieje tylko jako tekst. Aplikacja demonstracy
 
 ## Lista sprawdzeń (zagadnienie 4)
 
-Dziesięć sprawdzeń z czasem wykonania w minutach. Suma czasów przekracza okno 40 minut. Lista nie ma poziomów ryzyka ani kolejności: ułożenie jej jest zadaniem modelu.
+Dziesięć sprawdzeń z czasem wykonania w minutach i zdanie o zmianie z oknem 40 minut. Lista nie ma poziomów ryzyka ani kolejności: ułożenie jej i policzenie, co mieści się w oknie, jest zadaniem modelu.
 
 ## Liczby dwóch buildów (zagadnienie 5)
 
-Dwa gotowe pliki wyników, po jednym na build. Każdy zawiera profil obciążenia, progi i metryki ścieżek `orders` oraz `search`.
-
-| Ścieżka | p95 na buildzie 1.4.0 | p95 na buildzie 1.5.0 | Próg p95 |
-| --- | --- | --- | --- |
-| orders | 42,1 ms | 702,3 ms | poniżej 500 ms |
-| search | 118,4 ms | 118,9 ms | poniżej 300 ms |
-
-Profil w obu plikach jest ten sam: 20 użytkowników, narastanie 30 s, czas trwania 300 s, przerwa między żądaniami 1 s.
+Dwa gotowe pliki wyników, po jednym na build. Każdy zawiera profil obciążenia, progi i metryki ścieżek `orders` oraz `search`. Zestawienie liczb, porównanie profilu i odniesienie do progów jest zadaniem modelu, dlatego ten dokument liczb nie powtarza.
 
 Liczby są przygotowane na potrzeby pokazu. Narzędzia niczego nie mierzą, a aplikacja demonstracyjna nie ma ścieżek `orders` i `search`. Przyjęte założenie: liczby dotyczą tych samych dwóch buildów co porty 8765 i 8766.
 
@@ -48,7 +41,7 @@ Liczby są przygotowane na potrzeby pokazu. Narzędzia niczego nie mierzą, a ap
 
 Trzy pliki w `material/przebieg-nocny`:
 
-- `wynik-8766.json`: dziesięć testów na buildzie 1.5.0, sześć z wynikiem innym niż zaliczony,
+- `wynik-8766.json`: dziesięć testów na buildzie 1.5.0, część z wynikiem innym niż zaliczony,
 - `wynik-8765.json`: ten sam zestaw na buildzie 1.4.0 jako przebieg referencyjny,
 - `log-8766.txt`: log przebiegu z wpisami przebiegu, aplikacji i środowiska.
 
@@ -64,4 +57,8 @@ Lista ryzyk służy do karty sesji przed sesją. Notatki służą do raportu po 
 
 ## Zgłoszenia i zakres (zagadnienia 6 i P2)
 
-`ZGL-101.md` to zgłoszenie w kształcie, jaki powstaje w zagadnieniu 2 po decyzji człowieka. Dotkliwość i priorytet w zgłoszeniach oraz stany w zakresie wydania są wpisane jako decyzje ludzi.
+`ZGL-101.md` to zgłoszenie, od którego zaczyna się ponowny test w zagadnieniu P2. Dotkliwość i priorytet w zgłoszeniach oraz stany w zakresie wydania są wpisane jako decyzje ludzi.
+
+## Odpowiedzi dla prowadzącego
+
+To, co model ma w pokazie ustalić z materiału, jest opisane w pliku `prowadzacy/odpowiedzi-pokazu.md`. Modele pracujące w repozytorium tego pliku nie czytają, patrz `docs/plik-prowadzacego.md`.

@@ -13,6 +13,7 @@ Repozytorium zawiera pierwszy etap zestawu: materiał pokazu, narzędzia i skryp
 | `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach | [docs/material.md](docs/material.md) |
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
 | `.github/skills` | czternaście skilli dla testerów | [docs/skille.md](docs/skille.md) |
+| `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
 | `docs` | dokumentacja, jeden plik na funkcję | |
 
 ## Zasady pokazu
@@ -26,6 +27,7 @@ Repozytorium zawiera pierwszy etap zestawu: materiał pokazu, narzędzia i skryp
 7. Model nie osłabia bramek: nie obcina asercji, nie rusza progów, nie wyrzuca przypadku, żeby zmieścić się w czasie.
 8. Model nie podejmuje decyzji o wydaniu. Słowa „wgrywamy” w jego wyniku nie ma.
 9. Model mówi także, czego nie sprawdził i czego nie ruszał.
+10. Model nie czyta katalogu `prowadzacy`, w którym leżą odpowiedzi pokazu dla prowadzącego.
 
 ## Szybki start
 
@@ -55,15 +57,17 @@ python narzedzia/przebieg.py --port 8765
 python narzedzia/przebieg.py --port 8766
 ```
 
-Na porcie 8765 wszystkie testy są zaliczone. Na porcie 8766 test `test_link_dziala_jeden_raz` jest niezaliczony, a `test_wystarczy_kod_200` zaliczony.
+Każde polecenie wypisuje wynik przebiegu w stałej ramce i zapisuje go w katalogu `wyniki`.
 
 ## Buildy
 
-| Port | Build | Zachowanie |
+| Port | Build | Rola w pokazie |
 | --- | --- | --- |
-| 8765 | 1.4.0 | zgodne z wymaganiem |
-| 8766 | 1.5.0 | defekt: link resetu działa drugi raz |
-| 8767 | 1.5.1 | build z poprawką |
+| 8765 | 1.4.0 | wcześniejszy build, używany jako odniesienie |
+| 8766 | 1.5.0 | nowszy build |
+| 8767 | 1.5.1 | build dostarczony do ponownego testu po zgłoszeniu ZGL-101 (zagadnienie P2) |
+
+Czym buildy się różnią, ma w pokazie ustalić model na podstawie wejścia. Opis dla prowadzącego leży w pliku `prowadzacy/odpowiedzi-pokazu.md`.
 
 ## Zagadnienia
 
@@ -127,6 +131,7 @@ qa-demo/
 │   ├── sesja/                 ryzyka.md, notatki-z-sesji.md
 │   └── zmiana-w-testach/      test_reset_hasla.py, opis-zmiany.md
 ├── narzedzia/                 jedenaście skryptów i wspolne.py
+├── prowadzacy/                odpowiedzi-pokazu.md, plik dla prowadzącego
 ├── testy/                     conftest.py, test_reset_hasla.py, test_wiadomosc_resetu.py
 ├── pytest.ini
 └── requirements.txt

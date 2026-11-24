@@ -49,7 +49,7 @@ Każdy plik `SKILL.md` ma te same części:
 3. **Jak pracować**: kroki.
 4. **Format wyniku**: stały szablon z częścią „Zdanie modelu” i częścią „Decyzja człowieka”.
 5. **Czego nie robisz**: zakazy właściwe dla tego zagadnienia.
-6. **Zasady wspólne**: dziewięć zasad, takich samych w każdym skillu.
+6. **Zasady wspólne**: dziesięć zasad, takich samych w każdym skillu.
 
 ## Zasady wspólne
 
@@ -66,6 +66,7 @@ Każdy skill zawiera ten sam blok zasad. Blok jest powtórzony w każdym pliku, 
 | 7 | Bez osłabiania bramek: asercje, progi, pominięcia, ponowienia, usuwanie przypadków |
 | 8 | Bez decyzji o wydaniu: w wyniku nie ma słowa „wgrywamy” |
 | 9 | Jawnie, czego model nie sprawdził i czego nie ruszał |
+| 10 | Bez czytania katalogu `prowadzacy`, w którym leżą odpowiedzi pokazu dla prowadzącego |
 
 ## Jak użyć skilla
 

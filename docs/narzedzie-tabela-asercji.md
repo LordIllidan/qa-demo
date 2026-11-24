@@ -25,12 +25,14 @@ python narzedzia/tabela_asercji.py --porty 8765 8766 --testy test_link_dziala_je
 2. Tabelę: wiersz na test, kolumna na build, w komórce wynik testu.
 3. Szczegóły każdego uruchomienia razem z wymianą żądań i odpowiedzi.
 
-Tabela dla ustawień domyślnych:
+Układ tabeli dla ustawień domyślnych:
 
 | test | build 1.4.0 (port 8765) | build 1.5.0 (port 8766) |
 | --- | --- | --- |
-| test_link_dziala_jeden_raz | zaliczony | niezaliczony |
-| test_wystarczy_kod_200 | zaliczony | zaliczony |
+| test_link_dziala_jeden_raz | <wynik> | <wynik> |
+| test_wystarczy_kod_200 | <wynik> | <wynik> |
+
+Wypełniona tabela jest w pliku dla prowadzącego `prowadzacy/odpowiedzi-pokazu.md`.
 
 ## Co zapisuje
 

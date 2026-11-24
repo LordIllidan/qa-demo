@@ -7,26 +7,28 @@ Testy automatyczne resetu hasła w pytest. Rozmawiają z aplikacją demonstracyj
 | Plik | Zawartość |
 | --- | --- |
 | `testy/test_reset_hasla.py` | pięć testów resetu hasła; domyślny zestaw skryptu `przebieg.py` |
-| `testy/test_wiadomosc_resetu.py` | jeden test wiadomości z linkiem; ma zmienny wynik (zagadnienie P3) |
+| `testy/test_wiadomosc_resetu.py` | jeden test wiadomości z linkiem; poza domyślnym zestawem skryptu `przebieg.py` |
 | `testy/conftest.py` | klient aplikacji, opcje `--port` i `--wynik-json`, zapis przebiegu |
 | `pytest.ini` | wskazuje katalog `testy` |
 
 ## Dwa testy z pokazu
 
-| Test | Co sprawdza | Build 8765 | Build 8766 |
-| --- | --- | --- | --- |
-| `test_link_dziala_jeden_raz` („link działa jeden raz”) | pierwsze użycie linku daje 200, drugie 410, po drugim użyciu obowiązuje hasło z pierwszego | zielony | czerwony |
-| `test_wystarczy_kod_200` („wystarczy kod 200”) | ustawienie hasła przez link daje 200 | zielony | zielony |
+| Test | Nazwa w pokazie |
+| --- | --- |
+| `test_link_dziala_jeden_raz` | „link działa jeden raz” |
+| `test_wystarczy_kod_200` | „wystarczy kod 200” |
 
-Pierwszy test odróżnia build zgodny z wymaganiem od builda z defektem. Drugi przechodzi na obu, więc defektu nie wykrywa. Na tej różnicy stoi zagadnienie 3.
+Na tych dwóch testach pracują zagadnienia 3 i P6. Kod obu testów i ich wyniki na dwóch buildach podaje skrypt `tabela_asercji.py`. Co każdy z nich sprawdza i jak wypada na buildach, ma w pokazie ustalić model, dlatego ten dokument tego nie opisuje.
 
-Pozostałe testy z pliku `test_reset_hasla.py`: `test_nowe_haslo_loguje_stare_nie`, `test_nieznany_token_jest_odrzucany`, `test_stan_zwraca_numer_builda`. Zestaw celowo nie pokrywa wszystkich zdań wymagania i zawiera test bez zdania w wymaganiu. To materiał dla zagadnienia P4.
+Pozostałe testy z pliku `test_reset_hasla.py`: `test_nowe_haslo_loguje_stare_nie`, `test_nieznany_token_jest_odrzucany`, `test_stan_zwraca_numer_builda`. Powiązanie testów ze zdaniami wymagania jest zadaniem modelu w zagadnieniu P4.
 
-## Test o zmiennym wyniku
+## Test wiadomości z linkiem
 
-`test_wiadomosc_z_linkiem_jest_w_skrzynce` prosi o reset, czeka stałe 60 ms i raz czyta skrzynkę. Aplikacja dostarcza wiadomość z losowym opóźnieniem do 120 ms, więc na tym samym buildzie test raz przechodzi, a raz nie. Leży w osobnym pliku, żeby domyślny przebieg na porcie 8765 był zawsze zielony. Do historii przebiegów służy skrypt `historia.py`.
+`test_wiadomosc_z_linkiem_jest_w_skrzynce` leży w osobnym pliku `testy/test_wiadomosc_resetu.py`. Nie wchodzi do domyślnego zestawu skryptu `przebieg.py`. Wchodzi do domyślnego zestawu skryptu `historia.py`, który uruchamia cały katalog `testy`.
 
-Nazwa pliku i treść testu nie zdradzają, że wynik jest zmienny. Wskazać to ma model na podstawie historii.
+## Odpowiedzi dla prowadzącego
+
+Wyniki testów na buildach i opis tego, co z nich wynika, leżą w pliku `prowadzacy/odpowiedzi-pokazu.md`. Modele pracujące w repozytorium tego pliku nie czytają, patrz `docs/plik-prowadzacego.md`.
 
 ## Uruchamianie
 
@@ -44,7 +46,7 @@ python -m pytest testy/test_reset_hasla.py --port 8766
 python -m pytest testy/test_reset_hasla.py --port 8766 --wynik-json wyniki/reczny.json
 ```
 
-Polecenie `python -m pytest` bez wskazania pliku uruchamia cały katalog `testy`, razem z testem o zmiennym wyniku.
+Polecenie `python -m pytest` bez wskazania pliku uruchamia cały katalog `testy`, czyli oba pliki z testami.
 
 ## Zapis przebiegu
 

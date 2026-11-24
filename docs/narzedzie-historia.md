@@ -19,7 +19,7 @@ python narzedzia/historia.py --port 8765 --powtorzenia 20
 | `--powtorzenia` | liczba przebiegów; domyślnie 12 |
 | `--zestaw` | plik albo katalog z testami; domyślnie cały katalog `testy` |
 
-Domyślny zestaw obejmuje oba pliki z testami, czyli także test o zmiennym wyniku opisany w `docs/testy.md`. Dwanaście przebiegów trwa od kilku do kilkunastu sekund.
+Domyślny zestaw obejmuje oba pliki z testami opisane w `docs/testy.md`. Dwanaście przebiegów trwa od kilku do kilkunastu sekund.
 
 ## Co podaje
 
@@ -34,7 +34,7 @@ Domyślny zestaw obejmuje oba pliki z testami, czyli także test o zmiennym wyni
 | `wyniki/historia-<port>.txt` | tekst w stałej ramce |
 | `wyniki/historia-<port>.json` | wszystkie przebiegi, także uruchomienia zaliczone, z pełną wymianą |
 
-Wynik testu o zmiennym wyniku jest losowy, więc dwie historie różnią się od siebie. Plik `.json` pozwala wrócić do tej samej historii.
+Dwie historie mogą się od siebie różnić. Plik `.json` pozwala wrócić do tej samej historii.
 
 ## Czego nie robi
 

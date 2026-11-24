@@ -20,13 +20,7 @@ python narzedzia/przebieg.py --port 8767 --test test_link_dziala_jeden_raz
 | `--test` | nazwa testu z zestawu; można powtórzyć, żeby uruchomić kilka testów |
 | `--zestaw` | plik albo katalog z testami; domyślnie `testy/test_reset_hasla.py` |
 
-## Wynik na buildach pokazu
-
-| Build | Wynik domyślnego zestawu |
-| --- | --- |
-| 8765 (1.4.0) | pięć testów zaliczonych |
-| 8766 (1.5.0) | `test_link_dziala_jeden_raz` niezaliczony, pozostałe cztery zaliczone, w tym `test_wystarczy_kod_200` |
-| 8767 (1.5.1) | pięć testów zaliczonych |
+Domyślny zestaw ma pięć testów. Ich wyniki na buildach pokazu są w pliku dla prowadzącego `prowadzacy/odpowiedzi-pokazu.md`.
 
 ## Co zapisuje
 

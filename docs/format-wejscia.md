@@ -43,26 +43,26 @@ Skrypty piszą w UTF-8. W oknie PowerShell tekst wyświetla się poprawnie. Przy
 
 ## Wynik przebiegu w JSON
 
-Format `qa-demo/przebieg/1`, zapisywany przez `przebieg.py` i używany w materiale nocnego przebiegu:
+Format `qa-demo/przebieg/1`, zapisywany przez `przebieg.py` i używany w materiale nocnego przebiegu. Wartości w nawiasach ostrych opisują pole:
 
-```json
+```text
 {
   "format": "qa-demo/przebieg/1",
   "pochodzenie": "uruchomienie",
-  "build": {"port": 8766, "numer": "1.5.0"},
+  "build": {"port": <port>, "numer": "<numer builda>"},
   "zestaw": "testy/test_reset_hasla.py",
-  "start": "2026-11-24T19:40:02+01:00",
-  "podsumowanie": {"liczba_testow": 5, "zaliczony": 4, "niezaliczony": 1, "pominięty": 0, "błąd": 0},
+  "start": "<data i godzina ze strefą>",
+  "podsumowanie": {"liczba_testow": <liczba>, "zaliczony": <liczba>, "niezaliczony": <liczba>, "pominięty": <liczba>, "błąd": <liczba>},
   "testy": [
     {
-      "nazwa": "test_link_dziala_jeden_raz",
+      "nazwa": "<nazwa testu>",
       "plik": "testy/test_reset_hasla.py",
       "opis": "<docstring testu>",
-      "wynik": "niezaliczony",
-      "czas_ms": 118,
-      "komunikat": "AssertionError: assert 200 == 410 ...",
-      "miejsce": "testy/test_reset_hasla.py:12",
-      "asercja": "assert drugie_uzycie.status == 410",
+      "wynik": "<zaliczony | niezaliczony | pominięty | błąd>",
+      "czas_ms": <liczba>,
+      "komunikat": "<komunikat wyjątku albo powód pominięcia>",
+      "miejsce": "<plik>:<numer wiersza>",
+      "asercja": "<treść wiersza, na którym test się zatrzymał>",
       "wymiana": [
         {"nr": 1, "zadanie": "POST /test/konto", "dane": {"email": "...", "haslo": "..."}, "status": 201, "odpowiedz": {"email": "..."}}
       ]
@@ -70,6 +70,8 @@ Format `qa-demo/przebieg/1`, zapisywany przez `przebieg.py` i używany w materia
   ]
 }
 ```
+
+Wypełniony przykład jest w pliku dla prowadzącego `prowadzacy/odpowiedzi-pokazu.md`.
 
 | Pole | Znaczenie |
 | --- | --- |
