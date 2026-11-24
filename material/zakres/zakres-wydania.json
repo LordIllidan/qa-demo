@@ -1,0 +1,36 @@
+{
+  "format": "qa-demo/zakres-wydania/1",
+  "wydanie": "build 1.5.0",
+  "pozycje": [
+    {
+      "id": "Z1",
+      "pozycja": "Testy resetu hasła na buildach 1.4.0 i 1.5.0",
+      "stan": "wykonane",
+      "uwagi": "wyniki: wyniki/przebieg-8765.json i wyniki/przebieg-8766.json"
+    },
+    {
+      "id": "Z2",
+      "pozycja": "Liczby dla ścieżek orders i search na buildach 1.4.0 i 1.5.0",
+      "stan": "wykonane",
+      "uwagi": "wyniki: material/liczby"
+    },
+    {
+      "id": "Z3",
+      "pozycja": "Sesja eksploracyjna resetu hasła na buildzie 1.5.0",
+      "stan": "wykonane",
+      "uwagi": "notatki: material/sesja/notatki-z-sesji.md"
+    },
+    {
+      "id": "Z4",
+      "pozycja": "Przypadki uprawnień dla filtra listy zamówień",
+      "stan": "niewykonane",
+      "uwagi": "nie zmieściło się w oknie"
+    },
+    {
+      "id": "Z5",
+      "pozycja": "Regresja rejestracji, profilu i wyszukiwarki",
+      "stan": "niewykonane",
+      "uwagi": "nie zmieściło się w oknie"
+    }
+  ]
+}

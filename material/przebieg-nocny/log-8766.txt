@@ -1,0 +1,62 @@
+2026-11-24 02:13:50.012 [przebieg] start: build 1.5.0 (port 8766), regresja nocna resetu hasła, testów: 10
+2026-11-24 02:13:50.015 [środowisko] kontener aplikacja-8766: pamięć 301 MB, limit 512 MB
+2026-11-24 02:13:50.019 [przebieg] test_stan_zwraca_numer_builda: start
+2026-11-24 02:13:50.020 [aplikacja] "GET /stan HTTP/1.1" 200 -
+2026-11-24 02:13:50.021 [przebieg] test_stan_zwraca_numer_builda: zaliczony
+2026-11-24 02:13:50.025 [przebieg] test_link_dziala_jeden_raz: start
+2026-11-24 02:13:50.048 [aplikacja] "POST /test/konto HTTP/1.1" 201 -
+2026-11-24 02:13:50.071 [aplikacja] "POST /reset/zamow HTTP/1.1" 202 -
+2026-11-24 02:13:50.094 [aplikacja] "GET /test/skrzynka?email=test-4be19c07@example.com HTTP/1.1" 200 -
+2026-11-24 02:13:50.117 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 200 -
+2026-11-24 02:13:50.140 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 200 -
+2026-11-24 02:13:50.140 [przebieg] test_link_dziala_jeden_raz: AssertionError: assert 200 == 410
+2026-11-24 02:13:50.141 [przebieg] test_link_dziala_jeden_raz: niezaliczony
+2026-11-24 02:13:50.145 [przebieg] test_wystarczy_kod_200: start
+2026-11-24 02:13:50.168 [aplikacja] "POST /test/konto HTTP/1.1" 201 -
+2026-11-24 02:13:50.191 [aplikacja] "POST /reset/zamow HTTP/1.1" 202 -
+2026-11-24 02:13:50.214 [aplikacja] "GET /test/skrzynka?email=test-a02d7f63@example.com HTTP/1.1" 200 -
+2026-11-24 02:13:50.237 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 200 -
+2026-11-24 02:13:50.238 [przebieg] test_wystarczy_kod_200: zaliczony
+2026-11-24 02:13:50.242 [przebieg] test_nowe_haslo_loguje_stare_nie: start
+2026-11-24 02:13:50.253 [aplikacja] "POST /test/konto HTTP/1.1" 201 -
+2026-11-24 02:13:50.264 [aplikacja] "POST /reset/zamow HTTP/1.1" 202 -
+2026-11-24 02:13:50.275 [aplikacja] "GET /test/skrzynka?email=test-c95e0b18@example.com HTTP/1.1" 200 -
+2026-11-24 02:13:50.286 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 200 -
+2026-11-24 02:13:50.297 [aplikacja] "POST /logowanie HTTP/1.1" 200 -
+2026-11-24 02:13:50.308 [aplikacja] "POST /logowanie HTTP/1.1" 401 -
+2026-11-24 02:13:50.309 [przebieg] test_nowe_haslo_loguje_stare_nie: zaliczony
+2026-11-24 02:13:50.313 [przebieg] test_nieznany_token_jest_odrzucany: start
+2026-11-24 02:13:50.314 [aplikacja] "POST /test/konto HTTP/1.1" 201 -
+2026-11-24 02:13:50.315 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 400 -
+2026-11-24 02:13:50.316 [aplikacja] "POST /logowanie HTTP/1.1" 401 -
+2026-11-24 02:13:50.317 [aplikacja] "POST /logowanie HTTP/1.1" 200 -
+2026-11-24 02:13:50.318 [przebieg] test_nieznany_token_jest_odrzucany: zaliczony
+2026-11-24 02:13:50.322 [przebieg] test_drugie_uzycie_linku_nie_zmienia_hasla: start
+2026-11-24 02:13:50.344 [aplikacja] "POST /test/konto HTTP/1.1" 201 -
+2026-11-24 02:13:50.366 [aplikacja] "POST /reset/zamow HTTP/1.1" 202 -
+2026-11-24 02:13:50.388 [aplikacja] "GET /test/skrzynka?email=test-e18b42c9@example.com HTTP/1.1" 200 -
+2026-11-24 02:13:50.410 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 200 -
+2026-11-24 02:13:50.432 [aplikacja] "POST /reset/potwierdz HTTP/1.1" 200 -
+2026-11-24 02:13:50.454 [aplikacja] "POST /logowanie HTTP/1.1" 200 -
+2026-11-24 02:13:50.454 [przebieg] test_drugie_uzycie_linku_nie_zmienia_hasla: AssertionError: assert 200 == 401
+2026-11-24 02:13:50.455 [przebieg] test_drugie_uzycie_linku_nie_zmienia_hasla: niezaliczony
+2026-11-24 02:13:50.459 [przebieg] test_reset_dla_konta_ze_stalych_danych: start
+2026-11-24 02:13:50.462 [aplikacja] "POST /reset/zamow HTTP/1.1" 202 -
+2026-11-24 02:13:53.478 [aplikacja] "GET /test/skrzynka?email=ewa@example.com HTTP/1.1" 404 -
+2026-11-24 02:13:53.478 [przebieg] test_reset_dla_konta_ze_stalych_danych: AssertionError: wiadomość z linkiem resetu nie doszła
+2026-11-24 02:13:53.479 [przebieg] test_reset_dla_konta_ze_stalych_danych: niezaliczony
+2026-11-24 02:13:53.519 [środowisko] kontener aplikacja-8766: pamięć 507 MB, limit 512 MB
+2026-11-24 02:13:53.531 [środowisko] kontener aplikacja-8766: zatrzymany, kod wyjścia 137
+2026-11-24 02:13:53.535 [przebieg] test_sesja_sprzed_resetu_przestaje_dzialac: start
+2026-11-24 02:13:53.537 [przebieg] test_sesja_sprzed_resetu_przestaje_dzialac: ConnectionRefusedError: [Errno 111] Connection refused
+2026-11-24 02:13:53.538 [przebieg] test_sesja_sprzed_resetu_przestaje_dzialac: błąd
+2026-11-24 02:13:53.542 [przebieg] test_odpowiedz_na_prosbe_jest_taka_sama: start
+2026-11-24 02:13:53.543 [przebieg] test_odpowiedz_na_prosbe_jest_taka_sama: ConnectionRefusedError: [Errno 111] Connection refused
+2026-11-24 02:13:53.544 [przebieg] test_odpowiedz_na_prosbe_jest_taka_sama: niezaliczony
+2026-11-24 02:13:53.548 [przebieg] test_logowanie_blednym_haslem: start
+2026-11-24 02:13:53.549 [przebieg] test_logowanie_blednym_haslem: ConnectionRefusedError: [Errno 111] Connection refused
+2026-11-24 02:13:53.550 [przebieg] test_logowanie_blednym_haslem: błąd
+2026-11-24 02:13:53.556 [przebieg] koniec: zaliczone 4, niezaliczone 4, pominięte 0, błędy 2
+2026-11-24 02:13:56.427 [środowisko] kontener aplikacja-8766: uruchomiony ponownie
+2026-11-24 02:13:56.839 [aplikacja] Build 1.5.0 działa pod adresem http://127.0.0.1:8766
+2026-11-24 02:13:58.839 [przebieg] kontrola po przebiegu: GET /stan -> 200

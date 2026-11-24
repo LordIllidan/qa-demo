@@ -1,0 +1,468 @@
+{
+  "format": "qa-demo/przebieg/1",
+  "pochodzenie": "materiał przygotowany: zapis nocnego przebiegu regresji, nie powstał z uruchomienia skryptów pokazu",
+  "build": {
+    "port": 8766,
+    "numer": "1.5.0"
+  },
+  "zestaw": "regresja nocna resetu hasła (testy/test_reset_hasla.py oraz testy_nocne/test_reset_regresja.py)",
+  "start": "2026-11-24T02:13:50+01:00",
+  "podsumowanie": {
+    "liczba_testow": 10,
+    "zaliczony": 4,
+    "niezaliczony": 4,
+    "pominięty": 0,
+    "błąd": 2
+  },
+  "testy": [
+    {
+      "nazwa": "test_stan_zwraca_numer_builda",
+      "plik": "testy/test_reset_hasla.py",
+      "opis": "Adres /stan odpowiada kodem 200 i podaje numer builda.",
+      "wynik": "zaliczony",
+      "czas_ms": 2,
+      "komunikat": null,
+      "miejsce": null,
+      "asercja": null,
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "GET /stan",
+          "dane": null,
+          "status": 200,
+          "odpowiedz": {
+            "build": "1.5.0",
+            "port": 8766
+          }
+        }
+      ]
+    },
+    {
+      "nazwa": "test_link_dziala_jeden_raz",
+      "plik": "testy/test_reset_hasla.py",
+      "opis": "Link resetu działa jeden raz: drugie użycie tego samego linku jest odrzucane, a hasło się nie zmienia.",
+      "wynik": "niezaliczony",
+      "czas_ms": 118,
+      "komunikat": "AssertionError: assert 200 == 410\n +  where 200 = Odpowiedz(status=200, tresc={'komunikat': 'Hasło zostało zmienione.'}).status",
+      "miejsce": "testy/test_reset_hasla.py:12",
+      "asercja": "assert drugie_uzycie.status == 410",
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "POST /test/konto",
+          "dane": {
+            "email": "test-4be19c07@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 201,
+          "odpowiedz": {
+            "email": "test-4be19c07@example.com"
+          }
+        },
+        {
+          "nr": 2,
+          "zadanie": "POST /reset/zamow",
+          "dane": {
+            "email": "test-4be19c07@example.com"
+          },
+          "status": 202,
+          "odpowiedz": {
+            "komunikat": "Jeśli konto istnieje, wysłaliśmy wiadomość z linkiem resetu."
+          }
+        },
+        {
+          "nr": 3,
+          "zadanie": "GET /test/skrzynka?email=test-4be19c07@example.com",
+          "dane": null,
+          "status": 200,
+          "odpowiedz": {
+            "email": "test-4be19c07@example.com",
+            "temat": "Reset hasła",
+            "link": "http://127.0.0.1:8766/reset?token=Qm3xT9vLr2ZpKe8sHd5WnA",
+            "token": "Qm3xT9vLr2ZpKe8sHd5WnA"
+          },
+          "uwaga": "odczyt skrzynki ponawiany do skutku, liczba odczytów: 5"
+        },
+        {
+          "nr": 4,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "Qm3xT9vLr2ZpKe8sHd5WnA",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "komunikat": "Hasło zostało zmienione."
+          }
+        },
+        {
+          "nr": 5,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "Qm3xT9vLr2ZpKe8sHd5WnA",
+            "haslo": "InneHaslo-2"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "komunikat": "Hasło zostało zmienione."
+          }
+        }
+      ]
+    },
+    {
+      "nazwa": "test_wystarczy_kod_200",
+      "plik": "testy/test_reset_hasla.py",
+      "opis": "Ustawienie hasła przez link resetu odpowiada kodem 200.",
+      "wynik": "zaliczony",
+      "czas_ms": 96,
+      "komunikat": null,
+      "miejsce": null,
+      "asercja": null,
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "POST /test/konto",
+          "dane": {
+            "email": "test-a02d7f63@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 201,
+          "odpowiedz": {
+            "email": "test-a02d7f63@example.com"
+          }
+        },
+        {
+          "nr": 2,
+          "zadanie": "POST /reset/zamow",
+          "dane": {
+            "email": "test-a02d7f63@example.com"
+          },
+          "status": 202,
+          "odpowiedz": {
+            "komunikat": "Jeśli konto istnieje, wysłaliśmy wiadomość z linkiem resetu."
+          }
+        },
+        {
+          "nr": 3,
+          "zadanie": "GET /test/skrzynka?email=test-a02d7f63@example.com",
+          "dane": null,
+          "status": 200,
+          "odpowiedz": {
+            "email": "test-a02d7f63@example.com",
+            "temat": "Reset hasła",
+            "link": "http://127.0.0.1:8766/reset?token=u7YbC1oGf4RtJx6MaV0qEw",
+            "token": "u7YbC1oGf4RtJx6MaV0qEw"
+          },
+          "uwaga": "odczyt skrzynki ponawiany do skutku, liczba odczytów: 4"
+        },
+        {
+          "nr": 4,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "u7YbC1oGf4RtJx6MaV0qEw",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "komunikat": "Hasło zostało zmienione."
+          }
+        }
+      ]
+    },
+    {
+      "nazwa": "test_nowe_haslo_loguje_stare_nie",
+      "plik": "testy/test_reset_hasla.py",
+      "opis": "Po resecie użytkownik loguje się nowym hasłem, a stare hasło przestaje działać.",
+      "wynik": "zaliczony",
+      "czas_ms": 71,
+      "komunikat": null,
+      "miejsce": null,
+      "asercja": null,
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "POST /test/konto",
+          "dane": {
+            "email": "test-c95e0b18@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 201,
+          "odpowiedz": {
+            "email": "test-c95e0b18@example.com"
+          }
+        },
+        {
+          "nr": 2,
+          "zadanie": "POST /reset/zamow",
+          "dane": {
+            "email": "test-c95e0b18@example.com"
+          },
+          "status": 202,
+          "odpowiedz": {
+            "komunikat": "Jeśli konto istnieje, wysłaliśmy wiadomość z linkiem resetu."
+          }
+        },
+        {
+          "nr": 3,
+          "zadanie": "GET /test/skrzynka?email=test-c95e0b18@example.com",
+          "dane": null,
+          "status": 200,
+          "odpowiedz": {
+            "email": "test-c95e0b18@example.com",
+            "temat": "Reset hasła",
+            "link": "http://127.0.0.1:8766/reset?token=Lk9dS2hPz5NcBv8XrT3mUg",
+            "token": "Lk9dS2hPz5NcBv8XrT3mUg"
+          },
+          "uwaga": "odczyt skrzynki ponawiany do skutku, liczba odczytów: 3"
+        },
+        {
+          "nr": 4,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "Lk9dS2hPz5NcBv8XrT3mUg",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "komunikat": "Hasło zostało zmienione."
+          }
+        },
+        {
+          "nr": 5,
+          "zadanie": "POST /logowanie",
+          "dane": {
+            "email": "test-c95e0b18@example.com",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "sesja": "Zc4LmT7xQe1VnB9sKd2HyR"
+          }
+        },
+        {
+          "nr": 6,
+          "zadanie": "POST /logowanie",
+          "dane": {
+            "email": "test-c95e0b18@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 401,
+          "odpowiedz": {
+            "blad": "Błędny adres e-mail albo hasło."
+          }
+        }
+      ]
+    },
+    {
+      "nazwa": "test_nieznany_token_jest_odrzucany",
+      "plik": "testy/test_reset_hasla.py",
+      "opis": "Ustawienie hasła z tokenem, którego system nie wydał, jest odrzucane, a hasło się nie zmienia.",
+      "wynik": "zaliczony",
+      "czas_ms": 5,
+      "komunikat": null,
+      "miejsce": null,
+      "asercja": null,
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "POST /test/konto",
+          "dane": {
+            "email": "test-7d3f61aa@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 201,
+          "odpowiedz": {
+            "email": "test-7d3f61aa@example.com"
+          }
+        },
+        {
+          "nr": 2,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "token-ktorego-nikt-nie-wydal",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 400,
+          "odpowiedz": {
+            "blad": "Brak tokenu albo token nie został wydany przez system."
+          }
+        },
+        {
+          "nr": 3,
+          "zadanie": "POST /logowanie",
+          "dane": {
+            "email": "test-7d3f61aa@example.com",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 401,
+          "odpowiedz": {
+            "blad": "Błędny adres e-mail albo hasło."
+          }
+        },
+        {
+          "nr": 4,
+          "zadanie": "POST /logowanie",
+          "dane": {
+            "email": "test-7d3f61aa@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "sesja": "g5DsJ8kAf2PoI6uYt3RwEq"
+          }
+        }
+      ]
+    },
+    {
+      "nazwa": "test_drugie_uzycie_linku_nie_zmienia_hasla",
+      "plik": "testy_nocne/test_reset_regresja.py",
+      "opis": "Po drugim użyciu tego samego linku obowiązuje hasło ustawione przy pierwszym użyciu.",
+      "wynik": "niezaliczony",
+      "czas_ms": 139,
+      "komunikat": "AssertionError: assert 200 == 401\n +  where 200 = Odpowiedz(status=200, tresc={'sesja': 'Vx1NbM4cZl7KjH0gFd3SaP'}).status",
+      "miejsce": "testy_nocne/test_reset_regresja.py:21",
+      "asercja": "assert aplikacja.zaloguj(konto.email, \"InneHaslo-2\").status == 401",
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "POST /test/konto",
+          "dane": {
+            "email": "test-e18b42c9@example.com",
+            "haslo": "StareHaslo-1"
+          },
+          "status": 201,
+          "odpowiedz": {
+            "email": "test-e18b42c9@example.com"
+          }
+        },
+        {
+          "nr": 2,
+          "zadanie": "POST /reset/zamow",
+          "dane": {
+            "email": "test-e18b42c9@example.com"
+          },
+          "status": 202,
+          "odpowiedz": {
+            "komunikat": "Jeśli konto istnieje, wysłaliśmy wiadomość z linkiem resetu."
+          }
+        },
+        {
+          "nr": 3,
+          "zadanie": "GET /test/skrzynka?email=test-e18b42c9@example.com",
+          "dane": null,
+          "status": 200,
+          "odpowiedz": {
+            "email": "test-e18b42c9@example.com",
+            "temat": "Reset hasła",
+            "link": "http://127.0.0.1:8766/reset?token=w4FjA7eQy1ZoHn6KpD9sCb",
+            "token": "w4FjA7eQy1ZoHn6KpD9sCb"
+          },
+          "uwaga": "odczyt skrzynki ponawiany do skutku, liczba odczytów: 6"
+        },
+        {
+          "nr": 4,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "w4FjA7eQy1ZoHn6KpD9sCb",
+            "haslo": "NoweHaslo-1"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "komunikat": "Hasło zostało zmienione."
+          }
+        },
+        {
+          "nr": 5,
+          "zadanie": "POST /reset/potwierdz",
+          "dane": {
+            "token": "w4FjA7eQy1ZoHn6KpD9sCb",
+            "haslo": "InneHaslo-2"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "komunikat": "Hasło zostało zmienione."
+          }
+        },
+        {
+          "nr": 6,
+          "zadanie": "POST /logowanie",
+          "dane": {
+            "email": "test-e18b42c9@example.com",
+            "haslo": "InneHaslo-2"
+          },
+          "status": 200,
+          "odpowiedz": {
+            "sesja": "Vx1NbM4cZl7KjH0gFd3SaP"
+          }
+        }
+      ]
+    },
+    {
+      "nazwa": "test_reset_dla_konta_ze_stalych_danych",
+      "plik": "testy_nocne/test_reset_regresja.py",
+      "opis": "Reset hasła dla konta ewa@example.com ze stałych danych testowych.",
+      "wynik": "niezaliczony",
+      "czas_ms": 3021,
+      "komunikat": "AssertionError: wiadomość z linkiem resetu nie doszła\nassert 404 == 200\n +  where 404 = Odpowiedz(status=404, tresc={'blad': 'Brak wiadomości w skrzynce.', 'w_drodze': 0}).status",
+      "miejsce": "testy/conftest.py:109",
+      "asercja": "assert odpowiedz.status == 200, \"wiadomość z linkiem resetu nie doszła\"",
+      "wymiana": [
+        {
+          "nr": 1,
+          "zadanie": "POST /reset/zamow",
+          "dane": {
+            "email": "ewa@example.com"
+          },
+          "status": 202,
+          "odpowiedz": {
+            "komunikat": "Jeśli konto istnieje, wysłaliśmy wiadomość z linkiem resetu."
+          }
+        },
+        {
+          "nr": 2,
+          "zadanie": "GET /test/skrzynka?email=ewa@example.com",
+          "dane": null,
+          "status": 404,
+          "odpowiedz": {
+            "blad": "Brak wiadomości w skrzynce.",
+            "w_drodze": 0
+          },
+          "uwaga": "odczyt skrzynki ponawiany do skutku, liczba odczytów: 143"
+        }
+      ]
+    },
+    {
+      "nazwa": "test_sesja_sprzed_resetu_przestaje_dzialac",
+      "plik": "testy_nocne/test_reset_regresja.py",
+      "opis": "Po ustawieniu nowego hasła sesja otwarta przed resetem przestaje działać.",
+      "wynik": "błąd",
+      "czas_ms": 3,
+      "komunikat": "ConnectionRefusedError: [Errno 111] Connection refused",
+      "miejsce": "testy/conftest.py:56",
+      "asercja": "polaczenie.request(metoda, sciezka, body=tresc, headers=naglowki)",
+      "wymiana": []
+    },
+    {
+      "nazwa": "test_odpowiedz_na_prosbe_jest_taka_sama",
+      "plik": "testy_nocne/test_reset_regresja.py",
+      "opis": "Prośba o reset dla adresu z kontem i dla adresu bez konta dostaje taką samą odpowiedź.",
+      "wynik": "niezaliczony",
+      "czas_ms": 2,
+      "komunikat": "ConnectionRefusedError: [Errno 111] Connection refused",
+      "miejsce": "testy/conftest.py:56",
+      "asercja": "polaczenie.request(metoda, sciezka, body=tresc, headers=naglowki)",
+      "wymiana": []
+    },
+    {
+      "nazwa": "test_logowanie_blednym_haslem",
+      "plik": "testy_nocne/test_reset_regresja.py",
+      "opis": "Logowanie błędnym hasłem jest odrzucane kodem 401.",
+      "wynik": "błąd",
+      "czas_ms": 2,
+      "komunikat": "ConnectionRefusedError: [Errno 111] Connection refused",
+      "miejsce": "testy/conftest.py:56",
+      "asercja": "polaczenie.request(metoda, sciezka, body=tresc, headers=naglowki)",
+      "wymiana": []
+    }
+  ]
+}

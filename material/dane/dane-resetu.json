@@ -1,0 +1,31 @@
+{
+  "format": "qa-demo/dane/1",
+  "wymaganie": "reset-hasla",
+  "operacja": "POST /reset/potwierdz",
+  "wejscia": [
+    {
+      "id": "D1",
+      "opis": "pierwszy link",
+      "token": "{nowy-link}",
+      "haslo": "NoweHaslo-1",
+      "oczekiwany_status": 200,
+      "zrodlo": "zdanie z wymagania, R3: „Użytkownik, który otworzy link, ustawia nowe hasło.”"
+    },
+    {
+      "id": "D2",
+      "opis": "ten sam link drugi raz",
+      "token": "{ten-sam-link}",
+      "haslo": "InneHaslo-2",
+      "oczekiwany_status": 410,
+      "zrodlo": "zdanie z wymagania, R4: „Ten sam link użyty ponownie jest odrzucany, a hasło się nie zmienia.”"
+    },
+    {
+      "id": "D3",
+      "opis": "pusty token",
+      "token": "",
+      "haslo": "NoweHaslo-3",
+      "oczekiwany_status": 400,
+      "zrodlo": "zdanie z wymagania, R5: „Żądanie ustawienia hasła bez tokenu albo z tokenem, którego system nie wydał, jest odrzucane.”"
+    }
+  ]
+}

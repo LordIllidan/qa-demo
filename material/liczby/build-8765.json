@@ -1,0 +1,33 @@
+{
+  "format": "qa-demo/liczby/1",
+  "pochodzenie": "gotowy plik wyników; narzędzia pokazu niczego nie mierzą",
+  "build": {"port": 8765, "numer": "1.4.0"},
+  "profil": {
+    "uzytkownicy": 20,
+    "narastanie_s": 30,
+    "czas_trwania_s": 300,
+    "przerwa_miedzy_zadaniami_s": 1.0
+  },
+  "progi": {
+    "orders": {"p95_ms_ponizej": 500, "bledy_proc_ponizej": 1.0},
+    "search": {"p95_ms_ponizej": 300, "bledy_proc_ponizej": 1.0}
+  },
+  "sciezki": {
+    "orders": {
+      "liczba_zadan": 2742,
+      "mediana_ms": 31.6,
+      "srednia_ms": 33.2,
+      "p95_ms": 42.1,
+      "max_ms": 96.4,
+      "bledy_proc": 0.0
+    },
+    "search": {
+      "liczba_zadan": 2742,
+      "mediana_ms": 84.9,
+      "srednia_ms": 88.3,
+      "p95_ms": 118.4,
+      "max_ms": 203.7,
+      "bledy_proc": 0.0
+    }
+  }
+}

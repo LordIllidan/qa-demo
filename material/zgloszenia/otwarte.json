@@ -1,0 +1,24 @@
+{
+  "format": "qa-demo/otwarte-zgloszenia/1",
+  "stan_na": "2026-11-24",
+  "zgloszenia": [
+    {
+      "id": "ZGL-101",
+      "tytul": "Link resetu hasła działa drugi raz",
+      "build": "1.5.0",
+      "stan": "otwarte",
+      "dotkliwosc": "wysoka",
+      "priorytet": "wysoki",
+      "plik": "material/zgloszenia/ZGL-101.md"
+    },
+    {
+      "id": "ZGL-097",
+      "tytul": "Wiadomość z linkiem resetu nie ma stopki z danymi kontaktowymi",
+      "build": "1.4.0",
+      "stan": "otwarte",
+      "dotkliwosc": "niska",
+      "priorytet": "niski",
+      "plik": null
+    }
+  ]
+}

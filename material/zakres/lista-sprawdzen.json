@@ -1,0 +1,17 @@
+{
+  "format": "qa-demo/lista-sprawdzen/1",
+  "zmiana": "zmiana w resecie, 40 minut",
+  "wymaganie": "reset-hasla",
+  "sprawdzenia": [
+    {"id": "S1", "obszar": "reset hasła", "sprawdzenie": "Pierwszy link z wiadomości ustawia nowe hasło", "czas_min": 5},
+    {"id": "S2", "obszar": "reset hasła", "sprawdzenie": "Ten sam link użyty drugi raz", "czas_min": 5},
+    {"id": "S3", "obszar": "reset hasła", "sprawdzenie": "Ustawienie hasła bez tokenu i z tokenem, którego system nie wydał", "czas_min": 4},
+    {"id": "S4", "obszar": "reset hasła", "sprawdzenie": "Prośba o reset dla adresu z kontem i dla adresu bez konta", "czas_min": 4},
+    {"id": "S5", "obszar": "logowanie", "sprawdzenie": "Logowanie nowym i starym hasłem po resecie", "czas_min": 5},
+    {"id": "S6", "obszar": "logowanie", "sprawdzenie": "Logowanie poprawnym i błędnym hasłem bez resetu", "czas_min": 4},
+    {"id": "S7", "obszar": "rejestracja", "sprawdzenie": "Założenie nowego konta", "czas_min": 8},
+    {"id": "S8", "obszar": "profil", "sprawdzenie": "Zmiana danych w profilu użytkownika", "czas_min": 6},
+    {"id": "S9", "obszar": "zamówienia", "sprawdzenie": "Lista zamówień z filtrem statusu", "czas_min": 7},
+    {"id": "S10", "obszar": "wyszukiwarka", "sprawdzenie": "Wyszukiwanie produktu po nazwie", "czas_min": 6}
+  ]
+}
