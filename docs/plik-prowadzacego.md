@@ -17,7 +17,8 @@ Dlatego dokumentacja w `README.md` i w katalogu `docs` opisuje materiał neutral
 - opis testu, którego dotyczy zagadnienie P3,
 - liczby zagadnienia 5 zestawione z progami,
 - zawartość przykładowego pliku danych zagadnienia 7,
-- wypełniony przykład zapisu przebiegu.
+- wypełniony przykład zapisu przebiegu,
+- odpowiedzi do zagadnień rozszerzających R1–R5.
 
 ## Kto czyta
 
@@ -37,7 +38,7 @@ Get-Content prowadzacy/odpowiedzi-pokazu.md -Encoding UTF8
 
 Zakaz stoi w trzech miejscach:
 
-1. W bloku „Zasady wspólne” każdego z czternastu skilli w `.github/skills`, jako zasada 10.
+1. W bloku „Zasady wspólne” każdego z dziewiętnastu skilli w `.github/skills`, jako zasada 10.
 2. W zasadach pokazu w `README.md`, jako zasada 10.
 3. W części „Wejście” każdego z trzech agentów GitHub Copilot w `.github/agents` (opis: [agenci-copilot.md](agenci-copilot.md)).
 

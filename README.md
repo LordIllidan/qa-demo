@@ -12,11 +12,11 @@ Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHu
 | `testy` | testy pytest, w tym „link działa jeden raz” i „wystarczy kod 200” | [docs/testy.md](docs/testy.md) |
 | `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach | [docs/material.md](docs/material.md) |
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
-| `.github/skills` | czternaście skilli dla testerów | [docs/skille.md](docs/skille.md) |
+| `.github/skills` | dziewiętnaście skilli dla testerów: czternaście dla zagadnień pokazu i pięć dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
 | `.github/agents` | trzech agentów GitHub Copilot dla testerów | [docs/agenci-copilot.md](docs/agenci-copilot.md) |
 | `agenci_langgraph` | trzy agenty LangGraph dla testerów: grafy kroków z zatrzymaniem na decyzję człowieka | [docs/agenci-langgraph.md](docs/agenci-langgraph.md) |
 | `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
-| `docs` | dokumentacja, jeden plik na funkcję | |
+| `docs` | dokumentacja, jeden plik na funkcję; podział zagadnień na pracę testera manualnego i automatyzującego opisuje [docs/role-testerow.md](docs/role-testerow.md) | |
 
 ## Zasady pokazu
 
@@ -71,6 +71,34 @@ Każde polecenie wypisuje wynik przebiegu w stałej ramce i zapisuje go w katalo
 
 Czym buildy się różnią, ma w pokazie ustalić model na podstawie wejścia. Opis dla prowadzącego leży w pliku `prowadzacy/odpowiedzi-pokazu.md`.
 
+## Tester manualny i tester automatyzujący
+
+Zestaw służy dwóm rolom. Tester manualny projektuje i wykonuje testy ręcznie, prowadzi sesje eksploracyjne i zgłasza to, co zobaczył. Tester automatyzujący pisze i utrzymuje testy automatyczne, czyta wyniki przebiegów i pilnuje bramek. Tabela pokazuje, komu które zagadnienie służy: „tak” oznacza pracę codzienną, „czasem” pracę, do której trzeba wnieść własne wejście albo która zdarza się rzadziej.
+
+| Nr | Zagadnienie | Tester manualny | Tester automatyzujący |
+| --- | --- | --- | --- |
+| 1 | Luki w wymaganiu | tak | tak |
+| 2 | Defekt z czerwonego przebiegu | – (patrz R2) | tak |
+| 3 | Ocena asercji | – | tak |
+| 4 | Zakres po zmianie | tak | czasem |
+| 5 | Zdanie o dwóch buildach | czasem | tak |
+| 6 | Karta przed wgraniem | tak | tak |
+| 7 | Dane pod regułę | tak | tak |
+| 8 | Uprawnienia przy zwykłej historyjce | tak | tak |
+| P1 | Czerwony przebieg: produkt, test czy środowisko | – | tak |
+| P2 | Ponowny test po poprawce | czasem | tak |
+| P3 | Test niestabilny | – | tak |
+| P4 | Pokrycie wymagania testami | czasem | tak |
+| P5 | Karta sesji eksploracyjnej | tak | czasem |
+| P6 | Przegląd zmiany w testach | – | tak |
+| R1 | Przypadki testowe techniką | tak | tak |
+| R2 | Zgłoszenie z obserwacji ręcznej | tak | czasem |
+| R3 | Kandydaci do automatyzacji | czasem | tak |
+| R4 | Szkic testu automatycznego | – | tak |
+| R5 | Testy niefunkcjonalne | tak | tak |
+
+Dzień pracy każdej roli z zagadnieniami w kolejności użycia, wejście, które tester wnosi sam, nawyki pracy z modelem i wykaz tego, czego zestaw nie obejmuje, opisuje [docs/role-testerow.md](docs/role-testerow.md).
+
 ## Zagadnienia
 
 Czternaście zagadnień: osiem podstawowych (1–8) i sześć dodatkowych (P1–P6). Każde zaczyna się od sytuacji z dnia testera i ma ten sam układ opisu: co model dostaje, co oddaje, czego sam nie robi i jaka decyzja zostaje przy człowieku. Każde ma też skill w `.github/skills/<nazwa>/SKILL.md`, agenta GitHub Copilot w `.github/agents`, który ten skill stosuje, i polecenia, które podają wejście. Dziewięć zagadnień obsługują także agenty LangGraph z katalogu `agenci_langgraph`; instalację i ustawienie modelu opisuje [docs/agenci-langgraph.md](docs/agenci-langgraph.md).
@@ -96,6 +124,8 @@ Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to m
 
 Wariant 20-minutowy to zagadnienia 1, 2 i 5. Pokazują trzy rodzaje wejścia: wymaganie, wynik przebiegu i liczby.
 
+Poza czternastoma zagadnieniami pokazu jest pięć zagadnień rozszerzających (R1–R5). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego i testów niefunkcjonalnych. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
+
 Polecenia ze skryptami `przebieg.py`, `tabela_asercji.py`, `przebieg_danych.py`, `historia.py` i `zmiana_w_testach.py` wymagają aplikacji działającej w drugim oknie PowerShell (`python app/serwer.py`). Pozostałe skrypty czytają pliki i aplikacji nie potrzebują.
 
 ### 1. Luki w wymaganiu
@@ -107,6 +137,7 @@ Wariant 20-minutowy: tak.
 - **Model oddaje.** Dwie listy: pytania do autora i przypadki testowe, które sam dopisał. Każda pozycja ma źródło: zdanie z wymagania z dosłownym cytatem albo reguła własna modelu.
 - **Czego model nie robi.** Nie odpowiada na własne pytania w imieniu autora i nie wpisuje „rozsądnych domyślnych” wartości. Nie podaje dopisanej reguły jako wymagania. Niczego nie dodaje do zestawu testów.
 - **Decyzja człowieka.** Które pytania idą do autora i które dopisane przypadki wchodzą do zestawu.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
 - **Skill.** `luki-w-wymaganiu`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Agent LangGraph.** „Od wymagania do potwierdzonego zestawu” (`agenci_langgraph/od_wymagania_do_zestawu.py`), polecenie `python -m agenci_langgraph zestaw`
@@ -125,6 +156,7 @@ Wariant 20-minutowy: tak.
 - **Model oddaje.** Szkic zgłoszenia: kroki do ręcznego powtórzenia, wynik faktyczny, wynik oczekiwany z cytatem wymagania, zdanie porównujące oba buildy, dowody, fakty pomocne przy ocenie dotkliwości i to, czego nie sprawdził. Zgłoszenie opisuje zachowanie systemu, a nie to, że test padł.
 - **Czego model nie robi.** Nie wysyła zgłoszenia i nie zakłada go w żadnym systemie. Nie nadaje dotkliwości ani priorytetu. Nie podaje domysłu o przyczynie w kodzie jako faktu. Nie zmienia testu ani oczekiwanego wyniku.
 - **Decyzja człowieka.** Czy to defekt, jaka dotkliwość i priorytet, czy zgłoszenie wychodzi i do kogo.
+- **Dla kogo.** Tester automatyzujący. Tester manualny zgłasza własną obserwację w zagadnieniu R2.
 - **Skill.** `zgloszenie-defektu`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Agent LangGraph.** „Od czerwonego przebiegu do zgłoszenia” (`agenci_langgraph/od_przebiegu_do_zgloszenia.py`), polecenie `python -m agenci_langgraph zgloszenie`
@@ -143,6 +175,7 @@ python narzedzia/wymaganie.py reset-hasla
 - **Model oddaje.** Jedno zdanie o tym, który z testów nadaje się na bramkę, z uzasadnieniem w wynikach. Pod nim tabelę: co sprawdzają asercje każdego testu, którego zdania wymagania dotyczą i jaki wynik dały na każdym buildzie.
 - **Czego model nie robi.** Nie zmienia kodu testów: nie obcina, nie dopisuje i nie łagodzi asercji. Nie usuwa i nie wyłącza słabszego testu. Nie wyprowadza oczekiwanego wyniku z tego, co robi aplikacja.
 - **Decyzja człowieka.** Który test jest bramką i co dzieje się ze słabszym testem.
+- **Dla kogo.** Tester automatyzujący.
 - **Skill.** `ocena-asercji`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypty.** `narzedzia/tabela_asercji.py`, `narzedzia/wymaganie.py`
@@ -159,6 +192,7 @@ python narzedzia/wymaganie.py reset-hasla
 - **Model oddaje.** Kolejność sprawdzeń od najwyższego ryzyka z powodem przy każdej pozycji, rachunek czasu narastająco, przypadki, których na liście brakuje względem wymagania, oraz wykaz tego, co nie mieści się w oknie.
 - **Czego model nie robi.** Nie usuwa pozycji z listy i nie łączy kilku w jedną. Nie skraca czasów podanych w wejściu. Nie pomija dopisanego przypadku dlatego, że się nie mieści. Nie decyduje, co zostaje pominięte.
 - **Decyzja człowieka.** Co wykonać w oknie, czy okno wydłużyć, czy przyjąć ryzyko pominięcia.
+- **Dla kogo.** Tester manualny. Tester automatyzujący, gdy część regresji wykonuje się ręcznie.
 - **Skill.** `zakres-po-zmianie`
 - **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
 - **Agent LangGraph.** „Dwa buildy i karta” (`agenci_langgraph/dwa_buildy_i_karta.py`), polecenie `python -m agenci_langgraph karta`
@@ -178,6 +212,7 @@ Wariant 20-minutowy: tak.
 - **Model oddaje.** Jedno zdanie o zmianie między buildami. Pod nim porównanie profilu, tabelę metryk każdej ścieżki, odniesienie liczb do progów i listę tego, czego nie wie.
 - **Czego model nie robi.** Nie zmienia progów i nie proponuje ich podniesienia. Nie porównuje liczb, gdy profile obciążenia się różnią. Nie orzeka o przyczynie w kodzie. Nie uśrednia ścieżek i nie pomija metryki, która wygląda źle.
 - **Decyzja człowieka.** Czy zmiana blokuje wydanie, czy powstaje zgłoszenie, czy potrzebna jest dalsza diagnoza.
+- **Dla kogo.** Tester automatyzujący albo ten, kto dostaje liczby z przebiegów wydajności.
 - **Skill.** `dwa-buildy-w-liczbach`
 - **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
 - **Agent LangGraph.** „Dwa buildy i karta” (`agenci_langgraph/dwa_buildy_i_karta.py`), polecenie `python -m agenci_langgraph karta`
@@ -194,6 +229,7 @@ python narzedzia/liczby.py
 - **Model oddaje.** Jedno zdanie i kartę o stałym układzie trzech części: co sprawdzone, co czerwone, czego nie ruszano.
 - **Czego model nie robi.** Nie pisze słowa „wgrywamy” ani jego zaprzeczenia i nie zastępuje ich rekomendacją. Nie ocenia ryzyka biznesowego. Nie pomija i nie łagodzi czerwonych wyników. Nie przedstawia jako potwierdzonego czegoś, na co nie widział wyniku.
 - **Decyzja człowieka.** Decyzja o wydaniu. Podejmuje ją osoba odpowiedzialna za wydanie.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
 - **Skill.** `karta-przed-wgraniem`
 - **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
 - **Agent LangGraph.** „Dwa buildy i karta” (`agenci_langgraph/dwa_buildy_i_karta.py`), polecenie `python -m agenci_langgraph karta`
@@ -212,6 +248,7 @@ python narzedzia/zbierz_wyniki.py
 - **Model oddaje.** Tabelę wejść z oczekiwanym wynikiem i jego źródłem oraz te same dane w formacie pliku, który można wstawić w przebieg. Gdy wymaganie nie mówi, co ma się stać dla danego wejścia, w miejscu wyniku stoi pytanie do autora.
 - **Czego model nie robi.** Nie wpisuje oczekiwanego wyniku, którego nie ma w wymaganiu, i nie odczytuje go z odpowiedzi aplikacji. Nie sięga po dane produkcyjne. Nie uruchamia przebiegu z własnej inicjatywy i nie dopisuje do pliku wejść, których człowiek nie wybrał.
 - **Decyzja człowieka.** Które wejścia trafiają do przebiegu.
+- **Dla kogo.** Tester manualny (tabela wejść) i tester automatyzujący (plik dla przebiegu).
 - **Skill.** `dane-pod-regule`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Agent LangGraph.** „Od wymagania do potwierdzonego zestawu” (`agenci_langgraph/od_wymagania_do_zestawu.py`), polecenie `python -m agenci_langgraph zestaw`
@@ -231,6 +268,7 @@ Opcja `--dane` wskazuje plik z wejściami wybranymi przez człowieka. `material/
 - **Model oddaje.** Osobną grupę przypadków uprawnień dla każdej historyjki, ułożoną według trzech pytań kontrolnych: obcy identyfikator, wygasły token albo sesja, rola tylko do odczytu. Oczekiwany wynik pochodzi z wymagania i ma cytat. Gdy wymaganie milczy, w jego miejscu stoi pytanie do autora.
 - **Czego model nie robi.** Nie wymyśla polityki: kodu odpowiedzi, czasu życia tokenu ani tego, co wolno roli. Nie podaje zalecenia OWASP jako oczekiwanego wyniku. Nie wysyła żądań do systemu. Nie ogłasza, że funkcja jest bezpieczna.
 - **Decyzja człowieka.** Politykę dostępu ustala autor wymagania albo właściciel bezpieczeństwa. Tester decyduje, które przypadki wchodzą do zestawu.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
 - **Skill.** `przypadki-uprawnien`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Agent LangGraph.** „Od wymagania do potwierdzonego zestawu” (`agenci_langgraph/od_wymagania_do_zestawu.py`), polecenie `python -m agenci_langgraph zestaw`
@@ -248,6 +286,7 @@ python narzedzia/wymaganie.py filtr-zamowien
 - **Model oddaje.** Grupy awarii o wspólnej przyczynie. Dla każdej: co się stało, wynik tych samych testów w przebiegu referencyjnym, proponowaną klasyfikację (produkt, test, dane, środowisko albo „nie ustaliłem”), dowód z wejścia i to, czego dowód nie rozstrzyga.
 - **Czego model nie robi.** Nie ponawia przebiegu ani pojedynczych testów. Nie oznacza testu jako niestabilnego i go nie wyłącza. Nie klasyfikuje bez dowodu. Nie zakłada zgłoszeń i nie poprawia testów ani danych.
 - **Decyzja człowieka.** Klasyfikacja i następny krok dla każdej grupy: zgłoszenie, poprawka testu, naprawa danych albo naprawa środowiska.
+- **Dla kogo.** Tester automatyzujący.
 - **Skill.** `klasyfikacja-awarii`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Agent LangGraph.** „Od czerwonego przebiegu do zgłoszenia” (`agenci_langgraph/od_przebiegu_do_zgloszenia.py`), polecenie `python -m agenci_langgraph zgloszenie`
@@ -264,6 +303,7 @@ python narzedzia/przebieg_nocny.py
 - **Model oddaje.** Jedno zdanie o tym, czy kroki ze zgłoszenia dają teraz wynik oczekiwany. Pod nim tabelę krok po kroku i listę tego, czego wokół poprawki nie sprawdzono.
 - **Czego model nie robi.** Nie zamyka zgłoszenia i nie zmienia jego stanu. Nie pisze, że defekt jest naprawiony. Nie rozszerza wniosku na zachowania, których test nie sprawdza. Nie zmienia testu, żeby pasował do nowego builda.
 - **Decyzja człowieka.** Zamknąć zgłoszenie czy otworzyć je ponownie i czy przed tą decyzją wykonać dodatkowe sprawdzenia.
+- **Dla kogo.** Tester automatyzujący. Tester manualny, gdy poda własny wynik ponownego testu.
 - **Skill.** `test-potwierdzajacy`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypt.** `narzedzia/przebieg.py`; zgłoszenie model czyta z pliku
@@ -279,6 +319,7 @@ python narzedzia/przebieg.py --port 8767 --test test_link_dziala_jeden_raz
 - **Model oddaje.** Zdanie z liczbami: który test ma zmienny wynik i ile razy nie przeszedł. Pod nim okoliczności niezaliczonych uruchomień, przypuszczalny wzorzec oznaczony jako przypuszczenie i to, czego z historii nie da się rozstrzygnąć.
 - **Czego model nie robi.** Nie dodaje ponowień ani pominięć i nie zmienia kodu testu. Nie wyłącza testu i nie przenosi go do kwarantanny. Nie nazywa testu niestabilnym na podstawie jednego przebiegu. Nie przesądza, czy przyczyna leży w teście, czy w systemie.
 - **Decyzja człowieka.** Kwarantanna, naprawa czy pozostawienie testu, a jeśli naprawa, to testu czy systemu.
+- **Dla kogo.** Tester automatyzujący.
 - **Skill.** `test-niestabilny`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypt.** `narzedzia/historia.py`
@@ -294,6 +335,7 @@ python narzedzia/historia.py --port 8765
 - **Model oddaje.** Tabelę zdań wymagania z testami, które ich dotyczą, oraz dwie listy braków: zdania bez testu i testy bez zdania w wymaganiu. Przy każdym powiązaniu podaje, czy oparł je na opisie testu, czy na jego kodzie.
 - **Czego model nie robi.** Nie dopisuje testów i nie usuwa istniejących. Nie ogłasza, że pokrycie jest wystarczające. Nie uznaje zdania za pokryte dlatego, że nazwa testu brzmi podobnie. Nie zmienia wymagania, żeby pasowało do testów.
 - **Decyzja człowieka.** Które braki uzupełnić i co zrobić z testami bez zdania w wymaganiu.
+- **Dla kogo.** Tester automatyzujący. Tester manualny, gdy zamiast listy testów poda listę przypadków ręcznych.
 - **Skill.** `pokrycie-wymagania`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Agent LangGraph.** „Od wymagania do potwierdzonego zestawu” (`agenci_langgraph/od_wymagania_do_zestawu.py`), polecenie `python -m agenci_langgraph zestaw`
@@ -311,6 +353,7 @@ python narzedzia/lista_testow.py
 - **Model oddaje.** Przed sesją kartę: cel, ryzyka, których sesja dotyczy, pomysły do zbadania ze źródłem i to, co zostaje poza zakresem. Po sesji raport, który oddziela obserwacje testera od wniosków modelu i wypisuje pytania, które zostały.
 - **Czego model nie robi.** Nie dopisuje do raportu czynności, których nie ma w notatkach. Nie uznaje obszaru za sprawdzony na podstawie karty. Nie nazywa obserwacji defektem. Nie zmienia poziomów ryzyka i nie wygładza wątpliwości testera.
 - **Decyzja człowieka.** Cel, czas i build sesji oraz pomysły, które wchodzą do karty. Po sesji: które obserwacje są defektami, które pytania idą do autora i czy potrzebna jest kolejna sesja.
+- **Dla kogo.** Tester manualny.
 - **Skill.** `sesja-eksploracyjna`
 - **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Skrypt.** `narzedzia/wymaganie.py`; listę ryzyk i notatki model czyta z plików `material/sesja/ryzyka.md` i `material/sesja/notatki-z-sesji.md`
@@ -328,6 +371,7 @@ Get-Content material/sesja/notatki-z-sesji.md -Encoding UTF8
 - **Model oddaje.** Listę miejsc, w których bramka stała się słabsza: osłabiona asercja, usunięty przypadek, podniesiony próg, dodane pominięcie albo ponowienie. Przy każdym miejscu podaje zdanie wymagania, którego test pilnował, i skutek widoczny w wynikach. Osobno wypisuje zmiany bez wpływu na bramkę i zestawia opis autora z różnicą wersji.
 - **Czego model nie robi.** Nie cofa zmiany i nie poprawia testów. Nie zatwierdza i nie odrzuca zmiany. Nie uznaje zmiany za bezpieczną dlatego, że po niej przebieg jest zielony. Nie ocenia intencji autora.
 - **Decyzja człowieka.** Przyjąć zmianę, odrzucić ją albo przyjąć częściowo.
+- **Dla kogo.** Tester automatyzujący.
 - **Skill.** `przeglad-zmiany-w-testach`
 - **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypty.** `narzedzia/zmiana_w_testach.py`, `narzedzia/wymaganie.py`
@@ -335,6 +379,112 @@ Get-Content material/sesja/notatki-z-sesji.md -Encoding UTF8
 ```powershell
 python narzedzia/zmiana_w_testach.py
 python narzedzia/wymaganie.py reset-hasla
+```
+
+## Zagadnienia rozszerzające
+
+Pięć zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. Korzystają z istniejącego materiału i istniejących skryptów. Nie mają agenta LangGraph i nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
+
+| Nr | Zagadnienie | Skill | Agent |
+| --- | --- | --- | --- |
+| R1 | [Przypadki testowe techniką](#r1-przypadki-testowe-techniką) | `projektowanie-przypadkow` | Analiza wymagania |
+| R2 | [Zgłoszenie z obserwacji ręcznej](#r2-zgłoszenie-z-obserwacji-ręcznej) | `zgloszenie-z-obserwacji` | Analiza przebiegu |
+| R3 | [Kandydaci do automatyzacji](#r3-kandydaci-do-automatyzacji) | `kandydaci-do-automatyzacji` | Zakres i wydanie |
+| R4 | [Szkic testu automatycznego](#r4-szkic-testu-automatycznego) | `szkic-testu-automatycznego` | Analiza wymagania |
+| R5 | [Testy niefunkcjonalne](#r5-testy-niefunkcjonalne) | `testy-niefunkcjonalne` | Analiza wymagania |
+
+### R1. Przypadki testowe techniką
+
+- **Sytuacja.** Tester ma historyjkę i potrzebuje przypadków, które wykona ręcznie albo odda do automatyzacji. Zamiast długiej listy chce przypadków, z których każdy ma powód: klasę równoważności, granicę, kombinację warunków albo przejście między stanami.
+- **Model dostaje.** Tekst wymagania.
+- **Model oddaje.** Technikę dobraną do każdego zdania, model tej techniki (klasy, granice, tablicę decyzyjną albo stany z przejściami) i przypadki z krokami, danymi i oczekiwanym wynikiem ze źródłem. Element modelu, o którym wymaganie milczy, ma pytanie do autora zamiast wyniku.
+- **Czego model nie robi.** Nie wpisuje oczekiwanego wyniku, którego nie ma w wymaganiu, i nie odczytuje go z odpowiedzi aplikacji. Nie mnoży przypadków z tej samej klasy. Nie ogłasza, że zestaw jest kompletny. Nie wykonuje przypadków i niczego nie dodaje do zestawu.
+- **Decyzja człowieka.** Które przypadki wchodzą do zestawu, które wykonać ręcznie, a które zautomatyzować, i które pytania idą do autora.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `projektowanie-przypadkow`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Skrypt.** `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/wymaganie.py reset-hasla
+python narzedzia/wymaganie.py filtr-zamowien
+```
+
+### R2. Zgłoszenie z obserwacji ręcznej
+
+- **Sytuacja.** Tester pracujący ręcznie nie ma zapisu przebiegu. Ma notatki: co zrobił, co zobaczył i czego nie jest pewien. Chce z jednej obserwacji zrobić zgłoszenie i wiedzieć, czy ktoś już tego nie zgłosił.
+- **Model dostaje.** Notatki testera ze wskazaną obserwacją, wymaganie i listę otwartych zgłoszeń.
+- **Model oddaje.** Szkic zgłoszenia: kroki wyłącznie z notatek, dosłowny wynik faktyczny, wynik oczekiwany z cytatem wymagania albo pytanie do autora, gdy wymaganie tego nie określa. Osobno to, czego brakuje do odtworzenia, i otwarte zgłoszenia, które mogą dotyczyć tego samego zachowania.
+- **Czego model nie robi.** Nie dopisuje kroków ani odpowiedzi systemu, których nie ma w notatkach. Nie odtwarza obserwacji sam. Nie rozstrzyga, czy to powtórzenie, i niczego nie dopisuje do istniejącego zgłoszenia. Nie nadaje dotkliwości i nie wysyła zgłoszenia.
+- **Decyzja człowieka.** Czy to defekt, czy to powtórzenie otwartego zgłoszenia, jaka dotkliwość i priorytet, czy zgłoszenie wychodzi i do kogo.
+- **Dla kogo.** Tester manualny. Tester automatyzujący, gdy zgłasza coś, co zobaczył poza przebiegiem automatycznym.
+- **Skill.** `zgloszenie-z-obserwacji`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Skrypt.** `narzedzia/wymaganie.py`; notatki i listę otwartych zgłoszeń model czyta z plików `material/sesja/notatki-z-sesji.md` i `material/zgloszenia/otwarte.json`
+
+```powershell
+python narzedzia/wymaganie.py reset-hasla
+Get-Content material/sesja/notatki-z-sesji.md -Encoding UTF8
+Get-Content material/zgloszenia/otwarte.json -Encoding UTF8
+```
+
+Tester wskazuje w prośbie, której obserwacji z notatek dotyczy zgłoszenie, na przykład przez godzinę zapisu.
+
+### R3. Kandydaci do automatyzacji
+
+- **Sytuacja.** Regresja ręczna rośnie, a czasu na automatyzację jest mało. Zanim zespół wybierze, co automatyzować, musi wiedzieć, które sprawdzenia ręczne mają już test automatyczny i w jakiej części.
+- **Model dostaje.** Listę sprawdzeń ręcznych z czasami i listę testów automatycznych z opisami. Kod testów czyta wtedy, gdy opis nie wystarcza.
+- **Model oddaje.** Tabelę: sprawdzenie, test automatyczny, stan (w całości, częściowo, brak) i część sprawdzenia, której żaden test nie obejmuje. Do tego czas ręcznej pracy w każdej grupie, fakty pomocne przy wyborze i to, czego wejście nie mówi.
+- **Czego model nie robi.** Nie pisze testów. Nie zdejmuje sprawdzeń z listy ręcznej, także tych, które mają test. Nie uznaje sprawdzenia za zautomatyzowane po nazwie testu. Nie podaje oszczędności ani kosztu, na które nie ma liczb.
+- **Decyzja człowieka.** Które sprawdzenia automatyzować i w jakiej kolejności, które zostają ręczne i czy sprawdzenia z pełnym testem schodzą z listy ręcznej.
+- **Dla kogo.** Tester automatyzujący. Tester manualny dostarcza listę sprawdzeń i współdecyduje.
+- **Skill.** `kandydaci-do-automatyzacji`
+- **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
+- **Skrypty.** `narzedzia/lista_sprawdzen.py`, `narzedzia/lista_testow.py`
+
+```powershell
+python narzedzia/lista_sprawdzen.py
+python narzedzia/lista_testow.py
+```
+
+### R4. Szkic testu automatycznego
+
+- **Sytuacja.** Tester automatyzujący ma przypadek, który człowiek potwierdził, i chce go zamienić w test. Model napisze kod szybko, ale test jest wart tyle, ile jego oczekiwany wynik: jeśli pochodzi z tego, co build akurat zwraca, test utrwali defekt.
+- **Model dostaje.** Potwierdzony przypadek (kroki, dane, oczekiwany wynik), wymaganie, listę istniejących testów i ich kod razem ze wspólnym zapleczem.
+- **Model oddaje.** Kod testu w konwencji zestawu jako propozycję do przeglądu, tabelę asercji ze zdaniem wymagania przy każdej i wykaz tego, czego test nie sprawdza. Po przyjęciu zapisuje dokładnie przyjęty kod w nowym pliku, a na polecenie człowieka uruchamia go i opisuje zachowanie systemu.
+- **Czego model nie robi.** Nie pisze testu dla przypadku niepotwierdzonego. Nie bierze oczekiwanego wyniku z odpowiedzi aplikacji. Nie zapisuje kodu przed przyjęciem. Nie zmienia istniejących testów ani zaplecza. Nie dodaje pominięć ani ponowień i nie zmienia asercji po czerwonym wyniku.
+- **Decyzja człowieka.** Czy kod wchodzi do zestawu po przeglądzie i na których buildach go uruchomić.
+- **Dla kogo.** Tester automatyzujący.
+- **Skill.** `szkic-testu-automatycznego`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Skrypty.** `narzedzia/wymaganie.py`, `narzedzia/lista_testow.py`, po przyjęciu kodu `narzedzia/przebieg.py`
+
+```powershell
+python narzedzia/wymaganie.py reset-hasla
+python narzedzia/lista_testow.py
+```
+
+Po przyjęciu kodu, z aplikacją działającą w drugim oknie:
+
+```powershell
+python narzedzia/przebieg.py --port 8765 --zestaw <plik z testem> --test <nazwa testu>
+```
+
+### R5. Testy niefunkcjonalne
+
+- **Sytuacja.** Historyjka opisuje, co system ma robić, a milczy o tym, jak dobrze: jak szybko, dla kogo, na czym, co przy awarii. Tester, który planuje testy tylko z kryteriów akceptacji, sprawdzi funkcję i pominie resztę.
+- **Model dostaje.** Tekst wymagania.
+- **Model oddaje.** Tabelę po cechach jakości z ISO/IEC 25010:2023: wydajność, zgodność, użyteczność i dostępność, niezawodność, bezpieczeństwo, utrzymywalność, przenośność, bezpieczeństwo użytkowania. Przy każdej: co mówi wymaganie, pytanie do autora, rodzaj testu i to, czy zwykle wykonuje się go ręcznie, automatycznie czy narzędziem.
+- **Czego model nie robi.** Nie wymyśla progów: czasu odpowiedzi, liczby użytkowników, poziomu zgodności z normą. Nie podaje normy jako wymagania. Nie ogłasza, że cecha jest spełniona. Nie obciąża systemu, nie prowadzi ataków i nie uruchamia skanerów.
+- **Decyzja człowieka.** Które pytania idą do autora, które rodzaje testów wchodzą do planu i kto je wykonuje.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `testy-niefunkcjonalne`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Skrypt.** `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/wymaganie.py reset-hasla
+python narzedzia/wymaganie.py filtr-zamowien
 ```
 
 ## Narzędzia
@@ -362,7 +512,7 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 ```text
 qa-demo/
 ├── .github/agents/            trzy pliki .agent.md, agenci GitHub Copilot
-├── .github/skills/            czternaście katalogów, w każdym SKILL.md
+├── .github/skills/            dziewiętnaście katalogów, w każdym SKILL.md
 ├── agenci_langgraph/          trzy agenty LangGraph, części wspólne i testy na modelu zastępczym
 ├── app/serwer.py              aplikacja demonstracyjna, porty 8765, 8766 i 8767
 ├── docs/                      dokumentacja

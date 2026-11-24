@@ -2,7 +2,7 @@
 
 Podaje listę testów z opisami.
 
-- Zagadnienia: P4
+- Zagadnienia: P4, R3, R4
 - Rodzaj wejścia: lista testów
 - Aplikacja nie musi działać
 

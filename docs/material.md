@@ -6,17 +6,17 @@ Wspólny materiał wejściowy dla wszystkich zagadnień. Leży w katalogu `mater
 
 | Plik albo katalog | Co zawiera | Zagadnienia | Podaje go |
 | --- | --- | --- | --- |
-| `material/wymagania/reset-hasla.md` | wymaganie resetu hasła, zdania R1–R7 i interfejs | 1, 2, 3, 4, 7, 8, P4, P5, P6 | `wymaganie.py reset-hasla` |
-| `material/wymagania/filtr-zamowien.md` | historyjka z filtrem listy zamówień, zdania F1–F8 i role | 8 | `wymaganie.py filtr-zamowien` |
-| `material/zakres/lista-sprawdzen.json` | zdanie „zmiana w resecie, 40 minut” i lista sprawdzeń z czasami | 4 | `lista_sprawdzen.py` |
+| `material/wymagania/reset-hasla.md` | wymaganie resetu hasła, zdania R1–R7 i interfejs | 1, 2, 3, 4, 7, 8, P4, P5, P6, R1, R2, R4, R5 | `wymaganie.py reset-hasla` |
+| `material/wymagania/filtr-zamowien.md` | historyjka z filtrem listy zamówień, zdania F1–F8 i role | 8, R1, R5 | `wymaganie.py filtr-zamowien` |
+| `material/zakres/lista-sprawdzen.json` | zdanie „zmiana w resecie, 40 minut” i lista sprawdzeń z czasami | 4, R3 | `lista_sprawdzen.py` |
 | `material/liczby/build-8765.json`, `material/liczby/build-8766.json` | liczby dwóch buildów: profil, progi, ścieżki orders i search | 5, 6 | `liczby.py`, `zbierz_wyniki.py` |
 | `material/dane/dane-resetu.json` | przykładowy plik danych dla przebiegu w formacie `qa-demo/dane/1`: lista wejść, każde z oczekiwanym wynikiem i jego źródłem | 7 | `przebieg_danych.py` |
 | `material/zgloszenia/ZGL-101.md` | zgłoszenie defektu resetu hasła | P2 | plik czyta model albo człowiek |
-| `material/zgloszenia/otwarte.json` | lista otwartych zgłoszeń | 6 | `zbierz_wyniki.py` |
+| `material/zgloszenia/otwarte.json` | lista otwartych zgłoszeń | 6, R2 | `zbierz_wyniki.py`; w zagadnieniu R2 plik czyta model albo człowiek |
 | `material/zakres/zakres-wydania.json` | zakres planowany i wykonany | 6 | `zbierz_wyniki.py` |
 | `material/przebieg-nocny/` | zapis nocnego przebiegu z kilkoma awariami, przebieg referencyjny i log | P1 | `przebieg_nocny.py` |
 | `material/sesja/ryzyka.md` | lista ryzyk resetu hasła z poziomami ustalonymi przez zespół | P5 | plik czyta model albo człowiek |
-| `material/sesja/notatki-z-sesji.md` | notatki testera z sesji eksploracyjnej na buildzie 1.5.0 | P5 | plik czyta model albo człowiek |
+| `material/sesja/notatki-z-sesji.md` | notatki testera z sesji eksploracyjnej na buildzie 1.5.0 | P5, R2 | plik czyta model albo człowiek |
 | `material/zmiana-w-testach/` | wersja pliku z testami po zmianie i opis zmiany od autora | P6 | `zmiana_w_testach.py` |
 
 Materiałem są też dwa buildy aplikacji (`docs/aplikacja.md`) i testy (`docs/testy.md`).
@@ -25,7 +25,7 @@ Materiałem są też dwa buildy aplikacji (`docs/aplikacja.md`) i testy (`docs/t
 
 Oba wymagania są napisane tak, jak pisze się zwykłe historyjki: mówią o głównej drodze użytkownika i nie mówią wszystkiego. Czego w nich brakuje, ma wskazać model, dlatego dokumentacja tego nie wylicza.
 
-Historyjka z filtrem zamówień istnieje tylko jako tekst. Aplikacja demonstracyjna jej nie realizuje, bo zagadnienie 8 pracuje na samym wymaganiu.
+Historyjka z filtrem zamówień istnieje tylko jako tekst. Aplikacja demonstracyjna jej nie realizuje, bo zagadnienia 8, R1 i R5 pracują na samym wymaganiu.
 
 ## Lista sprawdzeń (zagadnienie 4)
 

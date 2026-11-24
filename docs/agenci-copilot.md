@@ -1,6 +1,6 @@
 # Agenci GitHub Copilot dla testerów
 
-Trzech niestandardowych agentów GitHub Copilot. Każdy obsługuje grupę zagadnień pokazu i przy każdym zagadnieniu stosuje odpowiedni skill z katalogu `.github/skills`. Agent nie zastępuje skilla: wybiera go, pilnuje źródła wejścia i zasad wspólnych oraz zatrzymuje się przed decyzją człowieka.
+Trzech niestandardowych agentów GitHub Copilot. Każdy obsługuje grupę zagadnień i przy każdym zagadnieniu stosuje odpowiedni skill z katalogu `.github/skills`. Agent nie zastępuje skilla: wybiera go, pilnuje źródła wejścia i zasad wspólnych oraz zatrzymuje się przed decyzją człowieka.
 
 ## Gdzie leżą i w jakim formacie
 
@@ -22,17 +22,17 @@ Każdy agent to plik Markdown z rozszerzeniem `.agent.md` i nagłówkiem YAML. N
 | `tools` | tak | lista narzędzi dostępnych agentowi; bez tego pola agent ma wszystkie narzędzia |
 | `target`, `model`, `mcp-servers` i pozostałe | nie | bez `target` agent jest dostępny i w VS Code, i w GitHub Copilot; model wybiera użytkownik |
 
-Treść pod nagłówkiem to instrukcja agenta. Limit wynosi 30 000 znaków. Najdłuższa z trzech instrukcji ma około 6 300 znaków.
+Treść pod nagłówkiem to instrukcja agenta. Limit wynosi 30 000 znaków. Najdłuższa z trzech instrukcji ma około 6 800 znaków.
 
 ## Lista agentów
 
 | Agent | Plik | Zagadnienia | Co robi |
 | --- | --- | --- | --- |
-| Analiza wymagania | `analiza-wymagania.agent.md` | 1, 7, 8, P4, P5 | Pracuje z tekstem wymagania: pytania do autora, dane pod regułę, przypadki uprawnień, pokrycie wymagania testami, karta i raport sesji eksploracyjnej. |
-| Analiza przebiegu | `analiza-przebiegu.agent.md` | 2, 3, P1, P2, P3, P6 | Pracuje z wynikiem przebiegu: zgłoszenie defektu, ocena asercji, klasyfikacja awarii, ponowny test po poprawce, test niestabilny, przegląd zmiany w testach. |
-| Zakres i wydanie | `zakres-i-wydanie.agent.md` | 4, 5, 6 | Przygotowuje informację przed wydaniem: zakres po zmianie, zdanie o liczbach dwóch buildów, karta przed wgraniem. |
+| Analiza wymagania | `analiza-wymagania.agent.md` | 1, 7, 8, P4, P5, R1, R4, R5 | Pracuje z tekstem wymagania: pytania do autora, dane pod regułę, przypadki uprawnień, pokrycie wymagania testami, karta i raport sesji eksploracyjnej, przypadki testowe techniką, szkic testu automatycznego, testy niefunkcjonalne. |
+| Analiza przebiegu | `analiza-przebiegu.agent.md` | 2, 3, P1, P2, P3, P6, R2 | Pracuje z wynikiem przebiegu albo z obserwacją testera: zgłoszenie defektu, ocena asercji, klasyfikacja awarii, ponowny test po poprawce, test niestabilny, przegląd zmiany w testach, zgłoszenie z obserwacji ręcznej. |
+| Zakres i wydanie | `zakres-i-wydanie.agent.md` | 4, 5, 6, R3 | Przygotowuje informację przed wydaniem: zakres po zmianie, zdanie o liczbach dwóch buildów, karta przed wgraniem. Zestawia też sprawdzenia ręczne z testami automatycznymi przed wyborem tego, co automatyzować. |
 
-Razem agenci obsługują wszystkie czternaście zagadnień, każde dokładnie raz. Opis zagadnień jest w `README.md`.
+Razem agenci obsługują wszystkie dziewiętnaście zagadnień, czyli czternaście zagadnień pokazu i pięć rozszerzających, każde dokładnie raz. Opis zagadnień jest w `README.md`. Podział zagadnień na pracę testera manualnego i automatyzującego opisuje [role-testerow.md](role-testerow.md).
 
 | Zagadnienie | Skill | Agent |
 | --- | --- | --- |
@@ -50,6 +50,11 @@ Razem agenci obsługują wszystkie czternaście zagadnień, każde dokładnie ra
 | P4. Pokrycie wymagania testami | `pokrycie-wymagania` | Analiza wymagania |
 | P5. Karta sesji eksploracyjnej | `sesja-eksploracyjna` | Analiza wymagania |
 | P6. Przegląd zmiany w testach | `przeglad-zmiany-w-testach` | Analiza przebiegu |
+| R1. Przypadki testowe techniką | `projektowanie-przypadkow` | Analiza wymagania |
+| R2. Zgłoszenie z obserwacji ręcznej | `zgloszenie-z-obserwacji` | Analiza przebiegu |
+| R3. Kandydaci do automatyzacji | `kandydaci-do-automatyzacji` | Zakres i wydanie |
+| R4. Szkic testu automatycznego | `szkic-testu-automatycznego` | Analiza wymagania |
+| R5. Testy niefunkcjonalne | `testy-niefunkcjonalne` | Analiza wymagania |
 
 ## Budowa agenta
 
@@ -70,9 +75,9 @@ Jedynym źródłem wejścia są skrypty z katalogu `narzedzia` i pliki, które s
 
 | Agent | Skrypty |
 | --- | --- |
-| Analiza wymagania | `wymaganie.py`, `lista_testow.py`, po decyzji człowieka `przebieg_danych.py` |
+| Analiza wymagania | `wymaganie.py`, `lista_testow.py`, po decyzji człowieka `przebieg_danych.py` i `przebieg.py` |
 | Analiza przebiegu | `przebieg.py`, `tabela_asercji.py`, `przebieg_nocny.py`, `historia.py`, `zmiana_w_testach.py`, `wymaganie.py` |
-| Zakres i wydanie | `lista_sprawdzen.py`, `liczby.py`, `zbierz_wyniki.py`, `wymaganie.py`, na polecenie człowieka `przebieg.py` |
+| Zakres i wydanie | `lista_sprawdzen.py`, `liczby.py`, `zbierz_wyniki.py`, `lista_testow.py`, `wymaganie.py`, na polecenie człowieka `przebieg.py` |
 
 Każdy agent ma zapisane, że:
 
@@ -85,7 +90,7 @@ Każdy agent ma zapisane, że:
 
 | Agent | `tools` | Dlaczego |
 | --- | --- | --- |
-| Analiza wymagania | `read`, `search`, `execute`, `edit` | `edit` jest potrzebne w dwóch sytuacjach, obu po decyzji człowieka: zapis pliku danych w katalogu `wyniki` (zagadnienie 7) i dopisanie wskazanych przypadków do zestawu testów (zagadnienie 1) |
+| Analiza wymagania | `read`, `search`, `execute`, `edit` | `edit` jest potrzebne w trzech sytuacjach, każdej po decyzji człowieka: zapis pliku danych w katalogu `wyniki` (zagadnienie 7), dopisanie wskazanych przypadków do zestawu testów (zagadnienie 1) i zapis przyjętego kodu testu w nowym pliku w katalogu `testy` (zagadnienie R4) |
 | Analiza przebiegu | `read`, `search`, `execute` | agent niczego nie zmienia; brak `edit` wzmacnia zasadę „nie obcinasz asercji” |
 | Zakres i wydanie | `read`, `search`, `execute` | agent niczego nie zmienia; brak `edit` wzmacnia zasadę „nie ruszasz progów” |
 
@@ -107,7 +112,7 @@ Pełne brzmienie zasad jest w bloku „Zasady wspólne” każdego skilla (opis:
 
 ## Jak użyć
 
-Wymagania wstępne są takie same jak dla skryptów: środowisko z `README.md`, a przy zagadnieniach 2, 3, 6, 7, P2, P3 i P6 aplikacja uruchomiona w osobnym oknie PowerShell:
+Wymagania wstępne są takie same jak dla skryptów: środowisko z `README.md`, a przy zagadnieniach 2, 3, 6, 7, P2, P3 i P6 oraz przy uruchomieniu testu w zagadnieniu R4 aplikacja uruchomiona w osobnym oknie PowerShell:
 
 ```powershell
 python app/serwer.py
@@ -155,5 +160,5 @@ Agenci z gałęzi domyślnej są widoczni na liście agentów na stronie [github
 
 - Nowe zagadnienie: dodaj skill w `.github/skills`, a potem wiersz w tabeli „Zagadnienia i skille” właściwego agenta i w tabelach tego pliku.
 - Zmiana sposobu pracy przy zagadnieniu: zmień skill. Pliku agenta nie trzeba ruszać.
-- Zmiana zasad wspólnych: zmień blok w czternastu skillach i skrót w trzech agentach.
+- Zmiana zasad wspólnych: zmień blok w dziewiętnastu skillach i skrót w trzech agentach.
 - Po zmianie sprawdź, że nagłówek YAML się wczytuje i że każda ścieżka skilla z tabeli istnieje.

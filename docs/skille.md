@@ -1,6 +1,6 @@
 # Zbiór skilli dla testerów
 
-Czternaście skilli GitHub Copilot, po jednym na zagadnienie pokazu. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
+Dziewiętnaście skilli GitHub Copilot: czternaście dla zagadnień pokazu i pięć dla zagadnień rozszerzających (R1–R5), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
 
 ## Gdzie leżą i w jakim formacie
 
@@ -39,6 +39,13 @@ Skille nie mają pola `allowed-tools`, więc żadnego narzędzia nie zatwierdzaj
 | `pokrycie-wymagania` | P4. Pokrycie wymagania testami | zdania bez testu i testy bez zdania |
 | `sesja-eksploracyjna` | P5. Karta sesji eksploracyjnej | karta przed sesją albo raport z notatek po sesji |
 | `przeglad-zmiany-w-testach` | P6. Przegląd zmiany w testach | lista miejsc, w których bramka stała się słabsza, ze skutkiem w wynikach |
+| `projektowanie-przypadkow` | R1. Przypadki testowe techniką | technika dobrana do zdania wymagania, jej model i przypadki z krokami, danymi i wynikiem ze źródłem |
+| `zgloszenie-z-obserwacji` | R2. Zgłoszenie z obserwacji ręcznej | szkic zgłoszenia z notatek testera, braki do odtworzenia i możliwe powtórzenia wśród otwartych zgłoszeń |
+| `kandydaci-do-automatyzacji` | R3. Kandydaci do automatyzacji | zestawienie sprawdzeń ręcznych z testami automatycznymi: w całości, częściowo, brak, z czasem ręcznej pracy |
+| `szkic-testu-automatycznego` | R4. Szkic testu automatycznego | kod testu dla potwierdzonego przypadku, asercje ze zdaniem wymagania i to, czego test nie sprawdza |
+| `testy-niefunkcjonalne` | R5. Testy niefunkcjonalne | tabela cech jakości: co mówi wymaganie, pytanie do autora, rodzaj testu |
+
+Które skille służą testerowi manualnemu, a które automatyzującemu, opisuje [role-testerow.md](role-testerow.md).
 
 ## Budowa skilla
 
@@ -92,4 +99,4 @@ python app/serwer.py
 
 ## Zmiana skilla
 
-Przy zmianie zasad wspólnych trzeba poprawić blok „Zasady wspólne” we wszystkich czternastu plikach, żeby pozostał jednakowy. Nazwa w polu `name` musi być taka sama jak nazwa katalogu; wymaga tego specyfikacja.
+Przy zmianie zasad wspólnych trzeba poprawić blok „Zasady wspólne” we wszystkich dziewiętnastu plikach, żeby pozostał jednakowy. Nazwa w polu `name` musi być taka sama jak nazwa katalogu; wymaga tego specyfikacja.

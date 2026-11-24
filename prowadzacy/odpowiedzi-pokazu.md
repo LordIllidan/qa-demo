@@ -95,6 +95,84 @@ W pliku `material/przebieg-nocny/wynik-8766.json` jest dziesięć testów na bui
 
 `material/zgloszenia/ZGL-101.md` to zgłoszenie defektu „link resetu działa drugi raz” w kształcie, jaki powstaje w zagadnieniu 2 po decyzji człowieka.
 
+## Zagadnienia rozszerzające (R1–R5)
+
+Odpowiedzi wyprowadzone z materiału ręcznie. Skilli i agentów dla tych zagadnień nie uruchomiono w GitHub Copilot, więc to, co odda model, może się różnić układem.
+
+### R1. Przypadki testowe techniką
+
+Czego się spodziewać dla wymagania `reset-hasla`:
+
+- R4 nadaje się do przejść stanów. Wymaganie podaje dwa stany linku: wydany i użyty. Przejście „wydany → użyty” daje 200, a ponowne użycie daje 410 i hasło się nie zmienia. Wymaganie nie opisuje linku, którego czas minął, ani starszego linku po użyciu nowszego. W tych miejscach powinno stać pytanie do autora, a nie oczekiwany wynik.
+- R5 nadaje się do klas równoważności: brak tokenu, token, którego system nie wydał, token wydany. Dla dwóch pierwszych wymaganie podaje 400.
+- R2 daje dwie klasy adresu: z kontem i bez konta, z tą samą odpowiedzią 202. O adresie niepoprawnym składniowo i o wielkości liter wymaganie milczy.
+- R6 i R7 to skutki po ustawieniu hasła. Nie mają granic ani kombinacji, więc wystarcza po jednym przypadku.
+
+Dla wymagania `filtr-zamowien`:
+
+- F3 nadaje się do wartości brzegowych: zamówienie z dnia „od”, z dnia „do”, z dnia przed „od” i z dnia po „do”. O sytuacji, w której „od” jest późniejsze niż „do”, i o podaniu tylko jednej daty wymaganie milczy.
+- F2 i F4 nadają się do tablicy decyzyjnej: status spełniony albo nie, data spełniona albo nie, cztery kombinacje, lista pokazuje zamówienie tylko w jednej.
+- F2: cztery statusy to cztery klasy, do tego wybór kilku naraz. O braku wybranego statusu i o statusie spoza listy wymaganie milczy.
+
+Dobry wynik ma mało przypadków, a przy każdym element modelu. Zły wynik to kilkadziesiąt przypadków z tej samej klasy albo oczekiwany wynik wpisany tam, gdzie wymaganie milczy.
+
+### R2. Zgłoszenie z obserwacji ręcznej
+
+Notatki z sesji mają kilka obserwacji o różnym charakterze:
+
+| Zapis | Co z niego wynika |
+| --- | --- |
+| 10:09, ten sam link drugi raz, odpowiedź 200 i zmienione hasło | sprzeczne z R4; to samo zachowanie opisuje otwarte zgłoszenie ZGL-101, na tym samym buildzie, z tymi samymi hasłami |
+| 10:13, starszy link działa po użyciu nowszego | wymaganie tego nie określa; pytanie do autora, a nie defekt |
+| 10:13, hasło z jednego znaku przyjęte | wymaganie nie ma reguł hasła; pytanie do autora |
+| 10:07, sesja sprzed resetu odpowiada 401 | zgodne z R7; to nie jest obserwacja do zgłoszenia |
+| 10:21, adres bez konta dostaje 202 i ten sam komunikat | zgodne z R2 |
+| 10:24, adres wielkimi literami, skrzynka niesprawdzona | obserwacja niedokończona; brakuje wyniku, żeby cokolwiek zgłaszać |
+
+Dla zapisu z 10:09 model powinien wskazać ZGL-101 jako możliwe powtórzenie i zostawić rozstrzygnięcie człowiekowi. ZGL-097 dotyczy stopki wiadomości i nie ma związku z żadną obserwacją. Kroki zgłoszenia mają pochodzić z zapisów 10:03, 10:06 i 10:09. Notatki nie mówią, czy obserwację powtórzono, ani jak te same kroki kończą się na buildzie 1.4.0; porównanie z tym buildem tester sam wpisał do części „Nie zdążyłam”. Model powinien to podać jako braki, a nie przepisać porównanie z ZGL-101 jako własną obserwację testera.
+
+### R3. Kandydaci do automatyzacji
+
+| Sprawdzenie | Test automatyczny | Stan |
+| --- | --- | --- |
+| S1 (5 min) | `test_wystarczy_kod_200` sprawdza tylko kod odpowiedzi; skutek, czyli logowanie nowym hasłem, sprawdza `test_nowe_haslo_loguje_stare_nie` | w całości, ale dopiero dwoma testami razem; sam `test_wystarczy_kod_200` to pokrycie częściowe |
+| S2 (5 min) | `test_link_dziala_jeden_raz` | w całości |
+| S3 (4 min) | `test_nieznany_token_jest_odrzucany` | częściowo: nie ma żądania bez tokenu |
+| S4 (4 min) | `test_wiadomosc_z_linkiem_jest_w_skrzynce` | częściowo: nie ma adresu bez konta ani porównania odpowiedzi |
+| S5 (5 min) | `test_nowe_haslo_loguje_stare_nie` | w całości |
+| S6 (4 min) | brak osobnego testu; logowanie występuje tylko jako krok po resecie | brak |
+| S7–S10 (8, 6, 7, 6 min) | brak | brak |
+
+Czas ręczny: sprawdzenia z pełnym testem (S1, S2, S5) to 15 minut, z częściowym (S3, S4) 8 minut, bez testu (S6–S10) 31 minut, razem 54 minuty. `test_stan_zwraca_numer_builda` nie odpowiada żadnemu sprawdzeniu z listy. Wejście nie mówi, jak często wykonuje się listę, jak często zmieniają się obszary ani ile kosztuje napisanie testu, więc model nie ma z czego wyliczyć opłacalności.
+
+### R4. Szkic testu automatycznego
+
+Przykładowy przypadek do potwierdzenia przez prowadzącego: „Odpowiedź na prośbę o reset jest taka sama dla adresu z kontem i dla adresu bez konta: kod 202 i ta sama treść” (R2 i tabela interfejsu). Takiego testu w zestawie nie ma. Wspólne zaplecze ma potrzebny krok, `popros_o_reset`, więc zmiana zaplecza nie jest potrzebna.
+
+Test napisany z tych kroków jest zielony na wszystkich trzech buildach (8765, 8766, 8767): każdy odpowiada kodem 202 i tym samym komunikatem. Sprawdzono to 24.11.2026 plikiem tymczasowym, którego w repozytorium nie ma.
+
+Test nie sprawdza czasu odpowiedzi ani tego, czy dla adresu bez konta nie powstaje wiadomość. Model powinien to napisać w części „Czego ten test nie sprawdza”.
+
+Drugi przykład, na którym widać zakaz: jeśli poprosić o test dla starszego linku po użyciu nowszego, wymaganie nie podaje oczekiwanego wyniku. Model ma zapytać, a nie uruchomić kroki i wpisać do asercji 200, które build zwraca.
+
+### R5. Testy niefunkcjonalne
+
+Wymaganie `reset-hasla`:
+
+- Bezpieczeństwo ma zdania: R2, R4, R5, R7. Milczy o czasie ważności linku, liczbie próśb w krótkim czasie i regułach hasła.
+- Wydajność, niezawodność, zgodność: nic. Na przykład nie ma czasu dostarczenia wiadomości ani zachowania, gdy wysyłka się nie powiedzie.
+- Użyteczność i dostępność: wymaganie opisuje interfejs programistyczny, bez ekranu. Model powinien napisać, że z tekstu nie da się tego ocenić, i zapytać o ekran ustawienia hasła oraz treść wiadomości.
+- Bezpieczeństwo użytkowania: bez zastosowania.
+
+Wymaganie `filtr-zamowien`:
+
+- Użyteczność: F5 podaje treść komunikatu. O obsłudze klawiaturą, czytniku ekranu i kontraście nic.
+- Zgodność: F8 mówi o pliku CSV, ale nie o kodowaniu, separatorze ani formacie daty.
+- Wydajność: nic o liczbie zamówień, stronicowaniu ani czasie odpowiedzi.
+- Bezpieczeństwo: F6 i F7 oraz rola tylko do odczytu; szczegóły należą do zagadnienia 8.
+
+Zły wynik to próg wpisany jak wymaganie, na przykład „odpowiedź poniżej 2 sekund” albo „zgodność z WCAG 2.1 AA”, bez etykiety „reguła własna modelu” i bez pytania do autora.
+
 ## Przykład zapisu przebiegu
 
 Zapis w formacie `qa-demo/przebieg/1` z builda 8766, z testem, który zatrzymał się na asercji:

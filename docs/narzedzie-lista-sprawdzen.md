@@ -2,7 +2,7 @@
 
 Podaje zdanie o zmianie z oknem czasu i listę sprawdzeń z czasami wykonania.
 
-- Zagadnienia: 4
+- Zagadnienia: 4, R3
 - Rodzaj wejścia: lista sprawdzeń z czasami
 - Aplikacja nie musi działać
 

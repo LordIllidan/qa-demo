@@ -2,7 +2,7 @@
 
 Uruchamia testy na buildzie pod wskazanym portem i podaje wynik przebiegu.
 
-- Zagadnienia: 2, 3, 6, P2
+- Zagadnienia: 2, 3, 6, P2, R4
 - Rodzaj wejścia: wynik przebiegu
 - Wymaga działającej aplikacji
 
