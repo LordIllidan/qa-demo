@@ -1,4 +1,4 @@
-"""Agent „Jedno zagadnienie” (zagadnienia 3, P2, P3, P5, P6 i R1–R11).
+"""Agent „Jedno zagadnienie” (zagadnienia 3, P2, P3, P5, P6 i R1–R18).
 
 Jeden wspólny graf dla zagadnień, których nie obejmują trzy pozostałe agenty:
 wejście ze skryptów wskazanych przez skill, zdanie modelu według skilla,
@@ -51,6 +51,14 @@ def wiedza(a) -> list:
     return [("wiedza.py", a.pytanie), *([("wymaganie.py", a.wymaganie)] if a.wymaganie else [])]
 
 
+def z_portem(skrypt: str):
+    return lambda a: [(skrypt, "--port", a.port)]
+
+
+def wiadomosc(a) -> list:
+    return [("wiadomosc.py", "--port", a.port, "--email", a.email)]
+
+
 def plan_iteracji(a) -> list:
     return [("plan_iteracji.py",), *([("zmiana_wymagania.py",)] if a.zmiana_wymagania else [])]
 
@@ -96,6 +104,21 @@ ZAGADNIENIA = {
         "R10", "Podobne zgłoszenia przed założeniem nowego", lambda a: [("podobne_zgloszenia.py", a.opis), RESET], ("opis",)),
     "przeglad-przypadkow-recznych": Zagadnienie(
         "R11", "Przegląd przypadków testowych ręcznych", lambda a: [("przypadki_reczne.py",), RESET]),
+    "przebieg-ui": Zagadnienie(
+        "R12", "Przebieg interfejsu w Playwright", lambda a: [(*z_portem("przebieg_ui.py")(a)[0],), RESET], ("port",), True),
+    "przebieg-api": Zagadnienie(
+        "R13", "Przebieg wywołań API",
+        lambda a: [(*z_portem("przebieg_api.py")(a)[0],), ("opis_interfejsu.py",), RESET], ("port",), True),
+    "wiadomosc-przychodzaca": Zagadnienie(
+        "R14", "Wiadomość przychodząca", lambda a: [wiadomosc(a)[0], RESET], ("port", "email"), True),
+    "pdf-potwierdzenie": Zagadnienie(
+        "R15", "PDF wygenerowany przez system", lambda a: [(*z_portem("pdf.py")(a)[0],), RESET], ("port",), True),
+    "dostepnosc-strony": Zagadnienie(
+        "R16", "Dostępność strony", lambda a: [(*z_portem("dostepnosc.py")(a)[0],), RESET], ("port",), True),
+    "lokalizatory-po-zmianie": Zagadnienie(
+        "R17", "Lokalizatory po zmianie strony", lambda a: [("lokalizatory.py",), RESET]),
+    "raport-z-przebiegu": Zagadnienie(
+        "R18", "Raport z jednego przebiegu", z_portem("przebieg.py"), ("port",), True),
 }
 
 
@@ -117,6 +140,8 @@ def dodaj_opcje(parser, zagadnienie: Zagadnienie) -> None:
         parser.add_argument("--pytanie", required=True, help="pytanie testera do bazy wiedzy o produkcie")
     if "wymaganie" in zagadnienie.opcje:
         parser.add_argument("--wymaganie", help="nazwa wymagania do dołożenia do wejścia, na przykład reset-hasla")
+    if "email" in zagadnienie.opcje:
+        parser.add_argument("--email", default="anna@example.com", help="adres skrzynki")
     if "opis" in zagadnienie.opcje:
         parser.add_argument("--opis", required=True, help="opis zachowania, które tester chce zgłosić")
     if "zmiana_wymagania" in zagadnienie.opcje:

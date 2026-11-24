@@ -1,0 +1,11 @@
+{
+  "format": "qa-demo/lokalizatory/1",
+  "opis": "Lokalizatory używane przez test interfejsu. Skrypt tylko sprawdza, czy selektor pasuje do pliku.",
+  "przed": "material/ui/strona-przed.html",
+  "po": "material/ui/strona-po.html",
+  "lokalizatory": [
+    {"id": "L1", "selektor": "#email", "opis": "pole adresu e-mail"},
+    {"id": "L2", "selektor": "tekst przycisku: Wyślij link", "opis": "przycisk wysłania linku"},
+    {"id": "L3", "selektor": "tekst nagłówka: Nie pamiętam hasła", "opis": "nagłówek strony"}
+  ]
+}

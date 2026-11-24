@@ -2,7 +2,7 @@
 
 Jeden wspólny, prosty graf dla zagadnień, których nie obejmują trzy agenty z własnym grafem. Uruchamia się go z nazwą zagadnienia, czyli nazwą jego skilla. Graf uruchamia skrypty wskazane przez skill, przekazuje ich wynik modelowi razem ze skillem jako instrukcją, zatrzymuje się na decyzję człowieka i dopiero po niej zapisuje protokół.
 
-- Zagadnienia: 3, P2, P3, P5, P6, R1–R11
+- Zagadnienia: 3, P2, P3, P5, P6, R1–R18
 - Kod: `agenci_langgraph/jedno_zagadnienie.py`
 - Zagadnienia 3, P2, P3 i P6 wymagają działającej aplikacji
 
@@ -26,6 +26,13 @@ Jeden wspólny, prosty graf dla zagadnień, których nie obejmują trzy agenty z
 | R9 | Wiedza o produkcie z bazy wiedzy | `wiedza-o-produkcie` | `wiedza.py "<pytanie>"`, z opcją `--wymaganie` także `wymaganie.py` | – |
 | R10 | Podobne zgłoszenia przed założeniem nowego | `podobne-zgloszenia` | `podobne_zgloszenia.py "<opis>"`, `wymaganie.py reset-hasla` | – |
 | R11 | Przegląd przypadków testowych ręcznych | `przeglad-przypadkow-recznych` | `przypadki_reczne.py`, `wymaganie.py reset-hasla` | – |
+| R12 | Przebieg interfejsu w Playwright | `przebieg-ui` | `przebieg_ui.py --port <port>`, `wymaganie.py reset-hasla` | tak |
+| R13 | Przebieg wywołań API | `przebieg-api` | `przebieg_api.py --port <port>`, `opis_interfejsu.py`, `wymaganie.py reset-hasla` | tak |
+| R14 | Wiadomość przychodząca | `wiadomosc-przychodzaca` | `wiadomosc.py --port <port> --email <adres>`, `wymaganie.py reset-hasla` | tak |
+| R15 | PDF wygenerowany przez system | `pdf-potwierdzenie` | `pdf.py --port <port>`, `wymaganie.py reset-hasla` | tak |
+| R16 | Dostępność strony | `dostepnosc-strony` | `dostepnosc.py --port <port>`, `wymaganie.py reset-hasla` | tak |
+| R17 | Lokalizatory po zmianie strony | `lokalizatory-po-zmianie` | `lokalizatory.py`, `wymaganie.py reset-hasla` | – |
+| R18 | Raport z jednego przebiegu | `raport-z-przebiegu` | `przebieg.py --port <port>` | tak |
 
 Wszystkie skrypty leżą w katalogu `narzedzia`. Listę poleceń razem z trzema pozostałymi agentami wypisuje `python -m agenci_langgraph lista`.
 
@@ -75,6 +82,7 @@ To, co skill każe wziąć z prośby testera, graf przyjmuje z wiersza poleceń.
 | `--pytanie "<tekst>"` | `wiedza-o-produkcie` (wymagana) | pytanie testera do bazy wiedzy |
 | `--wymaganie <nazwa>` | `wiedza-o-produkcie` | wymaganie dołożone do wejścia, na przykład `reset-hasla` |
 | `--opis "<tekst>"` | `podobne-zgloszenia` (wymagana) | opis zachowania, które tester chce zgłosić |
+| `--email <adres>` | `wiadomosc-przychodzaca` | adres skrzynki; domyślnie `anna@example.com` |
 
 Niektóre skille wymieniają jako wejście plik, dla którego nie ma skryptu: zgłoszenie, listę ryzyk, notatki z sesji, listę otwartych zgłoszeń, kod testów. Model w grafie nie czyta plików, więc taki plik wskazuje człowiek opcją `--plik`. Lista poleceń podaje przy każdym zagadnieniu pliki, które wymienia jego skill. Graf nie przyjmuje pliku z katalogu `prowadzacy` i kończy się wtedy komunikatem „Agent zatrzymany: agent nie czyta katalogu prowadzacy”. Brakujący plik też zatrzymuje agenta, zanim zapyta model.
 

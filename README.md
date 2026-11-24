@@ -12,7 +12,7 @@ Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHu
 | `testy` | testy pytest, w tym „link działa jeden raz” i „wystarczy kod 200” | [docs/testy.md](docs/testy.md) |
 | `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach, druga wersja wymagania, opis interfejsu, dane iteracji | [docs/material.md](docs/material.md) |
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
-| `.github/skills` | dwadzieścia pięć skilli dla testerów: czternaście dla zagadnień pokazu i jedenaście dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
+| `.github/skills` | trzydzieści dwa skille dla testerów: czternaście dla zagadnień pokazu i osiemnaście dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
 | `.github/agents` | trzech agentów GitHub Copilot dla testerów | [docs/agenci-copilot.md](docs/agenci-copilot.md) |
 | `agenci_langgraph` | agenty LangGraph dla testerów: trzy grafy dla dziewięciu zagadnień i jeden wspólny graf dla pozostałych, każdy z zatrzymaniem na decyzję człowieka | [docs/agenci-langgraph.md](docs/agenci-langgraph.md) |
 | `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
@@ -102,6 +102,13 @@ Zestaw służy dwóm rolom. Tester manualny projektuje i wykonuje testy ręcznie
 | R9 | Wiedza o produkcie z bazy wiedzy | tak | tak |
 | R10 | Podobne zgłoszenia przed założeniem nowego | tak | tak |
 | R11 | Przegląd przypadków testowych ręcznych | tak | – |
+| R12 | Przebieg interfejsu w Playwright | czasem | tak |
+| R13 | Przebieg wywołań API | czasem | tak |
+| R14 | Wiadomość przychodząca | tak | tak |
+| R15 | PDF wygenerowany przez system | tak | tak |
+| R16 | Dostępność strony | tak | czasem |
+| R17 | Lokalizatory po zmianie strony | – | tak |
+| R18 | Raport z jednego przebiegu | tak | tak |
 
 Dzień pracy każdej roli z zagadnieniami w kolejności użycia, wejście, które tester wnosi sam, nawyki pracy z modelem i wykaz tego, czego zestaw nie obejmuje, opisuje [docs/role-testerow.md](docs/role-testerow.md).
 
@@ -130,9 +137,9 @@ Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to m
 
 Wariant 20-minutowy to zagadnienia 1, 2 i 5. Pokazują trzy rodzaje wejścia: wymaganie, wynik przebiegu i liczby.
 
-Poza czternastoma zagadnieniami pokazu jest jedenaście zagadnień rozszerzających (R1–R11). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego, testów niefunkcjonalnych, utrzymania testów po zmianie wymagania, testów z opisu interfejsu i planu testów iteracji. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
+Poza czternastoma zagadnieniami pokazu jest osiemnaście zagadnień rozszerzających (R1–R18). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego, testów niefunkcjonalnych, utrzymania testów po zmianie wymagania, testów z opisu interfejsu i planu testów iteracji. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
 
-Polecenia ze skryptami `przebieg.py`, `tabela_asercji.py`, `przebieg_danych.py`, `historia.py` i `zmiana_w_testach.py` wymagają aplikacji działającej w drugim oknie PowerShell (`python app/serwer.py`). Pozostałe skrypty czytają pliki i aplikacji nie potrzebują.
+Polecenia ze skryptami `przebieg.py`, `tabela_asercji.py`, `przebieg_danych.py`, `historia.py`, `zmiana_w_testach.py`, `przebieg_ui.py`, `przebieg_api.py`, `wiadomosc.py`, `pdf.py` i `dostepnosc.py` wymagają aplikacji działającej w drugim oknie PowerShell (`python app/serwer.py`). `przebieg_ui.py` wymaga też przeglądarki Playwright (`python -m playwright install chromium`). Pozostałe skrypty czytają pliki i aplikacji nie potrzebują.
 
 ### 1. Luki w wymaganiu
 
@@ -394,7 +401,7 @@ python narzedzia/wymaganie.py reset-hasla
 
 ## Zagadnienia rozszerzające
 
-Jedenaście zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. R9–R11 korzystają z bazy wiedzy o produkcie, archiwum zgłoszeń i przypadków ręcznych. Agentem LangGraph jest dla wszystkich wspólny graf „Jedno zagadnienie”. Nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
+Osiemnaście zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. R9–R11 korzystają z bazy wiedzy o produkcie, archiwum zgłoszeń i przypadków ręcznych. Agentem LangGraph jest dla wszystkich wspólny graf „Jedno zagadnienie”. Nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
 
 | Nr | Zagadnienie | Skill | Agent | Agent LangGraph |
 | --- | --- | --- | --- | --- |
@@ -409,6 +416,13 @@ Jedenaście zagadnień dodanych po przeglądzie pokrycia pracy testera manualneg
 | R9 | [Wiedza o produkcie z bazy wiedzy](#r9-wiedza-o-produkcie-z-bazy-wiedzy) | `wiedza-o-produkcie` | Analiza wymagania | Jedno zagadnienie |
 | R10 | [Podobne zgłoszenia przed założeniem nowego](#r10-podobne-zgłoszenia-przed-założeniem-nowego) | `podobne-zgloszenia` | Analiza przebiegu | Jedno zagadnienie |
 | R11 | [Przegląd przypadków testowych ręcznych](#r11-przegląd-przypadków-testowych-ręcznych) | `przeglad-przypadkow-recznych` | Analiza wymagania | Jedno zagadnienie |
+| R12 | [Przebieg interfejsu w Playwright](#r12-przebieg-interfejsu-w-playwright) | `przebieg-ui` | Analiza przebiegu | Jedno zagadnienie |
+| R13 | [Przebieg wywołań API](#r13-przebieg-wywołań-api) | `przebieg-api` | Analiza przebiegu | Jedno zagadnienie |
+| R14 | [Wiadomość przychodząca](#r14-wiadomość-przychodząca) | `wiadomosc-przychodzaca` | Analiza przebiegu | Jedno zagadnienie |
+| R15 | [PDF wygenerowany przez system](#r15-pdf-wygenerowany-przez-system) | `pdf-potwierdzenie` | Analiza przebiegu | Jedno zagadnienie |
+| R16 | [Dostępność strony](#r16-dostępność-strony) | `dostepnosc-strony` | Analiza przebiegu | Jedno zagadnienie |
+| R17 | [Lokalizatory po zmianie strony](#r17-lokalizatory-po-zmianie-strony) | `lokalizatory-po-zmianie` | Analiza przebiegu | Jedno zagadnienie |
+| R18 | [Raport z jednego przebiegu](#r18-raport-z-jednego-przebiegu) | `raport-z-przebiegu` | Analiza przebiegu | Jedno zagadnienie |
 
 ### R1. Przypadki testowe techniką
 
@@ -614,6 +628,132 @@ python narzedzia/przypadki_reczne.py
 python narzedzia/wymaganie.py reset-hasla
 ```
 
+### R12. Przebieg interfejsu w Playwright
+
+- **Sytuacja.** Tester ma stronę resetu hasła i chce wiedzieć, co pokazała przeglądarka, oraz jakie sprawdzenia interfejsu wynikają z wymagania, a przebieg ich nie wykonał.
+- **Model dostaje.** Kroki przebiegu Playwright: selektor i tekst ze strony, oraz wymaganie. Nie dostaje surowego logu.
+- **Model oddaje.** Co strona pokazała, ze zdaniem wymagania albo z pytaniem, gdy wymaganie milczy. Osobno szkic sprawdzeń, których przebieg nie wykonał.
+- **Czego model nie robi.** Nie ocenia przebiegu po tym, że doszedł do końca. Nie zmienia selektorów i nie uruchamia przeglądarki sam.
+- **Decyzja człowieka.** Które szkice wchodzą do testu i czy powtórzyć przebieg na innym buildzie.
+- **Dla kogo.** Tester automatyzujący. Tester manualny, gdy czyta, co strona pokazała.
+- **Skill.** `przebieg-ui`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph przebieg-ui --port 8765`
+- **Skrypty.** `narzedzia/przebieg_ui.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/przebieg_ui.py --port 8765
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R13. Przebieg wywołań API
+
+- **Sytuacja.** Tester wykonuje kilka wywołań interfejsu i chce je zestawić z opisem OpenAPI i z wymaganiem, które nie muszą mówić tego samego.
+- **Model dostaje.** Żądanie, status i treść każdego wywołania, opis interfejsu i wymaganie.
+- **Model oddaje.** Przy każdym wywołaniu źródło oczekiwania. Rozbieżność opisu i wymagania jako pytanie. Propozycje wywołań, których przebieg nie wykonał.
+- **Czego model nie robi.** Nie wysyła własnych żądań i nie uznaje statusu z przebiegu za oczekiwany wynik. Nie rozstrzyga, który dokument ma rację.
+- **Decyzja człowieka.** Który dokument rozstrzyga rozbieżność i które wywołania dopisać.
+- **Dla kogo.** Tester automatyzujący. Tester manualny, gdy wykonuje wywołania ręcznie i wklei ich wynik.
+- **Skill.** `przebieg-api`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph przebieg-api --port 8765`
+- **Skrypty.** `narzedzia/przebieg_api.py`, `narzedzia/opis_interfejsu.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/przebieg_api.py --port 8765
+python narzedzia/opis_interfejsu.py
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R14. Wiadomość przychodząca
+
+- **Sytuacja.** Po prośbie o reset w skrzynce jest wiadomość. Tester chce wiedzieć, co w niej sprawdzić: nadawcę, odbiorcę, temat, treść, link i token.
+- **Model dostaje.** Wiadomość ze skrzynki builda i wymaganie.
+- **Model oddaje.** Każdą pozycję ze zdaniem wymagania albo z pytaniem, gdy wymaganie o niej milczy. Rozbieżność linku i tokenu, jeśli jest.
+- **Czego model nie robi.** Nie wymyśla wymaganego nadawcy ani czasu ważności linku. Nie otwiera linku i nie uznaje skrzynki testowej za skrzynkę odbiorcy.
+- **Decyzja człowieka.** Które pytania idą do autora i czy wiadomość nadaje się do pokazania odbiorcy.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `wiadomosc-przychodzaca`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph wiadomosc-przychodzaca --port 8765 --email anna@example.com`
+- **Skrypty.** `narzedzia/wiadomosc.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/wiadomosc.py --port 8765 --email anna@example.com
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R15. PDF wygenerowany przez system
+
+- **Sytuacja.** System oddaje PDF z potwierdzeniem. Tester chce szybko wiedzieć, co w nim jest i czy wymaganie o takim dokumencie mówi.
+- **Model dostaje.** Tytuł i wiersze tekstu wyciągnięte z PDF-a oraz wymaganie. Nie dostaje renderu strony.
+- **Model oddaje.** Każdy wiersz ze zdaniem wymagania albo z pytaniem. Osobno, czego sam plik nie dowodzi.
+- **Czego model nie robi.** Nie uznaje zdania z pliku za dowód, że system tak zrobił. Nie ocenia układu i nie wymyśla obowiązkowych pól dokumentu.
+- **Decyzja człowieka.** Które pytania o dokument idą do autora i czy plik wchodzi do sprawdzeń.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `pdf-potwierdzenie`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph pdf-potwierdzenie --port 8765`
+- **Skrypty.** `narzedzia/pdf.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/pdf.py --port 8765
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R16. Dostępność strony
+
+- **Sytuacja.** Tester chce wiedzieć, co da się odczytać ze znaczników strony, zanim ktokolwiek ogłosi, że strona jest dostępna.
+- **Model dostaje.** Inwentarz HTML: język, nagłówki, etykiety pól, przyciski, obrazki, oraz wymaganie.
+- **Model oddaje.** Fakty z inwentarza i pytania tam, gdzie wymaganie o stronie milczy. Granice skryptu: brak kontrastu, fokusu i czytnika.
+- **Czego model nie robi.** Nie ogłasza zgodności z normą, nie wymyśla progów i nie poprawia HTML.
+- **Decyzja człowieka.** Które pytania idą do autora i czy potrzebny jest audyt z przeglądarką i czytnikiem.
+- **Dla kogo.** Tester manualny. Tester automatyzujący, gdy spis ma wejść do kontroli strony.
+- **Skill.** `dostepnosc-strony`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph dostepnosc-strony --port 8765`
+- **Skrypty.** `narzedzia/dostepnosc.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/dostepnosc.py --port 8765
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R17. Lokalizatory po zmianie strony
+
+- **Sytuacja.** Strona się zmieniła i część selektorów testu interfejsu przestała pasować. Tester chce propozycję nowego selektora, a nie cichą podmianę.
+- **Model dostaje.** Tabelę lokalizatorów wobec dwóch wersji HTML i wymaganie.
+- **Model oddaje.** Które selektory przestały pasować i jedną propozycję nowego, oznaczoną jako reguła własna modelu. Osobno, czy zmiana tekstu rusza zdanie wymagania.
+- **Czego model nie robi.** Nie podmienia selektora w teście i nie wybiera go tylko dlatego, że test dzięki niemu przejdzie.
+- **Decyzja człowieka.** Które propozycje przyjąć i czy zmiana tekstu idzie do autora.
+- **Dla kogo.** Tester automatyzujący.
+- **Skill.** `lokalizatory-po-zmianie`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph lokalizatory-po-zmianie`
+- **Skrypty.** `narzedzia/lokalizatory.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/lokalizatory.py
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R18. Raport z jednego przebiegu
+
+- **Sytuacja.** Ktoś spoza zespołu prosi, co wyszło z przebiegu. Liczba zaliczonych i niezaliczonych mu nie mówi, co system zrobił.
+- **Model dostaje.** Jeden wynik przebiegu: build, zestaw, liczby i szczegóły testów.
+- **Model oddaje.** Krótki raport: co przebieg objął, co system zrobił, czego nie objął. Bez decyzji o wydaniu.
+- **Czego model nie robi.** Nie pisze karty przed wgraniem, nie klasyfikuje awarii i nie pisze zgłoszenia. Nie powtarza przebiegu.
+- **Decyzja człowieka.** Czy raport wychodzi do odbiorcy i czy przedtem potrzebne jest inne wejście.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `raport-z-przebiegu`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph raport-z-przebiegu --port 8765`
+- **Skrypt.** `narzedzia/przebieg.py`
+
+```powershell
+python narzedzia/przebieg.py --port 8765
+```
+
 ## Narzędzia
 
 Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki`. Żaden niczego nie ocenia.
@@ -637,6 +777,12 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 | `narzedzia/wiedza.py` | fragmenty bazy wiedzy do pytania testera, każdy ze źródłem | [docs/narzedzie-wiedza.md](docs/narzedzie-wiedza.md) |
 | `narzedzia/podobne_zgloszenia.py` | zgłoszenia podobne do opisu testera, otwarte i z archiwum | [docs/narzedzie-podobne-zgloszenia.md](docs/narzedzie-podobne-zgloszenia.md) |
 | `narzedzia/przypadki_reczne.py` | przypadki testowe ręczne z krokami i oczekiwanymi wynikami | [docs/narzedzie-przypadki-reczne.md](docs/narzedzie-przypadki-reczne.md) |
+| `narzedzia/przebieg_ui.py` | kroki przebiegu strony w Playwright, bez surowego logu | [docs/narzedzie-przebieg-ui.md](docs/narzedzie-przebieg-ui.md) |
+| `narzedzia/przebieg_api.py` | żądania i odpowiedzi wywołań API z pliku | [docs/narzedzie-przebieg-api.md](docs/narzedzie-przebieg-api.md) |
+| `narzedzia/wiadomosc.py` | nadawcę, treść, link i token wiadomości ze skrzynki | [docs/narzedzie-wiadomosc.md](docs/narzedzie-wiadomosc.md) |
+| `narzedzia/pdf.py` | tytuł i tekst wyciągnięty z PDF-a | [docs/narzedzie-pdf.md](docs/narzedzie-pdf.md) |
+| `narzedzia/dostepnosc.py` | inwentarz HTML stron: język, etykiety, przyciski, obrazki | [docs/narzedzie-dostepnosc.md](docs/narzedzie-dostepnosc.md) |
+| `narzedzia/lokalizatory.py` | które lokalizatory pasują do dwóch wersji strony | [docs/narzedzie-lokalizatory.md](docs/narzedzie-lokalizatory.md) |
 
 `narzedzia/wspolne.py` to moduł wspólny skryptów: ramka, zapis plików, uruchamianie pytest.
 
@@ -645,7 +791,7 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 ```text
 qa-demo/
 ├── .github/agents/            trzy pliki .agent.md, agenci GitHub Copilot
-├── .github/skills/            dwadzieścia pięć katalogów, w każdym SKILL.md
+├── .github/skills/            trzydzieści dwa katalogi, w każdym SKILL.md
 ├── agenci_langgraph/          agenty LangGraph, wspólny graf zagadnień, części wspólne i testy na modelu zastępczym
 ├── app/serwer.py              aplikacja demonstracyjna, porty 8765, 8766 i 8767
 ├── docs/                      dokumentacja
@@ -662,8 +808,10 @@ qa-demo/
 │   ├── interfejs/             reset-hasla.json (OpenAPI)
 │   ├── plan/                  iteracja.json
 │   ├── wiedza/                dokumenty o produkcie dla zagadnienia R9
-│   └── przypadki-reczne/      reset-hasla.json
-├── narzedzia/                 siedemnaście skryptów, wyszukiwanie.py i wspolne.py
+│   ├── przypadki-reczne/      reset-hasla.json
+│   ├── api/                   wywolania-reset.json
+│   └── ui/                    dwie wersje strony i lokalizatory
+├── narzedzia/                 dwadzieścia trzy skrypty, wyszukiwanie.py i wspolne.py
 ├── prowadzacy/                odpowiedzi-pokazu.md, plik dla prowadzącego
 ├── testy/                     conftest.py, test_reset_hasla.py, test_wiadomosc_resetu.py
 ├── pytest.ini

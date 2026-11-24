@@ -32,7 +32,7 @@ Treść pod nagłówkiem to instrukcja agenta. Limit wynosi 30 000 znaków. Najd
 | Analiza przebiegu | `analiza-przebiegu.agent.md` | 2, 3, P1, P2, P3, P6, R2 | Pracuje z wynikiem przebiegu albo z obserwacją testera: zgłoszenie defektu, ocena asercji, klasyfikacja awarii, ponowny test po poprawce, test niestabilny, przegląd zmiany w testach, zgłoszenie z obserwacji ręcznej. |
 | Zakres i wydanie | `zakres-i-wydanie.agent.md` | 4, 5, 6, R3, R8 | Przygotowuje informację przed wydaniem: zakres po zmianie, zdanie o liczbach dwóch buildów, karta przed wgraniem. Zestawia też sprawdzenia ręczne z testami automatycznymi przed wyborem tego, co automatyzować, i układa szkic planu testów iteracji. |
 
-Razem agenci obsługują wszystkie dwadzieścia pięć zagadnień, czyli czternaście zagadnień pokazu i jedenaście rozszerzających, każde dokładnie raz. Opis zagadnień jest w `README.md`. Podział zagadnień na pracę testera manualnego i automatyzującego opisuje [role-testerow.md](role-testerow.md).
+Razem agenci obsługują wszystkie trzydzieści dwa zagadnienia, czyli czternaście zagadnień pokazu i osiemnaście rozszerzających, każde dokładnie raz. Opis zagadnień jest w `README.md`. Podział zagadnień na pracę testera manualnego i automatyzującego opisuje [role-testerow.md](role-testerow.md).
 
 | Zagadnienie | Skill | Agent |
 | --- | --- | --- |
@@ -61,6 +61,13 @@ Razem agenci obsługują wszystkie dwadzieścia pięć zagadnień, czyli czterna
 | R9. Wiedza o produkcie z bazy wiedzy | `wiedza-o-produkcie` | Analiza wymagania |
 | R10. Podobne zgłoszenia przed założeniem nowego | `podobne-zgloszenia` | Analiza przebiegu |
 | R11. Przegląd przypadków testowych ręcznych | `przeglad-przypadkow-recznych` | Analiza wymagania |
+| R12. Przebieg interfejsu w Playwright | `przebieg-ui` | Analiza przebiegu |
+| R13. Przebieg wywołań API | `przebieg-api` | Analiza przebiegu |
+| R14. Wiadomość przychodząca | `wiadomosc-przychodzaca` | Analiza przebiegu |
+| R15. PDF wygenerowany przez system | `pdf-potwierdzenie` | Analiza przebiegu |
+| R16. Dostępność strony | `dostepnosc-strony` | Analiza przebiegu |
+| R17. Lokalizatory po zmianie strony | `lokalizatory-po-zmianie` | Analiza przebiegu |
+| R18. Raport z jednego przebiegu | `raport-z-przebiegu` | Analiza przebiegu |
 
 ## Budowa agenta
 
@@ -82,7 +89,7 @@ Jedynym źródłem wejścia są skrypty z katalogu `narzedzia` i pliki, które s
 | Agent | Skrypty |
 | --- | --- |
 | Analiza wymagania | `wymaganie.py`, `lista_testow.py`, `zmiana_wymagania.py`, `opis_interfejsu.py`, `wiedza.py`, `przypadki_reczne.py`, po decyzji człowieka `przebieg_danych.py` i `przebieg.py` |
-| Analiza przebiegu | `przebieg.py`, `tabela_asercji.py`, `przebieg_nocny.py`, `historia.py`, `zmiana_w_testach.py`, `podobne_zgloszenia.py`, `wymaganie.py` |
+| Analiza przebiegu | `przebieg.py`, `tabela_asercji.py`, `przebieg_nocny.py`, `historia.py`, `zmiana_w_testach.py`, `podobne_zgloszenia.py`, `przebieg_ui.py`, `przebieg_api.py`, `wiadomosc.py`, `pdf.py`, `dostepnosc.py`, `lokalizatory.py`, `opis_interfejsu.py`, `wymaganie.py` |
 | Zakres i wydanie | `lista_sprawdzen.py`, `liczby.py`, `zbierz_wyniki.py`, `lista_testow.py`, `plan_iteracji.py`, `zmiana_wymagania.py`, `wymaganie.py`, na polecenie człowieka `przebieg.py` |
 
 Każdy agent ma zapisane, że:

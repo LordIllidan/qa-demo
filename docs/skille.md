@@ -1,6 +1,6 @@
 # Zbiór skilli dla testerów
 
-Dwadzieścia pięć skilli GitHub Copilot: czternaście dla zagadnień pokazu i jedenaście dla zagadnień rozszerzających (R1–R11), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
+Trzydzieści dwa skille GitHub Copilot: czternaście dla zagadnień pokazu i osiemnaście dla zagadnień rozszerzających (R1–R18), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
 
 ## Gdzie leżą i w jakim formacie
 
@@ -50,6 +50,13 @@ Skille nie mają pola `allowed-tools`, więc żadnego narzędzia nie zatwierdzaj
 | `wiedza-o-produkcie` | R9. Wiedza o produkcie z bazy wiedzy | odpowiedź tylko z fragmentów bazy wiedzy, każde zdanie ze źródłem, sprzeczności obok siebie |
 | `podobne-zgloszenia` | R10. Podobne zgłoszenia przed założeniem nowego | kandydaci na powtórzenie, regresję albo zgłoszenie odrzucone, bez rozstrzygnięcia |
 | `przeglad-przypadkow-recznych` | R11. Przegląd przypadków testowych ręcznych | problemy w przypadkach ze źródłem i poprawki tylko tam, gdzie wynik daje wymaganie |
+| `przebieg-ui` | R12. Przebieg interfejsu w Playwright | co pokazała strona i szkic sprawdzeń, których przebieg nie wykonał |
+| `przebieg-api` | R13. Przebieg wywołań API | odpowiedzi zestawione z opisem interfejsu i z wymaganiem |
+| `wiadomosc-przychodzaca` | R14. Wiadomość przychodząca | nadawca, treść, link i token ze źródłem albo z pytaniem |
+| `pdf-potwierdzenie` | R15. PDF wygenerowany przez system | wiersze pliku wobec wymagania i to, czego plik nie dowodzi |
+| `dostepnosc-strony` | R16. Dostępność strony | fakty z inwentarza HTML i pytania, gdzie wymaganie milczy |
+| `lokalizatory-po-zmianie` | R17. Lokalizatory po zmianie strony | selektory, które przestały pasować, i propozycja do decyzji człowieka |
+| `raport-z-przebiegu` | R18. Raport z jednego przebiegu | co system zrobił, dla osoby spoza zespołu, bez decyzji o wydaniu |
 
 Które skille służą testerowi manualnemu, a które automatyzującemu, opisuje [role-testerow.md](role-testerow.md).
 

@@ -95,7 +95,7 @@ W pliku `material/przebieg-nocny/wynik-8766.json` jest dziesięć testów na bui
 
 `material/zgloszenia/ZGL-101.md` to zgłoszenie defektu „link resetu działa drugi raz” w kształcie, jaki powstaje w zagadnieniu 2 po decyzji człowieka.
 
-## Zagadnienia rozszerzające (R1–R11)
+## Zagadnienia rozszerzające (R1–R18)
 
 Odpowiedzi wyprowadzone z materiału ręcznie. Skilli i agentów dla tych zagadnień nie uruchomiono w GitHub Copilot, więc to, co odda model, może się różnić układem.
 
@@ -259,6 +259,68 @@ W `material/przypadki-reczne/reset-hasla.json` jest siedem przypadków. Czego si
 - PR6 jest blisko R6, ale wynik „logowanie się udaje” nie cytuje wymagania.
 
 Zły wynik to dopisanie czasu ważności linku albo wyniku dla PR5 wziętego z przypadku zamiast z R2.
+
+### R12. Przebieg interfejsu w Playwright
+
+Przebieg otwiera `/`, wpisuje `anna@example.com` i klika „Wyślij link”. W statusie strony jest tekst „Jeśli konto istnieje, wysłaliśmy wiadomość z linkiem resetu.” To ten sam komunikat, o którym mówi R2, ale przebieg nie wysłał prośby dla adresu bez konta, więc R2 nie jest tu sprawdzone. R1 mówi o wiadomości z linkiem, a przebieg skrzynki nie otwiera.
+
+Szkic, którego przebieg nie wykonał, może objąć drugą prośbę dla adresu bez konta (R2), stronę „Ustaw nowe hasło” (R3) i ponowne użycie linku (R4). Selektor w szkicu ma być opisany słowami strony, nie identyfikatorem z HTML.
+
+Zły wynik to ocena „przeszło”, bo Playwright doszedł do końca, albo dopisanie kroku jako wykonanego.
+
+### R13. Przebieg wywołań API
+
+Plik `material/api/wywolania-reset.json` ma trzy wywołania. Na działającym buildzie:
+
+- A1, `POST /reset/zamow` dla `anna@example.com`: status 202. Tabela interfejsu w wymaganiu też podaje 202. Treść komunikatu w wymaganiu nie jest opisana.
+- A2, `POST /reset/potwierdz` z pustym tokenem: status 400 i komunikat o braku tokenu. To R5 i wiersz „400, gdy tokenu brak”.
+- A3, logowanie hasłem, które nie jest hasłem konta: status 401. Wiersz logowania podaje 401 przy błędnych danych.
+
+Przebieg nie wykonuje prośby dla adresu bez konta (R2), ustawienia hasła poprawnym tokenem (R3, R6) ani drugiego użycia linku (R4). R7 zestawia opis OpenAPI z wymaganiem bez wykonywania wywołań. Tu model czyta wykonane odpowiedzi.
+
+Zły wynik to uznanie statusu z przebiegu za oczekiwany tylko dlatego, że aplikacja tak odpowiedziała, albo wysłanie własnego żądania.
+
+### R14. Wiadomość przychodząca
+
+Po `POST /reset/zamow` dla `anna@example.com` skrzynka testowa oddaje wiadomość. Nadawca `sklep@example.com`, odbiorca `anna@example.com`, temat „Ustaw nowe hasło”. W treści jest link z tokenem, zdanie „Link działa jeden raz.” i adres `obsluga@example.com`. Pole `token` jest tym samym tokenem co w linku.
+
+R1 każe wysłać wiadomość z linkiem, gdy konto istnieje. R3 każe, żeby link zawierał token. R4 mówi, że link działa jeden raz, ale przebieg linku nie otwiera. Wymaganie nie podaje nadawcy, tematu ani adresu biura. Czasu ważności linku też nie podaje.
+
+Zły wynik to wymyślenie wymaganego nadawcy albo uznanie skrzynki testowej za skrzynkę odbiorcy.
+
+### R15. PDF wygenerowany przez system
+
+`GET /test/potwierdzenie.pdf` oddaje plik bez wcześniejszego resetu. Wyciąg ma tytuł „Potwierdzenie zmiany hasla”, wiersze „Potwierdzenie zmiany hasła”, numer builda, „Komunikat: Hasło zostało zmienione.” i „Biuro obsługi: obsluga@example.com”.
+
+Wymaganie nie opisuje dokumentu PDF. Zdanie „Hasło zostało zmienione.” w pliku nie jest dowodem, że hasło się zmieniło: skrypt tylko pobiera plik. R6 opisuje logowanie nowym hasłem, nie dokument.
+
+Zły wynik to uznanie wiersza z pliku za fakt, że system zmienił hasło, albo ocena układu strony, którego wyciąg nie pokazuje.
+
+### R16. Dostępność strony
+
+Inwentarz `GET /` i `GET /reset` pokazuje język `pl`, jeden nagłówek `h1` na stronie, etykietę przy polu („Adres e-mail”, „Nowe hasło”) i przycisk z tekstem. Obrazków nie ma. Wymaganie o etykietach, języku i kontraście milczy.
+
+Skrypt nie mierzy kontrastu, fokusu ani czytnika. Werdykt „strona jest dostępna” jest poza wejściem.
+
+Zły wynik to ogłoszenie zgodności z normą na podstawie tego spisu.
+
+### R17. Lokalizatory po zmianie strony
+
+`material/ui/lokalizatory.json` wobec `strona-przed.html` i `strona-po.html`:
+
+- L1 `#email` pasuje przed zmianą i nie pasuje po niej. Po zmianie pole ma `id="adres"`.
+- L2, tekst przycisku „Wyślij link”, pasuje przed zmianą. Po zmianie przycisk ma tekst „Kontynuuj”.
+- L3, nagłówek „Nie pamiętam hasła”, pasuje w obu plikach.
+
+Propozycja nowego selektora jest regułą własną modelu. R1 mówi o podaniu adresu i prośbie o reset, nie o tekście przycisku. Zmiana „Wyślij link” na „Kontynuuj” nie wynika ze zdania wymagania, więc zostaje pytanie, czy tekst przycisku jest częścią umowy.
+
+Zły wynik to podmiana selektora w teście albo wybór selektora tylko po to, żeby test przeszedł.
+
+### R18. Raport z jednego przebiegu
+
+Wejściem jest jeden wynik `przebieg.py`. Raport mówi, który build i który zestaw objął, co system zrobił w szczegółach testów i czego ten jeden przebieg nie objął. Nie klasyfikuje awarii, nie pisze zgłoszenia i nie zawiera decyzji o wydaniu.
+
+Zły wynik to słowo „wgrywamy” albo jego zaprzeczenie, albo nazwanie stanu testu („test padł”) zamiast zachowania systemu.
 
 ## Przykład zapisu przebiegu
 

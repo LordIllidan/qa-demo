@@ -1,0 +1,27 @@
+{
+  "format": "qa-demo/wywolania-api/1",
+  "opis": "Wywołania resetu hasła do odczytania przez model. Plik nie podaje, czyja odpowiedź jest zgodna z wymaganiem.",
+  "wywolania": [
+    {
+      "id": "A1",
+      "opis": "Prośba o reset dla konta, które istnieje",
+      "metoda": "POST",
+      "sciezka": "/reset/zamow",
+      "dane": {"email": "anna@example.com"}
+    },
+    {
+      "id": "A2",
+      "opis": "Ustawienie hasła bez tokenu",
+      "metoda": "POST",
+      "sciezka": "/reset/potwierdz",
+      "dane": {"token": "", "haslo": "NoweHaslo-1"}
+    },
+    {
+      "id": "A3",
+      "opis": "Logowanie hasłem, które nie jest hasłem konta",
+      "metoda": "POST",
+      "sciezka": "/logowanie",
+      "dane": {"email": "anna@example.com", "haslo": "haslo-ktore-nie-jest-haslem-konta"}
+    }
+  ]
+}

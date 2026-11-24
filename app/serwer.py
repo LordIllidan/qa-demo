@@ -41,6 +41,104 @@ BUILDY = {
 }
 
 
+def zbuduj_pdf(tytul: str, linie: list) -> bytes:
+    """PDF z jedną stroną. Każda linia jest napisem UTF-16 w strumieniu treści."""
+    def napis(tekst: str) -> str:
+        return "<FEFF" + tekst.encode("utf-16-be").hex().upper() + "> Tj"
+
+    polecenia = ["BT", "/F1 14 Tf", "50 780 Td"]
+    for numer, linia in enumerate(linie):
+        if numer:
+            polecenia.append("0 -22 Td")
+        polecenia.append(napis(linia))
+    polecenia.append("ET")
+    strumien = ("\n".join(polecenia) + "\n").encode("ascii")
+    obiekty = [
+        b"<< /Type /Catalog /Pages 2 0 R >>",
+        b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R "
+        b"/Resources << /Font << /F1 5 0 R >> >> >>",
+        b"<< /Length " + str(len(strumien)).encode("ascii") + b" >>\nstream\n" + strumien + b"endstream",
+        b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    ]
+    czesci = [b"%PDF-1.4\n"]
+    przesuniecia = []
+    for numer, obiekt in enumerate(obiekty, start=1):
+        przesuniecia.append(sum(len(c) for c in czesci))
+        czesci.append(f"{numer} 0 obj\n".encode("ascii") + obiekt + b"\nendobj\n")
+    start_xref = sum(len(c) for c in czesci)
+    wpisy = ["0000000000 65535 f \n"] + [f"{p:010d} 00000 n \n" for p in przesuniecia]
+    czesci.append(
+        f"xref\n0 {len(obiekty) + 1}\n".encode("ascii")
+        + "".join(wpisy).encode("ascii")
+        + f"trailer\n<< /Size {len(obiekty) + 1} /Root 1 0 R /Info << /Title ({tytul}) >> >>\n".encode("ascii")
+        + f"startxref\n{start_xref}\n%%EOF\n".encode("ascii")
+    )
+    return b"".join(czesci)
+
+
+STRONA_RESETU = """<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="utf-8"><title>Reset hasła</title></head>
+<body>
+<main>
+  <h1>Nie pamiętam hasła</h1>
+  <form id="prosba">
+    <label for="email">Adres e-mail</label>
+    <input id="email" name="email" type="email" autocomplete="username">
+    <button type="submit">Wyślij link</button>
+  </form>
+  <p id="wynik" role="status"></p>
+</main>
+<script>
+document.getElementById("prosba").addEventListener("submit", function (zdarzenie) {
+  zdarzenie.preventDefault();
+  fetch("/reset/zamow", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({email: document.getElementById("email").value})
+  }).then(function (odpowiedz) { return odpowiedz.json(); })
+    .then(function (tresc) {
+      document.getElementById("wynik").textContent = tresc.komunikat || tresc.blad || "";
+    });
+});
+</script>
+</body>
+</html>
+"""
+
+STRONA_NOWEGO_HASLA = """<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="utf-8"><title>Nowe hasło</title></head>
+<body>
+<main>
+  <h1>Ustaw nowe hasło</h1>
+  <form id="haslo">
+    <label for="haslo-nowe">Nowe hasło</label>
+    <input id="haslo-nowe" name="haslo" type="password" autocomplete="new-password">
+    <button type="submit">Ustaw hasło</button>
+  </form>
+  <p id="wynik" role="status"></p>
+</main>
+<script>
+var token = new URLSearchParams(location.search).get("token") || "";
+document.getElementById("haslo").addEventListener("submit", function (zdarzenie) {
+  zdarzenie.preventDefault();
+  fetch("/reset/potwierdz", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({token: token, haslo: document.getElementById("haslo-nowe").value})
+  }).then(function (odpowiedz) { return odpowiedz.json(); })
+    .then(function (tresc) {
+      document.getElementById("wynik").textContent = tresc.komunikat || tresc.blad || "";
+    });
+});
+</script>
+</body>
+</html>
+"""
+
+
 @dataclass
 class Stan:
     """Dane jednego builda. Każdy build ma własne konta, tokeny i sesje."""
@@ -68,9 +166,18 @@ class Stan:
                 return
             token = secrets.token_urlsafe(16)
             self.tokeny[token] = email
+            link = f"http://{ADRES}:{self.port}/reset?token={token}"
             wiadomosc = {
-                "temat": "Reset hasła",
-                "link": f"http://{ADRES}:{self.port}/reset?token={token}",
+                "od": "sklep@example.com",
+                "do": email,
+                "temat": "Ustaw nowe hasło",
+                "tresc": (
+                    "Dzień dobry.\n"
+                    f"Link resetu: {link}\n"
+                    "Link działa jeden raz.\n"
+                    "Biuro obsługi: obsluga@example.com\n"
+                ),
+                "link": link,
                 "token": token,
                 "dostepna_od": time.monotonic() + random.uniform(*OPOZNIENIE_POCZTY_S),
             }
@@ -117,10 +224,23 @@ class Stan:
             ostatnia = dostarczone[-1]
             return 200, {
                 "email": email,
+                "od": ostatnia["od"],
+                "do": ostatnia["do"],
                 "temat": ostatnia["temat"],
+                "tresc": ostatnia["tresc"],
                 "link": ostatnia["link"],
                 "token": ostatnia["token"],
             }
+
+    def potwierdzenie_pdf(self) -> bytes:
+        """Prosty PDF z potwierdzeniem. Tekst jest w strumieniu jako UTF-16, żeby dało się go wyjąć."""
+        linie = [
+            "Potwierdzenie zmiany hasła",
+            f"Build: {self.build.numer}",
+            "Komunikat: Hasło zostało zmienione.",
+            "Biuro obsługi: obsluga@example.com",
+        ]
+        return zbuduj_pdf("Potwierdzenie zmiany hasla", linie)
 
 
 class Obsluga(BaseHTTPRequestHandler):
@@ -129,7 +249,13 @@ class Obsluga(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         adres = urlparse(self.path)
         parametry = parse_qs(adres.query)
-        if adres.path == "/stan":
+        if adres.path == "/":
+            self._odpowiedz_bajty(200, "text/html; charset=utf-8", STRONA_RESETU.encode("utf-8"))
+        elif adres.path == "/reset":
+            self._odpowiedz_bajty(200, "text/html; charset=utf-8", STRONA_NOWEGO_HASLA.encode("utf-8"))
+        elif adres.path == "/test/potwierdzenie.pdf":
+            self._odpowiedz_bajty(200, "application/pdf", self.stan.potwierdzenie_pdf())
+        elif adres.path == "/stan":
             self._odpowiedz(200, {"build": self.stan.build.numer, "port": self.stan.port})
         elif adres.path == "/konto":
             naglowek = self.headers.get("Authorization", "")
@@ -175,9 +301,12 @@ class Obsluga(BaseHTTPRequestHandler):
         return dane if isinstance(dane, dict) else None
 
     def _odpowiedz(self, status: int, tresc: dict) -> None:
-        surowe = json.dumps(tresc, ensure_ascii=False).encode("utf-8")
+        self._odpowiedz_bajty(status, "application/json; charset=utf-8",
+                              json.dumps(tresc, ensure_ascii=False).encode("utf-8"))
+
+    def _odpowiedz_bajty(self, status: int, typ: str, surowe: bytes) -> None:
         self.send_response(status)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Type", typ)
         self.send_header("Content-Length", str(len(surowe)))
         self.end_headers()
         self.wfile.write(surowe)

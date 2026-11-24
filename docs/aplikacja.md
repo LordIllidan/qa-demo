@@ -47,7 +47,10 @@ Adresy pomocnicze środowiska testowego (nie są częścią wymagania):
 | --- | --- |
 | `GET /stan` | podaje numer builda i port |
 | `POST /test/konto` z polami `email` i `haslo` | zakłada konto; odpowiedź 201 |
-| `GET /test/skrzynka?email=<adres>` | podaje ostatnią dostarczoną wiadomość z linkiem resetu i tokenem; 404, gdy wiadomości jeszcze nie ma |
+| `GET /test/skrzynka?email=<adres>` | podaje ostatnią dostarczoną wiadomość: nadawca, odbiorca, temat, treść, link i token; 404, gdy wiadomości jeszcze nie ma |
+| `GET /` | strona „Nie pamiętam hasła”; formularz woła `POST /reset/zamow` |
+| `GET /reset?token=<token>` | strona „Ustaw nowe hasło”; formularz woła `POST /reset/potwierdz` |
+| `GET /test/potwierdzenie.pdf` | prosty PDF z potwierdzeniem zmiany hasła; tekst wyciąga `narzedzia/pdf.py` |
 
 Po starcie w każdym buildzie istnieje konto `anna@example.com` z hasłem `StareHaslo-1`.
 

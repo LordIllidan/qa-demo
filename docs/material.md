@@ -24,6 +24,8 @@ Wspólny materiał wejściowy dla wszystkich zagadnień. Leży w katalogu `mater
 | `material/wiedza/` | pięć dokumentów o sklepie: słownik, pomoc dla klienta, procedury biura obsługi, zamówienia, wiadomości e-mail | R9 | `wiedza.py` |
 | `material/zgloszenia/archiwum.json` | zgłoszenia zamknięte, odrzucone i duplikaty | R10 | `podobne_zgloszenia.py` |
 | `material/przypadki-reczne/reset-hasla.json` | przypadki testowe ręczne resetu hasła | R11 | `przypadki_reczne.py` |
+| `material/api/wywolania-reset.json` | wywołania API resetu hasła do wykonania na buildzie | R13 | `przebieg_api.py` |
+| `material/ui/` | dwie wersje strony resetu i lista lokalizatorów | R17 | `lokalizatory.py` |
 
 Materiałem są też dwa buildy aplikacji (`docs/aplikacja.md`) i testy (`docs/testy.md`).
 

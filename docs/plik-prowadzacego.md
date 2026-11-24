@@ -18,7 +18,7 @@ Dlatego dokumentacja w `README.md` i w katalogu `docs` opisuje materiał neutral
 - liczby zagadnienia 5 zestawione z progami,
 - zawartość przykładowego pliku danych zagadnienia 7,
 - wypełniony przykład zapisu przebiegu,
-- odpowiedzi do zagadnień rozszerzających R1–R11.
+- odpowiedzi do zagadnień rozszerzających R1–R18.
 
 ## Kto czyta
 

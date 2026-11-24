@@ -1,6 +1,6 @@
 # Tester manualny i tester automatyzujący: kto czego używa
 
-Zestaw ma dwadzieścia pięć zagadnień: czternaście z pokazu i jedenaście rozszerzających (R1–R11). Ten plik dzieli je według dwóch ról i dla każdej podaje, w którym momencie pracy sięgnąć po które zagadnienie, co tester wnosi sam, co dostaje i na co ma uważać. Na końcu stoi wykaz rodzajów testów i prac, których zestaw nie obejmuje.
+Zestaw ma trzydzieści dwa zagadnienia: czternaście z pokazu i osiemnaście rozszerzających (R1–R18). Ten plik dzieli je według dwóch ról i dla każdej podaje, w którym momencie pracy sięgnąć po które zagadnienie, co tester wnosi sam, co dostaje i na co ma uważać. Na końcu stoi wykaz rodzajów testów i prac, których zestaw nie obejmuje.
 
 Opis zagadnień jest w `README.md`, opis skilli w [skille.md](skille.md), opis agentów w [agenci-copilot.md](agenci-copilot.md).
 
@@ -46,6 +46,13 @@ W wielu zespołach jedna osoba wykonuje obie prace. Podział dotyczy czynności,
 | R9 | Wiedza o produkcie z bazy wiedzy | tak | tak | Analiza wymagania |
 | R10 | Podobne zgłoszenia przed założeniem nowego | tak | tak | Analiza przebiegu |
 | R11 | Przegląd przypadków testowych ręcznych | tak | – | Analiza wymagania |
+| R12 | Przebieg interfejsu w Playwright | czasem | tak | Analiza przebiegu |
+| R13 | Przebieg wywołań API | czasem | tak | Analiza przebiegu |
+| R14 | Wiadomość przychodząca | tak | tak | Analiza przebiegu |
+| R15 | PDF wygenerowany przez system | tak | tak | Analiza przebiegu |
+| R16 | Dostępność strony | tak | czasem | Analiza przebiegu |
+| R17 | Lokalizatory po zmianie strony | – | tak | Analiza przebiegu |
+| R18 | Raport z jednego przebiegu | tak | tak | Analiza przebiegu |
 
 ## Ścieżka testera manualnego
 

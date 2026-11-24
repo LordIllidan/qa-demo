@@ -1,6 +1,6 @@
-# Zagadnienia rozszerzające R1–R11
+# Zagadnienia rozszerzające R1–R18
 
-Jedenaście zagadnień dodanych do czternastu zagadnień pokazu. R1–R8 powstały przy pierwszym przeglądzie pokrycia pracy testera, R9–R11 doszły razem z bazą wiedzy o produkcie, po tym samym przeglądzie. Każde ma skill w `.github/skills` i jest przypisane do jednego z trzech agentów GitHub Copilot.
+Osiemnaście zagadnień dodanych do czternastu zagadnień pokazu. R1–R8 powstały przy pierwszym przeglądzie pokrycia pracy testera, R9–R11 doszły razem z bazą wiedzy o produkcie, po tym samym przeglądzie. Każde ma skill w `.github/skills` i jest przypisane do jednego z trzech agentów GitHub Copilot.
 
 ## Po co
 
@@ -32,6 +32,13 @@ Czternaście zagadnień pokazu dotyczy miejsc, w których model formułuje zdani
 | R9 | Wiedza o produkcie z bazy wiedzy | `wiedza-o-produkcie` | Analiza wymagania | `wiedza.py`, z opcją `--wymaganie` także `wymaganie.py` |
 | R10 | Podobne zgłoszenia przed założeniem nowego | `podobne-zgloszenia` | Analiza przebiegu | `podobne_zgloszenia.py`, `wymaganie.py` |
 | R11 | Przegląd przypadków testowych ręcznych | `przeglad-przypadkow-recznych` | Analiza wymagania | `przypadki_reczne.py`, `wymaganie.py` |
+| R12 | Przebieg interfejsu w Playwright | `przebieg-ui` | Analiza przebiegu | `przebieg_ui.py`, `wymaganie.py` |
+| R13 | Przebieg wywołań API | `przebieg-api` | Analiza przebiegu | `przebieg_api.py`, `opis_interfejsu.py`, `wymaganie.py` |
+| R14 | Wiadomość przychodząca | `wiadomosc-przychodzaca` | Analiza przebiegu | `wiadomosc.py`, `wymaganie.py` |
+| R15 | PDF wygenerowany przez system | `pdf-potwierdzenie` | Analiza przebiegu | `pdf.py`, `wymaganie.py` |
+| R16 | Dostępność strony | `dostepnosc-strony` | Analiza przebiegu | `dostepnosc.py`, `wymaganie.py` |
+| R17 | Lokalizatory po zmianie strony | `lokalizatory-po-zmianie` | Analiza przebiegu | `lokalizatory.py`, `wymaganie.py` |
+| R18 | Raport z jednego przebiegu | `raport-z-przebiegu` | Analiza przebiegu | `przebieg.py` |
 
 Opis każdego zagadnienia w układzie „sytuacja, model dostaje, model oddaje, czego nie robi, decyzja człowieka” jest w `README.md`, w sekcji „Zagadnienia rozszerzające”.
 
@@ -47,6 +54,13 @@ R1–R5 pracują na materiale i skryptach pokazu. R6–R8 mają własny materia�
 | R9 | `material/wiedza/` | `narzedzia/wiedza.py` | [narzedzie-wiedza.md](narzedzie-wiedza.md) |
 | R10 | `material/zgloszenia/otwarte.json`, `material/zgloszenia/archiwum.json` | `narzedzia/podobne_zgloszenia.py` | [narzedzie-podobne-zgloszenia.md](narzedzie-podobne-zgloszenia.md) |
 | R11 | `material/przypadki-reczne/reset-hasla.json` | `narzedzia/przypadki_reczne.py` | [narzedzie-przypadki-reczne.md](narzedzie-przypadki-reczne.md) |
+| R12 | strona resetu w aplikacji | `narzedzia/przebieg_ui.py` | [narzedzie-przebieg-ui.md](narzedzie-przebieg-ui.md) |
+| R13 | `material/api/wywolania-reset.json` | `narzedzia/przebieg_api.py` | [narzedzie-przebieg-api.md](narzedzie-przebieg-api.md) |
+| R14 | skrzynka builda | `narzedzia/wiadomosc.py` | [narzedzie-wiadomosc.md](narzedzie-wiadomosc.md) |
+| R15 | `GET /test/potwierdzenie.pdf` | `narzedzia/pdf.py` | [narzedzie-pdf.md](narzedzie-pdf.md) |
+| R16 | strony `/` i `/reset` | `narzedzia/dostepnosc.py` | [narzedzie-dostepnosc.md](narzedzie-dostepnosc.md) |
+| R17 | `material/ui/` | `narzedzia/lokalizatory.py` | [narzedzie-lokalizatory.md](narzedzie-lokalizatory.md) |
+| R18 | przebieg na buildzie | `narzedzia/przebieg.py` | [narzedzie-przebieg.md](narzedzie-przebieg.md) |
 
 Materiał opisuje [material.md](material.md). Żaden z trzech skryptów nie wymaga działającej aplikacji. Aplikacja demonstracyjna realizuje pierwszą wersję wymagania resetu; druga wersja istnieje tylko jako tekst.
 
@@ -106,7 +120,7 @@ W czacie Visual Studio Code wybiera się agenta z listy albo wskazuje skill pole
 
 ## Odpowiedzi dla prowadzącego
 
-To, czego można się spodziewać po modelu w każdym z jedenastu zagadnień, jest w pliku `prowadzacy/odpowiedzi-pokazu.md`, w części „Zagadnienia rozszerzające (R1–R11)”. Ten plik i `README.md` tego nie podają.
+To, czego można się spodziewać po modelu w każdym z osiemnastu zagadnień, jest w pliku `prowadzacy/odpowiedzi-pokazu.md`, w części „Zagadnienia rozszerzające (R1–R18)”. Ten plik i `README.md` tego nie podają.
 
 ## Podział na role
 

@@ -42,12 +42,22 @@ POLECENIA = {
                            "python narzedzia/wymaganie.py reset-hasla"],
     "przeglad-przypadkow-recznych": ["python narzedzia/przypadki_reczne.py",
                                      "python narzedzia/wymaganie.py reset-hasla"],
+    "przebieg-ui": ["python narzedzia/przebieg_ui.py --port 8765", "python narzedzia/wymaganie.py reset-hasla"],
+    "przebieg-api": ["python narzedzia/przebieg_api.py --port 8765", "python narzedzia/opis_interfejsu.py",
+                     "python narzedzia/wymaganie.py reset-hasla"],
+    "wiadomosc-przychodzaca": ["python narzedzia/wiadomosc.py --port 8765 --email anna@example.com",
+                               "python narzedzia/wymaganie.py reset-hasla"],
+    "pdf-potwierdzenie": ["python narzedzia/pdf.py --port 8765", "python narzedzia/wymaganie.py reset-hasla"],
+    "dostepnosc-strony": ["python narzedzia/dostepnosc.py --port 8765", "python narzedzia/wymaganie.py reset-hasla"],
+    "lokalizatory-po-zmianie": ["python narzedzia/lokalizatory.py", "python narzedzia/wymaganie.py reset-hasla"],
+    "raport-z-przebiegu": ["python narzedzia/przebieg.py --port 8765"],
 }
 
 
 def test_wspolny_graf_obejmuje_zagadnienia_bez_wlasnego_agenta():
     numery = [z.numer for z in ZAGADNIENIA.values()]
-    assert numery == ["3", "P2", "P3", "P5", "P6", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11"]
+    assert numery == ["3", "P2", "P3", "P5", "P6", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
+                       "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18"]
     assert set(ZAGADNIENIA) == set(POLECENIA)
 
 

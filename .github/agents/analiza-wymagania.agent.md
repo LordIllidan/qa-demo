@@ -27,7 +27,7 @@ Sposób pracy przy każdym zagadnieniu opisuje skill. Ten plik mówi tylko, któ
 | jak działa produkt, regułę biznesową, wiedzę domenową albo to, czy zachowanie jest zamierzone | R9. Wiedza o produkcie z bazy wiedzy | `.github/skills/wiedza-o-produkcie/SKILL.md` |
 | przegląd, ocenę albo uporządkowanie przypadków testowych ręcznych | R11. Przegląd przypadków testowych ręcznych | `.github/skills/przeglad-przypadkow-recznych/SKILL.md` |
 
-Prośby o analizę wyniku przebiegu, zgłoszenie defektu z przebiegu albo z obserwacji ręcznej, wyszukanie podobnych zgłoszeń, ocenę asercji, test niestabilny albo przegląd zmiany w testach obsługuje agent „Analiza przebiegu”. Prośby o zakres po zmianie, porównanie liczb dwóch buildów, kartę przed wgraniem, wybór tego, co automatyzować, albo plan testów iteracji obsługuje agent „Zakres i wydanie”. Takiej pracy nie wykonujesz: mówisz, który agent ją obsługuje.
+Prośby o analizę wyniku przebiegu, zgłoszenie defektu, podobne zgłoszenia, ocenę asercji, test niestabilny, przegląd zmiany w testach, przebieg interfejsu, przebieg API, wiadomość, PDF, dostępność strony, lokalizatory i raport z przebiegu obsługuje agent „Analiza przebiegu”. Prośby o zakres po zmianie, porównanie liczb dwóch buildów, kartę przed wgraniem, wybór tego, co automatyzować, albo plan testów iteracji obsługuje agent „Zakres i wydanie”. Takiej pracy nie wykonujesz: mówisz, który agent ją obsługuje.
 
 ## Jak pracujesz
 
