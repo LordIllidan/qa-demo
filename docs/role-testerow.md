@@ -1,6 +1,6 @@
 # Tester manualny i tester automatyzujący: kto czego używa
 
-Zestaw ma dwadzieścia dwa zagadnienia: czternaście z pokazu i osiem rozszerzających (R1–R8). Ten plik dzieli je według dwóch ról i dla każdej podaje, w którym momencie pracy sięgnąć po które zagadnienie, co tester wnosi sam, co dostaje i na co ma uważać. Na końcu stoi wykaz rodzajów testów i prac, których zestaw nie obejmuje.
+Zestaw ma dwadzieścia pięć zagadnień: czternaście z pokazu i jedenaście rozszerzających (R1–R11). Ten plik dzieli je według dwóch ról i dla każdej podaje, w którym momencie pracy sięgnąć po które zagadnienie, co tester wnosi sam, co dostaje i na co ma uważać. Na końcu stoi wykaz rodzajów testów i prac, których zestaw nie obejmuje.
 
 Opis zagadnień jest w `README.md`, opis skilli w [skille.md](skille.md), opis agentów w [agenci-copilot.md](agenci-copilot.md).
 
@@ -43,17 +43,20 @@ W wielu zespołach jedna osoba wykonuje obie prace. Podział dotyczy czynności,
 | R6 | Testy po zmianie wymagania | czasem (przypadki ręczne) | tak | Analiza wymagania |
 | R7 | Testy z opisu interfejsu | czasem (testy API wykonywane ręcznie) | tak | Analiza wymagania |
 | R8 | Plan testów iteracji | tak | tak | Zakres i wydanie |
+| R9 | Wiedza o produkcie z bazy wiedzy | tak | tak | Analiza wymagania |
+| R10 | Podobne zgłoszenia przed założeniem nowego | tak | tak | Analiza przebiegu |
+| R11 | Przegląd przypadków testowych ręcznych | tak | – | Analiza wymagania |
 
 ## Ścieżka testera manualnego
 
 | Moment pracy | Zagadnienie | Co wnosisz | Co dostajesz | Na co uważasz |
 | --- | --- | --- | --- | --- |
 | Przed iteracją | R8 | dane iteracji, ryzyka, godziny | szkic planu: rodzaje testów, role, terminy, pytania | oszacowania i kryterium zakończenia daje zespół, nie model |
-| Historyjka trafia do przeglądu | 1, 8, R5 | tekst wymagania | pytania do autora, przypadki uprawnień, pytania o cechy jakości | pytanie nie jest wymaganiem; odpowiedź daje autor |
+| Historyjka trafia do przeglądu | 1, 8, R5, R9 | tekst wymagania i pytanie o produkt | pytania do autora, przypadki uprawnień, pytania o cechy jakości, odpowiedź z fragmentów bazy wiedzy | pytanie nie jest wymaganiem; zdanie bez cytatu fragmentu nie jest regułą produktu |
 | Wymaganie się zmieniło | R6 | obie wersje wymagania, własne przypadki ręczne | które przypadki trzeba poprawić i które nowe zdania nie mają przypadku | opis zmiany od autora może nie wymieniać wszystkiego |
 | Projektujesz testy | R1, 7 | tekst wymagania | przypadki z techniką i źródłem, tabelę wejść | oczekiwany wynik bez cytatu z wymagania to pytanie, a nie przypadek |
 | Przed sesją eksploracyjną | P5 | listę ryzyk, cel sesji | kartę sesji | zakres i czas ustalasz ty |
-| Po sesji albo po wykonaniu przypadków | P5, R2 | notatki: czynności, odpowiedzi systemu, build | raport z sesji, szkic zgłoszenia, możliwe powtórzenia | w szkicu nie może być kroku, którego nie ma w notatkach |
+| Po sesji albo po wykonaniu przypadków | P5, R2, R10, R11 | notatki, opis zachowania, przypadki ręczne | raport z sesji, szkic zgłoszenia, podobne zgłoszenia, problemy w przypadkach | w szkicu nie może być kroku, którego nie ma w notatkach; podobieństwo zgłoszeń rozstrzygasz ty |
 | Przychodzi poprawka | P2 | zgłoszenie i własny wynik ponownego testu | zdanie o tym, czy kroki dają wynik oczekiwany, i co zostało niesprawdzone | „naprawione” mówisz ty, po sprawdzeniu |
 | Zmiana w ograniczonym oknie czasu | 4 | listę sprawdzeń z czasami | kolejność od najwyższego ryzyka i to, co się nie mieści | model niczego nie usuwa z listy; skrócenie zakresu to decyzja |
 | Przed wydaniem | 6 | wyniki, zgłoszenia, zakres | kartę: co sprawdzone, co czerwone, czego nie ruszano | decyzja o wydaniu nie należy do modelu |

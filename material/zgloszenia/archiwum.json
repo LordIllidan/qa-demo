@@ -1,0 +1,78 @@
+{
+  "format": "qa-demo/archiwum-zgloszen/1",
+  "stan_na": "2026-11-24",
+  "zgloszenia": [
+    {
+      "id": "ZGL-064",
+      "tytul": "Filtr dat pomija zamówienia złożone w dniu podanym jako „do”",
+      "obszar": "zamówienia",
+      "build": "1.2.0",
+      "stan": "zamknięte",
+      "rozwiazanie": "poprawione w 1.3.0",
+      "opis": "Lista zamówień z filtrem od 01.09 do 05.09 nie pokazuje zamówienia złożonego 05.09 o 14:20. Zamówienie z 01.09 jest na liście."
+    },
+    {
+      "id": "ZGL-071",
+      "tytul": "Plik CSV z listą zamówień ma zniekształcone polskie znaki",
+      "obszar": "zamówienia",
+      "build": "1.2.0",
+      "stan": "zamknięte",
+      "rozwiazanie": "poprawione w 1.3.0: plik w kodowaniu UTF-8",
+      "opis": "Po pobraniu listy zamówień jako CSV statusy i nazwy produktów z polskimi znakami są nieczytelne."
+    },
+    {
+      "id": "ZGL-078",
+      "tytul": "Prośba o reset dla adresu bez konta nie zwraca błędu",
+      "obszar": "reset hasła",
+      "build": "1.3.0",
+      "stan": "odrzucone",
+      "rozwiazanie": "zachowanie zgodne z wymaganiem REQ-RESET, R2",
+      "opis": "Prośba o reset dla adresu, pod którym nie ma konta, dostaje tę samą odpowiedź 202 co dla adresu z kontem. Zgłaszający oczekiwał komunikatu, że konta nie ma."
+    },
+    {
+      "id": "ZGL-083",
+      "tytul": "Ten sam link resetu ustawia hasło drugi raz",
+      "obszar": "reset hasła",
+      "build": "1.3.2",
+      "stan": "zamknięte",
+      "rozwiazanie": "poprawione w 1.4.0",
+      "opis": "Po ustawieniu hasła linkiem z wiadomości ten sam link otwarty ponownie pozwala ustawić inne hasło. Odpowiedź 200."
+    },
+    {
+      "id": "ZGL-086",
+      "tytul": "Link z wiadomości resetu można użyć ponownie",
+      "obszar": "reset hasła",
+      "build": "1.3.2",
+      "stan": "duplikat",
+      "rozwiazanie": "duplikat ZGL-083",
+      "opis": "Drugie otwarcie linku resetu z tej samej wiadomości kończy się zmianą hasła."
+    },
+    {
+      "id": "ZGL-089",
+      "tytul": "Sesja otwarta przed resetem hasła działa po resecie",
+      "obszar": "reset hasła",
+      "build": "1.3.2",
+      "stan": "zamknięte",
+      "rozwiazanie": "poprawione w 1.4.0",
+      "opis": "Klient zalogowany w drugiej przeglądarce po resecie hasła nadal pobiera dane konta. GET /konto z sesją sprzed resetu odpowiada 200."
+    },
+    {
+      "id": "ZGL-092",
+      "tytul": "Konsultant widzi przycisk anulowania zamówienia klienta",
+      "obszar": "zamówienia",
+      "build": "1.3.2",
+      "stan": "zamknięte",
+      "rozwiazanie": "poprawione w 1.4.0: przycisk ukryty dla roli tylko do odczytu",
+      "opis": "W aplikacji biura obsługi konsultant widzi na liście zamówień klienta przycisk „Anuluj”. Po kliknięciu pojawia się komunikat o braku uprawnień."
+    },
+    {
+      "id": "ZGL-094",
+      "tytul": "Literówka w komunikacie o pustej liście zamówień",
+      "obszar": "zamówienia",
+      "build": "1.4.0",
+      "stan": "zamknięte",
+      "rozwiazanie": "poprawione w 1.4.1",
+      "opis": "Gdy żadne zamówienie nie spełnia filtrów, lista pokazuje komunikat „Brak zamówień dla wybranych filtórw”."
+    }
+  ]
+}

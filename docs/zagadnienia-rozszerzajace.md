@@ -1,6 +1,6 @@
-# Zagadnienia rozszerzające R1–R8
+# Zagadnienia rozszerzające R1–R11
 
-Osiem zagadnień dodanych do czternastu zagadnień pokazu. Powstały po przeglądzie tego, jak zestaw pokrywa pracę testera manualnego i testera automatyzującego. Każde ma skill w `.github/skills` i jest przypisane do jednego z trzech agentów GitHub Copilot.
+Jedenaście zagadnień dodanych do czternastu zagadnień pokazu. R1–R8 powstały przy pierwszym przeglądzie pokrycia pracy testera, R9–R11 doszły razem z bazą wiedzy o produkcie, po tym samym przeglądzie. Każde ma skill w `.github/skills` i jest przypisane do jednego z trzech agentów GitHub Copilot.
 
 ## Po co
 
@@ -29,6 +29,9 @@ Czternaście zagadnień pokazu dotyczy miejsc, w których model formułuje zdani
 | R6 | Testy po zmianie wymagania | `testy-po-zmianie-wymagania` | Analiza wymagania | `zmiana_wymagania.py`, kod w `testy` |
 | R7 | Testy z opisu interfejsu | `testy-z-opisu-interfejsu` | Analiza wymagania | `opis_interfejsu.py`, `wymaganie.py` |
 | R8 | Plan testów iteracji | `plan-testow-iteracji` | Zakres i wydanie | `plan_iteracji.py`, przy zmianie wymagania `zmiana_wymagania.py` |
+| R9 | Wiedza o produkcie z bazy wiedzy | `wiedza-o-produkcie` | Analiza wymagania | `wiedza.py`, z opcją `--wymaganie` także `wymaganie.py` |
+| R10 | Podobne zgłoszenia przed założeniem nowego | `podobne-zgloszenia` | Analiza przebiegu | `podobne_zgloszenia.py`, `wymaganie.py` |
+| R11 | Przegląd przypadków testowych ręcznych | `przeglad-przypadkow-recznych` | Analiza wymagania | `przypadki_reczne.py`, `wymaganie.py` |
 
 Opis każdego zagadnienia w układzie „sytuacja, model dostaje, model oddaje, czego nie robi, decyzja człowieka” jest w `README.md`, w sekcji „Zagadnienia rozszerzające”.
 
@@ -41,6 +44,9 @@ R1–R5 pracują na materiale i skryptach pokazu. R6–R8 mają własny materia�
 | R6 | `material/zmiana-wymagania/reset-hasla.md`, `material/zmiana-wymagania/opis-zmiany.md` | `narzedzia/zmiana_wymagania.py` | [narzedzie-zmiana-wymagania.md](narzedzie-zmiana-wymagania.md) |
 | R7 | `material/interfejs/reset-hasla.json` | `narzedzia/opis_interfejsu.py` | [narzedzie-opis-interfejsu.md](narzedzie-opis-interfejsu.md) |
 | R8 | `material/plan/iteracja.json`; lista ryzyk i otwarte zgłoszenia z materiału pokazu | `narzedzia/plan_iteracji.py` | [narzedzie-plan-iteracji.md](narzedzie-plan-iteracji.md) |
+| R9 | `material/wiedza/` | `narzedzia/wiedza.py` | [narzedzie-wiedza.md](narzedzie-wiedza.md) |
+| R10 | `material/zgloszenia/otwarte.json`, `material/zgloszenia/archiwum.json` | `narzedzia/podobne_zgloszenia.py` | [narzedzie-podobne-zgloszenia.md](narzedzie-podobne-zgloszenia.md) |
+| R11 | `material/przypadki-reczne/reset-hasla.json` | `narzedzia/przypadki_reczne.py` | [narzedzie-przypadki-reczne.md](narzedzie-przypadki-reczne.md) |
 
 Materiał opisuje [material.md](material.md). Żaden z trzech skryptów nie wymaga działającej aplikacji. Aplikacja demonstracyjna realizuje pierwszą wersję wymagania resetu; druga wersja istnieje tylko jako tekst.
 
@@ -100,7 +106,7 @@ W czacie Visual Studio Code wybiera się agenta z listy albo wskazuje skill pole
 
 ## Odpowiedzi dla prowadzącego
 
-To, czego można się spodziewać po modelu w każdym z ośmiu zagadnień, jest w pliku `prowadzacy/odpowiedzi-pokazu.md`, w części „Zagadnienia rozszerzające (R1–R8)”. Ten plik i `README.md` tego nie podają.
+To, czego można się spodziewać po modelu w każdym z jedenastu zagadnień, jest w pliku `prowadzacy/odpowiedzi-pokazu.md`, w części „Zagadnienia rozszerzające (R1–R11)”. Ten plik i `README.md` tego nie podają.
 
 ## Podział na role
 

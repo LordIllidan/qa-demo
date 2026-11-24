@@ -85,6 +85,11 @@ Na początku tej części pokaż `python -m agenci_langgraph lista`: widać, że
 1. `python -m agenci_langgraph testy-po-zmianie-wymagania --plik testy/conftest.py` (R6).
 2. `python -m agenci_langgraph testy-z-opisu-interfejsu` (R7).
 3. `python -m agenci_langgraph plan-testow-iteracji --zmiana-wymagania` (R8).
+4. `python -m agenci_langgraph wiedza-o-produkcie --pytanie "Czy po zmianie hasła klient zostaje zalogowany?" --wymaganie reset-hasla` (R9).
+5. `python -m agenci_langgraph podobne-zgloszenia --opis "Ten sam link resetu ustawia hasło drugi raz"` (R10).
+6. `python -m agenci_langgraph przeglad-przypadkow-recznych` (R11).
+
+Te polecenia używają tego samego modelu co reszta pokazu: MLflow ustawiony w części „Czy MLflow odpowiada”.
 
 ## Uwagi na pokaz
 

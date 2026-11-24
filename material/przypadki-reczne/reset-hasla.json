@@ -1,0 +1,69 @@
+{
+  "format": "qa-demo/przypadki-reczne/1",
+  "wymaganie": "reset-hasla",
+  "autor": "tester z zespołu, przypadki do regresji ręcznej",
+  "przypadki": [
+    {
+      "id": "PR1",
+      "tytul": "Prośba o reset dla adresu z kontem",
+      "warunki_poczatkowe": "Konto test@example.com istnieje.",
+      "kroki": [
+        {"krok": "Na stronie logowania wybrać „Nie pamiętam hasła” i podać test@example.com.", "oczekiwany": "Strona potwierdza przyjęcie prośby."},
+        {"krok": "Otworzyć skrzynkę test@example.com.", "oczekiwany": "Jest wiadomość z linkiem resetu."}
+      ]
+    },
+    {
+      "id": "PR2",
+      "tytul": "Link resetu po czasie",
+      "warunki_poczatkowe": "Konto test@example.com istnieje.",
+      "kroki": [
+        {"krok": "Poprosić o reset dla test@example.com.", "oczekiwany": "Jest wiadomość z linkiem resetu."},
+        {"krok": "Odczekać 30 minut i otworzyć link.", "oczekiwany": "Strona informuje, że link wygasł."}
+      ]
+    },
+    {
+      "id": "PR3",
+      "tytul": "Nowe hasło",
+      "warunki_poczatkowe": "",
+      "kroki": [
+        {"krok": "Ustawić nowe hasło linkiem z wiadomości i sprawdzić logowanie.", "oczekiwany": "Wszystko działa poprawnie."}
+      ]
+    },
+    {
+      "id": "PR4",
+      "tytul": "Drugie użycie linku",
+      "warunki_poczatkowe": "Konto test@example.com istnieje.",
+      "kroki": [
+        {"krok": "Poprosić o reset dla test@example.com.", "oczekiwany": "Jest wiadomość z linkiem resetu."},
+        {"krok": "Otworzyć link i ustawić hasło NoweHaslo-1.", "oczekiwany": "Strona potwierdza zmianę hasła."},
+        {"krok": "Otworzyć ten sam link drugi raz i ustawić hasło InneHaslo-2.", "oczekiwany": ""}
+      ]
+    },
+    {
+      "id": "PR5",
+      "tytul": "Prośba o reset dla adresu bez konta",
+      "warunki_poczatkowe": "Pod adresem brak@example.com nie ma konta.",
+      "kroki": [
+        {"krok": "Poprosić o reset dla brak@example.com.", "oczekiwany": "Strona pokazuje komunikat „Nie znaleziono konta dla tego adresu”."}
+      ]
+    },
+    {
+      "id": "PR6",
+      "tytul": "Logowanie po resecie",
+      "warunki_poczatkowe": "",
+      "kroki": [
+        {"krok": "Zalogować się nowym hasłem.", "oczekiwany": "Logowanie się udaje."},
+        {"krok": "Zalogować się starym hasłem.", "oczekiwany": "Logowanie się nie udaje."}
+      ]
+    },
+    {
+      "id": "PR7",
+      "tytul": "Reset hasła dla konta testowego",
+      "warunki_poczatkowe": "Konto test@example.com istnieje.",
+      "kroki": [
+        {"krok": "Poprosić o reset dla test@example.com.", "oczekiwany": "Strona potwierdza przyjęcie prośby."},
+        {"krok": "Sprawdzić skrzynkę test@example.com.", "oczekiwany": "Jest wiadomość z linkiem resetu."}
+      ]
+    }
+  ]
+}

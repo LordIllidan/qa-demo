@@ -16,6 +16,8 @@ NOTATKI = "material/sesja/notatki-z-sesji.md"
 OPCJE_TESTOWE = {
     "test-potwierdzajacy": ["--port", "8766", "--test", "test_stan_zwraca_numer_builda"],
     "test-niestabilny": ["--powtorzenia", "2"],
+    "wiedza-o-produkcie": ["--pytanie", "Czy po zmianie hasła klient zostaje zalogowany?", "--wymaganie", "reset-hasla"],
+    "podobne-zgloszenia": ["--opis", "Ten sam link resetu ustawia hasło drugi raz"],
 }
 
 POLECENIA = {
@@ -34,12 +36,18 @@ POLECENIA = {
     "testy-po-zmianie-wymagania": ["python narzedzia/zmiana_wymagania.py"],
     "testy-z-opisu-interfejsu": ["python narzedzia/opis_interfejsu.py", "python narzedzia/wymaganie.py reset-hasla"],
     "plan-testow-iteracji": ["python narzedzia/plan_iteracji.py"],
+    "wiedza-o-produkcie": ['python narzedzia/wiedza.py "Czy po zmianie hasła klient zostaje zalogowany?"',
+                           "python narzedzia/wymaganie.py reset-hasla"],
+    "podobne-zgloszenia": ['python narzedzia/podobne_zgloszenia.py "Ten sam link resetu ustawia hasło drugi raz"',
+                           "python narzedzia/wymaganie.py reset-hasla"],
+    "przeglad-przypadkow-recznych": ["python narzedzia/przypadki_reczne.py",
+                                     "python narzedzia/wymaganie.py reset-hasla"],
 }
 
 
 def test_wspolny_graf_obejmuje_zagadnienia_bez_wlasnego_agenta():
     numery = [z.numer for z in ZAGADNIENIA.values()]
-    assert numery == ["3", "P2", "P3", "P5", "P6", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8"]
+    assert numery == ["3", "P2", "P3", "P5", "P6", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11"]
     assert set(ZAGADNIENIA) == set(POLECENIA)
 
 

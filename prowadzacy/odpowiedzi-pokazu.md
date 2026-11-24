@@ -95,7 +95,7 @@ W pliku `material/przebieg-nocny/wynik-8766.json` jest dziesięć testów na bui
 
 `material/zgloszenia/ZGL-101.md` to zgłoszenie defektu „link resetu działa drugi raz” w kształcie, jaki powstaje w zagadnieniu 2 po decyzji człowieka.
 
-## Zagadnienia rozszerzające (R1–R8)
+## Zagadnienia rozszerzające (R1–R11)
 
 Odpowiedzi wyprowadzone z materiału ręcznie. Skilli i agentów dla tych zagadnień nie uruchomiono w GitHub Copilot, więc to, co odda model, może się różnić układem.
 
@@ -222,6 +222,43 @@ Czego się spodziewać w szkicu:
 - Pytania: kryterium zakończenia testów, ryzyka filtra, kto daje oszacowania, czy w iteracji jest regresja obszarów spoza historii, jak testować czas ważności linku.
 
 Zły wynik to podział godzin na pozycje („Ola 20 godzin na filtr”), kryterium zakończenia podane jak ustalenie albo nowe ryzyka wpisane jako ustalone przez zespół.
+
+### R9. Wiedza o produkcie z bazy wiedzy
+
+Pytanie z pokazu: „Czy po zmianie hasła klient zostaje zalogowany?”.
+
+Dwa fragmenty mówią co innego. Strona pomocy (`material/wiedza/pomoc-dla-klienta.md`, aktualizacja 12.03.2025) mówi, że po zmianie hasła klient zostaje zalogowany na urządzeniach do czasu wylogowania. Wymaganie REQ-RESET, R7, mówi, że po ustawieniu nowego hasła wszystkie wcześniej otwarte sesje przestają działać. Model ma pokazać oba cytaty jako sprzeczność i zapytać, który dokument obowiązuje. Nie wybiera nowszego tylko z powodu daty.
+
+Dokument „O sklepie” mówi, że sesja kończy się, gdy klient się wyloguje, i nie mówi o resecie. Procedura biura obsługi nie rozstrzyga sesji. Wiadomość resetu w bazie wiedzy mówi, że link działa jeden raz, tak jak R4.
+
+Zły wynik to odpowiedź z wiedzy ogólnej o sklepach albo wybór jednego z dwóch dokumentów bez pytania.
+
+### R10. Podobne zgłoszenia przed założeniem nowego
+
+Opis z pokazu: „Ten sam link resetu ustawia hasło drugi raz”.
+
+Czego się spodziewać:
+
+- ZGL-101, otwarte na buildzie 1.5.0: możliwe powtórzenie. Treść zgłoszenia opisuje to samo zachowanie.
+- ZGL-083, zamknięte jako poprawione w 1.4.0: możliwa regresja, bo opis dotyczy zachowania nowszego niż poprawka. Model nie rozstrzyga, czy to regresja.
+- ZGL-086 jest zapisane jako duplikat ZGL-083.
+- ZGL-078 zostało odrzucone jako zgodne z R2 i dotyczy innego zachowania: odpowiedzi dla adresu bez konta.
+- ZGL-097 z listy otwartych dotyczy stopki wiadomości. Wspólne mogą być tylko słowa.
+
+Zły wynik to uznanie zgłoszeń za to samo po tytule albo założenie nowego zgłoszenia przez model.
+
+### R11. Przegląd przypadków testowych ręcznych
+
+W `material/przypadki-reczne/reset-hasla.json` jest siedem przypadków. Czego się spodziewać:
+
+- PR2: oczekiwany wynik „link wygasł” po 30 minutach. Wymaganie nie podaje czasu ważności linku, więc zamiast poprawki stoi pytanie do autora.
+- PR3: wynik „wszystko działa poprawnie” nie da się sprawdzić, a warunków początkowych nie ma.
+- PR4: trzeci krok nie ma oczekiwanego wyniku. R4 podaje go wprost: ten sam link użyty ponownie jest odrzucany, a hasło się nie zmienia. Tu poprawka może powstać z wymagania.
+- PR5: wynik „Nie znaleziono konta dla tego adresu” jest sprzeczny z R2, które każe dać taką samą odpowiedź, gdy konto istnieje i gdy nie istnieje.
+- PR1 i PR7 sprawdzają to samo: prośbę o reset dla adresu z kontem i wiadomość z linkiem.
+- PR6 jest blisko R6, ale wynik „logowanie się udaje” nie cytuje wymagania.
+
+Zły wynik to dopisanie czasu ważności linku albo wyniku dla PR5 wziętego z przypadku zamiast z R2.
 
 ## Przykład zapisu przebiegu
 

@@ -12,7 +12,7 @@ Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHu
 | `testy` | testy pytest, w tym „link działa jeden raz” i „wystarczy kod 200” | [docs/testy.md](docs/testy.md) |
 | `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach, druga wersja wymagania, opis interfejsu, dane iteracji | [docs/material.md](docs/material.md) |
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
-| `.github/skills` | dwadzieścia dwa skille dla testerów: czternaście dla zagadnień pokazu i osiem dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
+| `.github/skills` | dwadzieścia pięć skilli dla testerów: czternaście dla zagadnień pokazu i jedenaście dla zagadnień rozszerzających | [docs/skille.md](docs/skille.md) |
 | `.github/agents` | trzech agentów GitHub Copilot dla testerów | [docs/agenci-copilot.md](docs/agenci-copilot.md) |
 | `agenci_langgraph` | agenty LangGraph dla testerów: trzy grafy dla dziewięciu zagadnień i jeden wspólny graf dla pozostałych, każdy z zatrzymaniem na decyzję człowieka | [docs/agenci-langgraph.md](docs/agenci-langgraph.md) |
 | `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
@@ -99,6 +99,9 @@ Zestaw służy dwóm rolom. Tester manualny projektuje i wykonuje testy ręcznie
 | R6 | Testy po zmianie wymagania | czasem (przypadki ręczne) | tak |
 | R7 | Testy z opisu interfejsu | czasem (testy API wykonywane ręcznie) | tak |
 | R8 | Plan testów iteracji | tak | tak |
+| R9 | Wiedza o produkcie z bazy wiedzy | tak | tak |
+| R10 | Podobne zgłoszenia przed założeniem nowego | tak | tak |
+| R11 | Przegląd przypadków testowych ręcznych | tak | – |
 
 Dzień pracy każdej roli z zagadnieniami w kolejności użycia, wejście, które tester wnosi sam, nawyki pracy z modelem i wykaz tego, czego zestaw nie obejmuje, opisuje [docs/role-testerow.md](docs/role-testerow.md).
 
@@ -127,7 +130,7 @@ Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to m
 
 Wariant 20-minutowy to zagadnienia 1, 2 i 5. Pokazują trzy rodzaje wejścia: wymaganie, wynik przebiegu i liczby.
 
-Poza czternastoma zagadnieniami pokazu jest osiem zagadnień rozszerzających (R1–R8). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego, testów niefunkcjonalnych, utrzymania testów po zmianie wymagania, testów z opisu interfejsu i planu testów iteracji. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
+Poza czternastoma zagadnieniami pokazu jest jedenaście zagadnień rozszerzających (R1–R11). Dotyczą pracy, której pokaz nie obejmuje: projektowania przypadków, zgłoszeń z testów ręcznych, wyboru tego, co automatyzować, pisania testu automatycznego, testów niefunkcjonalnych, utrzymania testów po zmianie wymagania, testów z opisu interfejsu i planu testów iteracji. Opisuje je sekcja [Zagadnienia rozszerzające](#zagadnienia-rozszerzające). Które zagadnienie służy testerowi manualnemu, a które automatyzującemu, pokazuje sekcja [Tester manualny i tester automatyzujący](#tester-manualny-i-tester-automatyzujący).
 
 Polecenia ze skryptami `przebieg.py`, `tabela_asercji.py`, `przebieg_danych.py`, `historia.py` i `zmiana_w_testach.py` wymagają aplikacji działającej w drugim oknie PowerShell (`python app/serwer.py`). Pozostałe skrypty czytają pliki i aplikacji nie potrzebują.
 
@@ -391,7 +394,7 @@ python narzedzia/wymaganie.py reset-hasla
 
 ## Zagadnienia rozszerzające
 
-Osiem zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. Agentem LangGraph jest dla nich wspólny graf „Jedno zagadnienie”. Nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
+Jedenaście zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i automatyzującego. Mają ten sam układ opisu i te same zasady co zagadnienia pokazu. R1–R5 korzystają z istniejącego materiału i skryptów, R6–R8 mają własny materiał i własne skrypty. R9–R11 korzystają z bazy wiedzy o produkcie, archiwum zgłoszeń i przypadków ręcznych. Agentem LangGraph jest dla wszystkich wspólny graf „Jedno zagadnienie”. Nie należą do wariantu 20-minutowego. Skąd się wzięły i czym różnią się od zagadnień pokazu, opisuje [docs/zagadnienia-rozszerzajace.md](docs/zagadnienia-rozszerzajace.md).
 
 | Nr | Zagadnienie | Skill | Agent | Agent LangGraph |
 | --- | --- | --- | --- | --- |
@@ -403,6 +406,9 @@ Osiem zagadnień dodanych po przeglądzie pokrycia pracy testera manualnego i au
 | R6 | [Testy po zmianie wymagania](#r6-testy-po-zmianie-wymagania) | `testy-po-zmianie-wymagania` | Analiza wymagania | Jedno zagadnienie |
 | R7 | [Testy z opisu interfejsu](#r7-testy-z-opisu-interfejsu) | `testy-z-opisu-interfejsu` | Analiza wymagania | Jedno zagadnienie |
 | R8 | [Plan testów iteracji](#r8-plan-testów-iteracji) | `plan-testow-iteracji` | Zakres i wydanie | Jedno zagadnienie |
+| R9 | [Wiedza o produkcie z bazy wiedzy](#r9-wiedza-o-produkcie-z-bazy-wiedzy) | `wiedza-o-produkcie` | Analiza wymagania | Jedno zagadnienie |
+| R10 | [Podobne zgłoszenia przed założeniem nowego](#r10-podobne-zgłoszenia-przed-założeniem-nowego) | `podobne-zgloszenia` | Analiza przebiegu | Jedno zagadnienie |
+| R11 | [Przegląd przypadków testowych ręcznych](#r11-przegląd-przypadków-testowych-ręcznych) | `przeglad-przypadkow-recznych` | Analiza wymagania | Jedno zagadnienie |
 
 ### R1. Przypadki testowe techniką
 
@@ -555,6 +561,59 @@ python narzedzia/wymaganie.py reset-hasla
 python narzedzia/plan_iteracji.py
 ```
 
+### R9. Wiedza o produkcie z bazy wiedzy
+
+- **Sytuacja.** Tester pyta, jak produkt ma działać, zanim oceni, czy działa źle. Dokumentacja produktu jest w kilku dokumentach i nie zawsze mówi to samo.
+- **Model dostaje.** Pytanie testera i fragmenty bazy wiedzy wyszukane do tego pytania, każdy z plikiem, sekcją i datą aktualizacji. Gdy pytanie dotyczy funkcji z wymaganiem, dostaje też wymaganie.
+- **Model oddaje.** Odpowiedź, w której każde zdanie ma cytat fragmentu. Sprzeczności między fragmentami albo między fragmentem a wymaganiem stoją obok siebie, z pytaniem, który dokument obowiązuje. To, czego fragmenty nie mówią, jest nazwane wprost.
+- **Czego model nie robi.** Nie odpowiada z wiedzy ogólnej o podobnych produktach. Nie wybiera, który dokument ma rację. Nie sprawdza odpowiedzi na działającej aplikacji i nie nazywa zachowania defektem.
+- **Decyzja człowieka.** Który dokument obowiązuje przy sprzeczności, które pytania wysłać i czy wyszukać ponownie innymi słowami.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `wiedza-o-produkcie`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph wiedza-o-produkcie --pytanie "<pytanie>" --wymaganie reset-hasla`
+- **Skrypt.** `narzedzia/wiedza.py`
+
+```powershell
+python narzedzia/wiedza.py "Czy po zmianie hasła klient zostaje zalogowany?"
+```
+
+### R10. Podobne zgłoszenia przed założeniem nowego
+
+- **Sytuacja.** Tester chce zgłosić zachowanie i najpierw sprawdza, czy ktoś już je zgłosił, czy było naprawione i wróciło, albo czy zostało odrzucone jako zgodne z wymaganiem.
+- **Model dostaje.** Opis zachowania od testera, zgłoszenia otwarte i z archiwum z najwyższym wynikiem wyszukiwania oraz wymaganie.
+- **Model oddaje.** Przy każdym kandydacie: co jest wspólne, co różne albo nieznane i jaką możliwość to pokazuje (możliwe powtórzenie, możliwa regresja, zgłoszenie odrzucone, inne zachowanie). Możliwość jest przypuszczeniem.
+- **Czego model nie robi.** Nie rozstrzyga, czy to powtórzenie, regresja czy nowy defekt. Nie zakłada zgłoszenia i nie zmienia istniejących. Nie uznaje zgłoszeń za to samo po podobnym tytule.
+- **Decyzja człowieka.** Czy to powtórzenie, regresja czy nowe zgłoszenie i czy zakładać nowe, dopisać do istniejącego albo otworzyć zamknięte ponownie.
+- **Dla kogo.** Tester manualny i tester automatyzujący.
+- **Skill.** `podobne-zgloszenia`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph podobne-zgloszenia --opis "<opis zachowania>"`
+- **Skrypty.** `narzedzia/podobne_zgloszenia.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/podobne_zgloszenia.py "Ten sam link resetu ustawia hasło drugi raz"
+python narzedzia/wymaganie.py reset-hasla
+```
+
+### R11. Przegląd przypadków testowych ręcznych
+
+- **Sytuacja.** Zespół ma przypadki ręczne pisane przez różnych ludzi. Część ma oczekiwany wynik „działa poprawnie”, część wynik bez źródła w wymaganiu, a część sprawdza to samo co inna.
+- **Model dostaje.** Przypadki z krokami i oczekiwanymi wynikami oraz wymaganie.
+- **Model oddaje.** Problemy w przypadkach ze źródłem: wynik bez źródła albo sprzeczny z wymaganiem, krok bez wyniku, wynik, którego nie da się sprawdzić, kilka sprawdzeń w jednym przypadku, brak warunków. Poprawkę proponuje tylko tam, gdzie wynik daje wymaganie. Osobno przypadki, które sprawdzają to samo, i zdania wymagania bez przypadku.
+- **Czego model nie robi.** Nie wpisuje oczekiwanego wyniku, którego nie ma w wymaganiu. Nie usuwa przypadków i nie zmienia pliku. Nie wykonuje przypadków na buildzie.
+- **Decyzja człowieka.** Które poprawki przyjąć, które pytania idą do autora i co zrobić z przypadkami, które sprawdzają to samo.
+- **Dla kogo.** Tester manualny.
+- **Skill.** `przeglad-przypadkow-recznych`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
+- **Agent LangGraph.** „Jedno zagadnienie” (`agenci_langgraph/jedno_zagadnienie.py`), polecenie `python -m agenci_langgraph przeglad-przypadkow-recznych`
+- **Skrypty.** `narzedzia/przypadki_reczne.py`, `narzedzia/wymaganie.py`
+
+```powershell
+python narzedzia/przypadki_reczne.py
+python narzedzia/wymaganie.py reset-hasla
+```
+
 ## Narzędzia
 
 Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki`. Żaden niczego nie ocenia.
@@ -575,6 +634,9 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 | `narzedzia/zmiana_wymagania.py` | dwie wersje wymagania, porównanie zdań, opis zmiany i listę testów | [docs/narzedzie-zmiana-wymagania.md](docs/narzedzie-zmiana-wymagania.md) |
 | `narzedzia/opis_interfejsu.py` | opis interfejsu OpenAPI jako tabelę operacji, pól i odpowiedzi | [docs/narzedzie-opis-interfejsu.md](docs/narzedzie-opis-interfejsu.md) |
 | `narzedzia/plan_iteracji.py` | dane iteracji, listę ryzyk, otwarte zgłoszenia i treść historii | [docs/narzedzie-plan-iteracji.md](docs/narzedzie-plan-iteracji.md) |
+| `narzedzia/wiedza.py` | fragmenty bazy wiedzy do pytania testera, każdy ze źródłem | [docs/narzedzie-wiedza.md](docs/narzedzie-wiedza.md) |
+| `narzedzia/podobne_zgloszenia.py` | zgłoszenia podobne do opisu testera, otwarte i z archiwum | [docs/narzedzie-podobne-zgloszenia.md](docs/narzedzie-podobne-zgloszenia.md) |
+| `narzedzia/przypadki_reczne.py` | przypadki testowe ręczne z krokami i oczekiwanymi wynikami | [docs/narzedzie-przypadki-reczne.md](docs/narzedzie-przypadki-reczne.md) |
 
 `narzedzia/wspolne.py` to moduł wspólny skryptów: ramka, zapis plików, uruchamianie pytest.
 
@@ -583,7 +645,7 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 ```text
 qa-demo/
 ├── .github/agents/            trzy pliki .agent.md, agenci GitHub Copilot
-├── .github/skills/            dwadzieścia dwa katalogi, w każdym SKILL.md
+├── .github/skills/            dwadzieścia pięć katalogów, w każdym SKILL.md
 ├── agenci_langgraph/          agenty LangGraph, wspólny graf zagadnień, części wspólne i testy na modelu zastępczym
 ├── app/serwer.py              aplikacja demonstracyjna, porty 8765, 8766 i 8767
 ├── docs/                      dokumentacja
@@ -592,14 +654,16 @@ qa-demo/
 │   ├── zakres/                lista-sprawdzen.json, zakres-wydania.json
 │   ├── liczby/                build-8765.json, build-8766.json
 │   ├── dane/                  dane-resetu.json
-│   ├── zgloszenia/            ZGL-101.md, otwarte.json
+│   ├── zgloszenia/            ZGL-101.md, otwarte.json, archiwum.json
 │   ├── przebieg-nocny/        wynik-8766.json, wynik-8765.json, log-8766.txt
 │   ├── sesja/                 ryzyka.md, notatki-z-sesji.md
 │   ├── zmiana-w-testach/      test_reset_hasla.py, opis-zmiany.md
 │   ├── zmiana-wymagania/      reset-hasla.md (wersja 2), opis-zmiany.md
 │   ├── interfejs/             reset-hasla.json (OpenAPI)
-│   └── plan/                  iteracja.json
-├── narzedzia/                 czternaście skryptów i wspolne.py
+│   ├── plan/                  iteracja.json
+│   ├── wiedza/                dokumenty o produkcie dla zagadnienia R9
+│   └── przypadki-reczne/      reset-hasla.json
+├── narzedzia/                 siedemnaście skryptów, wyszukiwanie.py i wspolne.py
 ├── prowadzacy/                odpowiedzi-pokazu.md, plik dla prowadzącego
 ├── testy/                     conftest.py, test_reset_hasla.py, test_wiadomosc_resetu.py
 ├── pytest.ini

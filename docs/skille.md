@@ -1,6 +1,6 @@
 # Zbiór skilli dla testerów
 
-Dwadzieścia dwa skille GitHub Copilot: czternaście dla zagadnień pokazu i osiem dla zagadnień rozszerzających (R1–R8), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
+Dwadzieścia pięć skilli GitHub Copilot: czternaście dla zagadnień pokazu i jedenaście dla zagadnień rozszerzających (R1–R11), po jednym na zagadnienie. Skill to instrukcja wielokrotnego użytku: mówi modelowi, jakiego wejścia potrzebuje, jak ma pracować, w jakim formacie oddać wynik i czego mu nie wolno.
 
 ## Gdzie leżą i w jakim formacie
 
@@ -47,6 +47,9 @@ Skille nie mają pola `allowed-tools`, więc żadnego narzędzia nie zatwierdzaj
 | `testy-po-zmianie-wymagania` | R6. Testy po zmianie wymagania | stan każdego testu po zmianie wymagania, zdania bez testu i pytania do autora |
 | `testy-z-opisu-interfejsu` | R7. Testy z opisu interfejsu | sprawdzenia kontraktu ze źródłem i niezgodności opisu interfejsu z wymaganiem |
 | `plan-testow-iteracji` | R8. Plan testów iteracji | szkic planu: rodzaje testów dla historii, ryzyka, role, terminy i pytania |
+| `wiedza-o-produkcie` | R9. Wiedza o produkcie z bazy wiedzy | odpowiedź tylko z fragmentów bazy wiedzy, każde zdanie ze źródłem, sprzeczności obok siebie |
+| `podobne-zgloszenia` | R10. Podobne zgłoszenia przed założeniem nowego | kandydaci na powtórzenie, regresję albo zgłoszenie odrzucone, bez rozstrzygnięcia |
+| `przeglad-przypadkow-recznych` | R11. Przegląd przypadków testowych ręcznych | problemy w przypadkach ze źródłem i poprawki tylko tam, gdzie wynik daje wymaganie |
 
 Które skille służą testerowi manualnemu, a które automatyzującemu, opisuje [role-testerow.md](role-testerow.md).
 

@@ -1,4 +1,4 @@
-"""Agent „Jedno zagadnienie” (zagadnienia 3, P2, P3, P5, P6 i R1–R8).
+"""Agent „Jedno zagadnienie” (zagadnienia 3, P2, P3, P5, P6 i R1–R11).
 
 Jeden wspólny graf dla zagadnień, których nie obejmują trzy pozostałe agenty:
 wejście ze skryptów wskazanych przez skill, zdanie modelu według skilla,
@@ -47,6 +47,10 @@ def historia(a) -> list:
     return [("historia.py", "--port", a.port, *powtorzenia)]
 
 
+def wiedza(a) -> list:
+    return [("wiedza.py", a.pytanie), *([("wymaganie.py", a.wymaganie)] if a.wymaganie else [])]
+
+
 def plan_iteracji(a) -> list:
     return [("plan_iteracji.py",), *([("zmiana_wymagania.py",)] if a.zmiana_wymagania else [])]
 
@@ -86,6 +90,12 @@ ZAGADNIENIA = {
     "testy-z-opisu-interfejsu": Zagadnienie(
         "R7", "Testy z opisu interfejsu", lambda a: [("opis_interfejsu.py",), RESET]),
     "plan-testow-iteracji": Zagadnienie("R8", "Plan testów iteracji", plan_iteracji, ("zmiana_wymagania",)),
+    "wiedza-o-produkcie": Zagadnienie(
+        "R9", "Wiedza o produkcie z bazy wiedzy", wiedza, ("pytanie", "wymaganie")),
+    "podobne-zgloszenia": Zagadnienie(
+        "R10", "Podobne zgłoszenia przed założeniem nowego", lambda a: [("podobne_zgloszenia.py", a.opis), RESET], ("opis",)),
+    "przeglad-przypadkow-recznych": Zagadnienie(
+        "R11", "Przegląd przypadków testowych ręcznych", lambda a: [("przypadki_reczne.py",), RESET]),
 }
 
 
@@ -103,6 +113,12 @@ def dodaj_opcje(parser, zagadnienie: Zagadnienie) -> None:
         parser.add_argument("--test", action="append", required=True, help="nazwa testu ze zgłoszenia; można powtórzyć")
     if "powtorzenia" in zagadnienie.opcje:
         parser.add_argument("--powtorzenia", type=int, help="liczba uruchomień zestawu, jeśli inna niż w skrypcie")
+    if "pytanie" in zagadnienie.opcje:
+        parser.add_argument("--pytanie", required=True, help="pytanie testera do bazy wiedzy o produkcie")
+    if "wymaganie" in zagadnienie.opcje:
+        parser.add_argument("--wymaganie", help="nazwa wymagania do dołożenia do wejścia, na przykład reset-hasla")
+    if "opis" in zagadnienie.opcje:
+        parser.add_argument("--opis", required=True, help="opis zachowania, które tester chce zgłosić")
     if "zmiana_wymagania" in zagadnienie.opcje:
         parser.add_argument("--zmiana-wymagania", action="store_true",
                             help="dołóż do wejścia szczegóły zmiany wymagania (narzedzia/zmiana_wymagania.py)")

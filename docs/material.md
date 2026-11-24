@@ -12,7 +12,7 @@ Wspólny materiał wejściowy dla wszystkich zagadnień. Leży w katalogu `mater
 | `material/liczby/build-8765.json`, `material/liczby/build-8766.json` | liczby dwóch buildów: profil, progi, ścieżki orders i search | 5, 6 | `liczby.py`, `zbierz_wyniki.py` |
 | `material/dane/dane-resetu.json` | przykładowy plik danych dla przebiegu w formacie `qa-demo/dane/1`: lista wejść, każde z oczekiwanym wynikiem i jego źródłem | 7 | `przebieg_danych.py` |
 | `material/zgloszenia/ZGL-101.md` | zgłoszenie defektu resetu hasła | P2 | plik czyta model albo człowiek |
-| `material/zgloszenia/otwarte.json` | lista otwartych zgłoszeń | 6, R2, R8 | `zbierz_wyniki.py`, `plan_iteracji.py`; w zagadnieniu R2 plik czyta model albo człowiek |
+| `material/zgloszenia/otwarte.json` | lista otwartych zgłoszeń | 6, R2, R8, R10 | `zbierz_wyniki.py`, `plan_iteracji.py`; w zagadnieniu R2 plik czyta model albo człowiek |
 | `material/zakres/zakres-wydania.json` | zakres planowany i wykonany | 6 | `zbierz_wyniki.py` |
 | `material/przebieg-nocny/` | zapis nocnego przebiegu z kilkoma awariami, przebieg referencyjny i log | P1 | `przebieg_nocny.py` |
 | `material/sesja/ryzyka.md` | lista ryzyk resetu hasła z poziomami ustalonymi przez zespół | P5, R8 | plik czyta model albo człowiek |
@@ -21,6 +21,9 @@ Wspólny materiał wejściowy dla wszystkich zagadnień. Leży w katalogu `mater
 | `material/zmiana-wymagania/` | wymaganie resetu hasła w wersji 2 i opis zmiany od autorki | R6, R8 | `zmiana_wymagania.py`, `plan_iteracji.py` |
 | `material/interfejs/reset-hasla.json` | opis interfejsu resetu hasła w formacie OpenAPI 3.0, przygotowany przez zespół programistów | R7 | `opis_interfejsu.py` |
 | `material/plan/iteracja.json` | dane iteracji: historie, zespół z godzinami, środowisko, ustalenia | R8 | `plan_iteracji.py` |
+| `material/wiedza/` | pięć dokumentów o sklepie: słownik, pomoc dla klienta, procedury biura obsługi, zamówienia, wiadomości e-mail | R9 | `wiedza.py` |
+| `material/zgloszenia/archiwum.json` | zgłoszenia zamknięte, odrzucone i duplikaty | R10 | `podobne_zgloszenia.py` |
+| `material/przypadki-reczne/reset-hasla.json` | przypadki testowe ręczne resetu hasła | R11 | `przypadki_reczne.py` |
 
 Materiałem są też dwa buildy aplikacji (`docs/aplikacja.md`) i testy (`docs/testy.md`).
 

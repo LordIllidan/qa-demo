@@ -66,7 +66,8 @@ def wzgledna(sciezka: Path) -> str:
 def opis_polecenia(polecenie: tuple) -> str:
     """Polecenie w postaci, w jakiej tester wpisuje je w PowerShell."""
     skrypt, *argumenty = polecenie
-    return " ".join(["python", f"narzedzia/{skrypt}", *map(str, argumenty)])
+    argumenty = [f'"{a}"' if " " in str(a) else str(a) for a in argumenty]
+    return " ".join(["python", f"narzedzia/{skrypt}", *argumenty])
 
 
 def wejscie_ze_skryptu(polecenie: tuple) -> str:

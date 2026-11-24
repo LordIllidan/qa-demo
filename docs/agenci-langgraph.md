@@ -11,7 +11,7 @@ Kod: katalog `agenci_langgraph`. Baza zestawu (aplikacja, testy, skrypty, skille
 | `zestaw` | Od wymagania do potwierdzonego zestawu | 1, 7, 8, P4 | jedno | [agent-langgraph-zestaw.md](agent-langgraph-zestaw.md) |
 | `zgloszenie` | Od czerwonego przebiegu do zgłoszenia | P1, 2 | dwa | [agent-langgraph-zgloszenie.md](agent-langgraph-zgloszenie.md) |
 | `karta` | Dwa buildy i karta | 4, 5, 6 | trzy | [agent-langgraph-karta.md](agent-langgraph-karta.md) |
-| nazwa skilla zagadnienia, na przykład `ocena-asercji` | Jedno zagadnienie | 3, P2, P3, P5, P6, R1–R8 | jedno | [agent-langgraph-jedno-zagadnienie.md](agent-langgraph-jedno-zagadnienie.md) |
+| nazwa skilla zagadnienia, na przykład `ocena-asercji` | Jedno zagadnienie | 3, P2, P3, P5, P6, R1–R11 | jedno | [agent-langgraph-jedno-zagadnienie.md](agent-langgraph-jedno-zagadnienie.md) |
 
 Listę poleceń z zagadnieniem, które każde obsługuje, wypisuje:
 
