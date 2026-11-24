@@ -19,7 +19,7 @@ python narzedzia/historia.py --port 8765 --powtorzenia 20
 | `--powtorzenia` | liczba przebiegów; domyślnie 12 |
 | `--zestaw` | plik albo katalog z testami; domyślnie cały katalog `testy` |
 
-Domyślny zestaw obejmuje oba pliki z testami, czyli także test o zmiennym wyniku opisany w `docs/testy.md`. Dwanaście przebiegów trwa kilkanaście sekund.
+Domyślny zestaw obejmuje oba pliki z testami, czyli także test o zmiennym wyniku opisany w `docs/testy.md`. Dwanaście przebiegów trwa od kilku do kilkunastu sekund.
 
 ## Co podaje
 
