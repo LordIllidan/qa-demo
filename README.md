@@ -2,7 +2,7 @@
 
 Zestaw pokazowy dla testerów i QA Engineerów: jak używać modelu AI w codziennej pracy testera tak, żeby model formułował zdanie, a decyzja zostawała przy człowieku.
 
-Repozytorium zawiera pierwszy etap zestawu: materiał pokazu, narzędzia i skrypty oraz zbiór skilli GitHub Copilot. Agentów GitHub Copilot i agentów LangGraph w tym etapie nie ma.
+Repozytorium zawiera materiał pokazu, narzędzia i skrypty, zbiór skilli GitHub Copilot oraz trzech agentów GitHub Copilot, którzy z tych skilli korzystają.
 
 ## Co tu jest
 
@@ -13,6 +13,7 @@ Repozytorium zawiera pierwszy etap zestawu: materiał pokazu, narzędzia i skryp
 | `material` | wymagania, lista sprawdzeń, liczby dwóch buildów, zgłoszenia, nocny przebieg, notatki z sesji, zmiana w testach | [docs/material.md](docs/material.md) |
 | `narzedzia` | skrypty, które podają modelowi wejście w stałym formacie | [docs/format-wejscia.md](docs/format-wejscia.md) |
 | `.github/skills` | czternaście skilli dla testerów | [docs/skille.md](docs/skille.md) |
+| `.github/agents` | trzech agentów GitHub Copilot dla testerów | [docs/agenci-copilot.md](docs/agenci-copilot.md) |
 | `prowadzacy` | odpowiedzi pokazu dla prowadzącego; modele tego katalogu nie czytają | [docs/plik-prowadzacego.md](docs/plik-prowadzacego.md) |
 | `docs` | dokumentacja, jeden plik na funkcję | |
 
@@ -71,26 +72,26 @@ Czym buildy się różnią, ma w pokazie ustalić model na podstawie wejścia. O
 
 ## Zagadnienia
 
-Czternaście zagadnień: osiem podstawowych (1–8) i sześć dodatkowych (P1–P6). Każde zaczyna się od sytuacji z dnia testera i ma ten sam układ opisu: co model dostaje, co oddaje, czego sam nie robi i jaka decyzja zostaje przy człowieku. Każde ma też skill w `.github/skills/<nazwa>/SKILL.md` i polecenia, które podają wejście.
+Czternaście zagadnień: osiem podstawowych (1–8) i sześć dodatkowych (P1–P6). Każde zaczyna się od sytuacji z dnia testera i ma ten sam układ opisu: co model dostaje, co oddaje, czego sam nie robi i jaka decyzja zostaje przy człowieku. Każde ma też skill w `.github/skills/<nazwa>/SKILL.md`, agenta GitHub Copilot w `.github/agents`, który ten skill stosuje, i polecenia, które podają wejście.
 
 Opisy mówią, co model robi i z czego. Nie mówią, co w pokazie wychodzi: to ma ustalić model na podstawie wejścia.
 
-| Nr | Zagadnienie | Skill | Wariant 20 min |
-| --- | --- | --- | --- |
-| 1 | [Luki w wymaganiu](#1-luki-w-wymaganiu) | `luki-w-wymaganiu` | tak |
-| 2 | [Defekt z czerwonego przebiegu](#2-defekt-z-czerwonego-przebiegu) | `zgloszenie-defektu` | tak |
-| 3 | [Ocena asercji](#3-ocena-asercji) | `ocena-asercji` | – |
-| 4 | [Zakres po zmianie](#4-zakres-po-zmianie) | `zakres-po-zmianie` | – |
-| 5 | [Zdanie o dwóch buildach](#5-zdanie-o-dwóch-buildach) | `dwa-buildy-w-liczbach` | tak |
-| 6 | [Karta przed wgraniem](#6-karta-przed-wgraniem) | `karta-przed-wgraniem` | – |
-| 7 | [Dane pod regułę](#7-dane-pod-regułę) | `dane-pod-regule` | – |
-| 8 | [Uprawnienia przy zwykłej historyjce](#8-uprawnienia-przy-zwykłej-historyjce) | `przypadki-uprawnien` | – |
-| P1 | [Czerwony przebieg: produkt, test czy środowisko](#p1-czerwony-przebieg-produkt-test-czy-środowisko) | `klasyfikacja-awarii` | – |
-| P2 | [Ponowny test po poprawce](#p2-ponowny-test-po-poprawce) | `test-potwierdzajacy` | – |
-| P3 | [Test niestabilny](#p3-test-niestabilny) | `test-niestabilny` | – |
-| P4 | [Pokrycie wymagania testami](#p4-pokrycie-wymagania-testami) | `pokrycie-wymagania` | – |
-| P5 | [Karta sesji eksploracyjnej](#p5-karta-sesji-eksploracyjnej) | `sesja-eksploracyjna` | – |
-| P6 | [Przegląd zmiany w testach](#p6-przegląd-zmiany-w-testach) | `przeglad-zmiany-w-testach` | – |
+| Nr | Zagadnienie | Skill | Agent | Wariant 20 min |
+| --- | --- | --- | --- | --- |
+| 1 | [Luki w wymaganiu](#1-luki-w-wymaganiu) | `luki-w-wymaganiu` | Analiza wymagania | tak |
+| 2 | [Defekt z czerwonego przebiegu](#2-defekt-z-czerwonego-przebiegu) | `zgloszenie-defektu` | Analiza przebiegu | tak |
+| 3 | [Ocena asercji](#3-ocena-asercji) | `ocena-asercji` | Analiza przebiegu | – |
+| 4 | [Zakres po zmianie](#4-zakres-po-zmianie) | `zakres-po-zmianie` | Zakres i wydanie | – |
+| 5 | [Zdanie o dwóch buildach](#5-zdanie-o-dwóch-buildach) | `dwa-buildy-w-liczbach` | Zakres i wydanie | tak |
+| 6 | [Karta przed wgraniem](#6-karta-przed-wgraniem) | `karta-przed-wgraniem` | Zakres i wydanie | – |
+| 7 | [Dane pod regułę](#7-dane-pod-regułę) | `dane-pod-regule` | Analiza wymagania | – |
+| 8 | [Uprawnienia przy zwykłej historyjce](#8-uprawnienia-przy-zwykłej-historyjce) | `przypadki-uprawnien` | Analiza wymagania | – |
+| P1 | [Czerwony przebieg: produkt, test czy środowisko](#p1-czerwony-przebieg-produkt-test-czy-środowisko) | `klasyfikacja-awarii` | Analiza przebiegu | – |
+| P2 | [Ponowny test po poprawce](#p2-ponowny-test-po-poprawce) | `test-potwierdzajacy` | Analiza przebiegu | – |
+| P3 | [Test niestabilny](#p3-test-niestabilny) | `test-niestabilny` | Analiza przebiegu | – |
+| P4 | [Pokrycie wymagania testami](#p4-pokrycie-wymagania-testami) | `pokrycie-wymagania` | Analiza wymagania | – |
+| P5 | [Karta sesji eksploracyjnej](#p5-karta-sesji-eksploracyjnej) | `sesja-eksploracyjna` | Analiza wymagania | – |
+| P6 | [Przegląd zmiany w testach](#p6-przegląd-zmiany-w-testach) | `przeglad-zmiany-w-testach` | Analiza przebiegu | – |
 
 Wariant 20-minutowy to zagadnienia 1, 2 i 5. Pokazują trzy rodzaje wejścia: wymaganie, wynik przebiegu i liczby.
 
@@ -106,6 +107,7 @@ Wariant 20-minutowy: tak.
 - **Czego model nie robi.** Nie odpowiada na własne pytania w imieniu autora i nie wpisuje „rozsądnych domyślnych” wartości. Nie podaje dopisanej reguły jako wymagania. Niczego nie dodaje do zestawu testów.
 - **Decyzja człowieka.** Które pytania idą do autora i które dopisane przypadki wchodzą do zestawu.
 - **Skill.** `luki-w-wymaganiu`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Skrypt.** `narzedzia/wymaganie.py`
 
 ```powershell
@@ -122,6 +124,7 @@ Wariant 20-minutowy: tak.
 - **Czego model nie robi.** Nie wysyła zgłoszenia i nie zakłada go w żadnym systemie. Nie nadaje dotkliwości ani priorytetu. Nie podaje domysłu o przyczynie w kodzie jako faktu. Nie zmienia testu ani oczekiwanego wyniku.
 - **Decyzja człowieka.** Czy to defekt, jaka dotkliwość i priorytet, czy zgłoszenie wychodzi i do kogo.
 - **Skill.** `zgloszenie-defektu`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypty.** `narzedzia/przebieg.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -138,6 +141,7 @@ python narzedzia/wymaganie.py reset-hasla
 - **Czego model nie robi.** Nie zmienia kodu testów: nie obcina, nie dopisuje i nie łagodzi asercji. Nie usuwa i nie wyłącza słabszego testu. Nie wyprowadza oczekiwanego wyniku z tego, co robi aplikacja.
 - **Decyzja człowieka.** Który test jest bramką i co dzieje się ze słabszym testem.
 - **Skill.** `ocena-asercji`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypty.** `narzedzia/tabela_asercji.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -153,6 +157,7 @@ python narzedzia/wymaganie.py reset-hasla
 - **Czego model nie robi.** Nie usuwa pozycji z listy i nie łączy kilku w jedną. Nie skraca czasów podanych w wejściu. Nie pomija dopisanego przypadku dlatego, że się nie mieści. Nie decyduje, co zostaje pominięte.
 - **Decyzja człowieka.** Co wykonać w oknie, czy okno wydłużyć, czy przyjąć ryzyko pominięcia.
 - **Skill.** `zakres-po-zmianie`
+- **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
 - **Skrypty.** `narzedzia/lista_sprawdzen.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -170,6 +175,7 @@ Wariant 20-minutowy: tak.
 - **Czego model nie robi.** Nie zmienia progów i nie proponuje ich podniesienia. Nie porównuje liczb, gdy profile obciążenia się różnią. Nie orzeka o przyczynie w kodzie. Nie uśrednia ścieżek i nie pomija metryki, która wygląda źle.
 - **Decyzja człowieka.** Czy zmiana blokuje wydanie, czy powstaje zgłoszenie, czy potrzebna jest dalsza diagnoza.
 - **Skill.** `dwa-buildy-w-liczbach`
+- **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
 - **Skrypt.** `narzedzia/liczby.py`
 
 ```powershell
@@ -184,6 +190,7 @@ python narzedzia/liczby.py
 - **Czego model nie robi.** Nie pisze słowa „wgrywamy” ani jego zaprzeczenia i nie zastępuje ich rekomendacją. Nie ocenia ryzyka biznesowego. Nie pomija i nie łagodzi czerwonych wyników. Nie przedstawia jako potwierdzonego czegoś, na co nie widział wyniku.
 - **Decyzja człowieka.** Decyzja o wydaniu. Podejmuje ją osoba odpowiedzialna za wydanie.
 - **Skill.** `karta-przed-wgraniem`
+- **Agent.** „Zakres i wydanie” (`.github/agents/zakres-i-wydanie.agent.md`)
 - **Skrypty.** `narzedzia/przebieg.py` (zapisuje przebiegi), `narzedzia/zbierz_wyniki.py` (zbiera wszystko w jeden plik)
 
 ```powershell
@@ -200,6 +207,7 @@ python narzedzia/zbierz_wyniki.py
 - **Czego model nie robi.** Nie wpisuje oczekiwanego wyniku, którego nie ma w wymaganiu, i nie odczytuje go z odpowiedzi aplikacji. Nie sięga po dane produkcyjne. Nie uruchamia przebiegu z własnej inicjatywy i nie dopisuje do pliku wejść, których człowiek nie wybrał.
 - **Decyzja człowieka.** Które wejścia trafiają do przebiegu.
 - **Skill.** `dane-pod-regule`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Skrypty.** `narzedzia/wymaganie.py`, po decyzji człowieka `narzedzia/przebieg_danych.py`
 
 ```powershell
@@ -217,6 +225,7 @@ Opcja `--dane` wskazuje plik z wejściami wybranymi przez człowieka. `material/
 - **Czego model nie robi.** Nie wymyśla polityki: kodu odpowiedzi, czasu życia tokenu ani tego, co wolno roli. Nie podaje zalecenia OWASP jako oczekiwanego wyniku. Nie wysyła żądań do systemu. Nie ogłasza, że funkcja jest bezpieczna.
 - **Decyzja człowieka.** Politykę dostępu ustala autor wymagania albo właściciel bezpieczeństwa. Tester decyduje, które przypadki wchodzą do zestawu.
 - **Skill.** `przypadki-uprawnien`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Skrypt.** `narzedzia/wymaganie.py`
 
 ```powershell
@@ -232,6 +241,7 @@ python narzedzia/wymaganie.py filtr-zamowien
 - **Czego model nie robi.** Nie ponawia przebiegu ani pojedynczych testów. Nie oznacza testu jako niestabilnego i go nie wyłącza. Nie klasyfikuje bez dowodu. Nie zakłada zgłoszeń i nie poprawia testów ani danych.
 - **Decyzja człowieka.** Klasyfikacja i następny krok dla każdej grupy: zgłoszenie, poprawka testu, naprawa danych albo naprawa środowiska.
 - **Skill.** `klasyfikacja-awarii`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypt.** `narzedzia/przebieg_nocny.py`
 
 ```powershell
@@ -246,6 +256,7 @@ python narzedzia/przebieg_nocny.py
 - **Czego model nie robi.** Nie zamyka zgłoszenia i nie zmienia jego stanu. Nie pisze, że defekt jest naprawiony. Nie rozszerza wniosku na zachowania, których test nie sprawdza. Nie zmienia testu, żeby pasował do nowego builda.
 - **Decyzja człowieka.** Zamknąć zgłoszenie czy otworzyć je ponownie i czy przed tą decyzją wykonać dodatkowe sprawdzenia.
 - **Skill.** `test-potwierdzajacy`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypt.** `narzedzia/przebieg.py`; zgłoszenie model czyta z pliku
 
 ```powershell
@@ -260,6 +271,7 @@ python narzedzia/przebieg.py --port 8767 --test test_link_dziala_jeden_raz
 - **Czego model nie robi.** Nie dodaje ponowień ani pominięć i nie zmienia kodu testu. Nie wyłącza testu i nie przenosi go do kwarantanny. Nie nazywa testu niestabilnym na podstawie jednego przebiegu. Nie przesądza, czy przyczyna leży w teście, czy w systemie.
 - **Decyzja człowieka.** Kwarantanna, naprawa czy pozostawienie testu, a jeśli naprawa, to testu czy systemu.
 - **Skill.** `test-niestabilny`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypt.** `narzedzia/historia.py`
 
 ```powershell
@@ -274,6 +286,7 @@ python narzedzia/historia.py --port 8765
 - **Czego model nie robi.** Nie dopisuje testów i nie usuwa istniejących. Nie ogłasza, że pokrycie jest wystarczające. Nie uznaje zdania za pokryte dlatego, że nazwa testu brzmi podobnie. Nie zmienia wymagania, żeby pasowało do testów.
 - **Decyzja człowieka.** Które braki uzupełnić i co zrobić z testami bez zdania w wymaganiu.
 - **Skill.** `pokrycie-wymagania`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Skrypty.** `narzedzia/wymaganie.py`, `narzedzia/lista_testow.py`
 
 ```powershell
@@ -289,6 +302,7 @@ python narzedzia/lista_testow.py
 - **Czego model nie robi.** Nie dopisuje do raportu czynności, których nie ma w notatkach. Nie uznaje obszaru za sprawdzony na podstawie karty. Nie nazywa obserwacji defektem. Nie zmienia poziomów ryzyka i nie wygładza wątpliwości testera.
 - **Decyzja człowieka.** Cel, czas i build sesji oraz pomysły, które wchodzą do karty. Po sesji: które obserwacje są defektami, które pytania idą do autora i czy potrzebna jest kolejna sesja.
 - **Skill.** `sesja-eksploracyjna`
+- **Agent.** „Analiza wymagania” (`.github/agents/analiza-wymagania.agent.md`)
 - **Skrypt.** `narzedzia/wymaganie.py`; listę ryzyk i notatki model czyta z plików `material/sesja/ryzyka.md` i `material/sesja/notatki-z-sesji.md`
 
 ```powershell
@@ -305,6 +319,7 @@ Get-Content material/sesja/notatki-z-sesji.md -Encoding UTF8
 - **Czego model nie robi.** Nie cofa zmiany i nie poprawia testów. Nie zatwierdza i nie odrzuca zmiany. Nie uznaje zmiany za bezpieczną dlatego, że po niej przebieg jest zielony. Nie ocenia intencji autora.
 - **Decyzja człowieka.** Przyjąć zmianę, odrzucić ją albo przyjąć częściowo.
 - **Skill.** `przeglad-zmiany-w-testach`
+- **Agent.** „Analiza przebiegu” (`.github/agents/analiza-przebiegu.agent.md`)
 - **Skrypty.** `narzedzia/zmiana_w_testach.py`, `narzedzia/wymaganie.py`
 
 ```powershell
@@ -336,6 +351,7 @@ Każdy skrypt wypisuje wejście w stałej ramce i zapisuje je w katalogu `wyniki
 
 ```text
 qa-demo/
+├── .github/agents/            trzy pliki .agent.md, agenci GitHub Copilot
 ├── .github/skills/            czternaście katalogów, w każdym SKILL.md
 ├── app/serwer.py              aplikacja demonstracyjna, porty 8765, 8766 i 8767
 ├── docs/                      dokumentacja

@@ -16,6 +16,7 @@ Dlatego dokumentacja w `README.md` i w katalogu `docs` opisuje materiał neutral
 - co wynika z porównania dwóch testów z pokazu,
 - opis testu, którego dotyczy zagadnienie P3,
 - liczby zagadnienia 5 zestawione z progami,
+- zawartość przykładowego pliku danych zagadnienia 7,
 - wypełniony przykład zapisu przebiegu.
 
 ## Kto czyta
@@ -34,12 +35,13 @@ Get-Content prowadzacy/odpowiedzi-pokazu.md -Encoding UTF8
 
 ## Jak działa zakaz dla modelu
 
-Zakaz stoi w dwóch miejscach:
+Zakaz stoi w trzech miejscach:
 
 1. W bloku „Zasady wspólne” każdego z czternastu skilli w `.github/skills`, jako zasada 10.
 2. W zasadach pokazu w `README.md`, jako zasada 10.
+3. W części „Wejście” każdego z trzech agentów GitHub Copilot w `.github/agents` (opis: [agenci-copilot.md](agenci-copilot.md)).
 
-Zakaz jest instrukcją, a nie blokadą techniczną. Model, który nie załadował żadnego skilla, tej instrukcji nie zna. Jeśli w rozmowie nie używasz skilla, dopisz zakaz do prośby albo nie otwieraj pliku w edytorze, w którym pracuje model.
+Zakaz jest instrukcją, a nie blokadą techniczną. Model, który nie załadował żadnego skilla i nie pracuje jako jeden z tych agentów, tej instrukcji nie zna. Jeśli w rozmowie nie używasz skilla ani agenta, dopisz zakaz do prośby albo nie otwieraj pliku w edytorze, w którym pracuje model.
 
 ## Czego zakaz nie obejmuje
 
@@ -49,7 +51,7 @@ Odpowiedzi widać także poza katalogiem `prowadzacy`, w miejscach potrzebnych d
 - `testy`: kod testów,
 - `material`: materiał wejściowy, w tym gotowe zgłoszenie dla zagadnienia P2.
 
-Skille każą brać wejście ze skryptów z katalogu `narzedzia`, ale czytania tych plików nie zakazują.
+Skille każą brać wejście ze skryptów z katalogu `narzedzia`, ale czytania tych plików nie zakazują. Agenci idą krok dalej: nie czytają kodu aplikacji z katalogu `app`, a pliki z katalogu `material` czytają tylko wtedy, gdy skill bieżącego zagadnienia wskazuje je jako wejście. To także instrukcja, a nie blokada.
 
 ## Zmiana pliku
 
