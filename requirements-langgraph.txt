@@ -1,0 +1,5 @@
+-r requirements.txt
+langgraph==1.2.24
+langchain==1.5.2
+langchain-openai==1.8.5
+langchain-anthropic==1.7.12
